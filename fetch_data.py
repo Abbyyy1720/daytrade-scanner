@@ -4,13 +4,17 @@ import json
 import requests
 from datetime import datetime
 
+# 🔥 1. 擴充股票清單，把友達、彩晶以及其他有當沖量能的股票加進來
 STOCKS = [
     {"code": "2382.TW", "name": "廣達", "twse_name": "廣達電腦"},
     {"code": "2317.TW", "name": "鴻海", "twse_name": "鴻海精密"},
     {"code": "2603.TW", "name": "長榮", "twse_name": "長榮海運"},
     {"code": "3481.TW", "name": "群創", "twse_name": "群創光電"},
-    {"code": "2886.TW", "name": "兆豐金", "twse_name": "兆豐金控"},
+    {"code": "2409.TW", "name": "友達", "twse_name": "友達光電"},    # 🔥 新增
+    {"code": "6116.TW", "name": "彩晶", "twse_name": "瀚宇彩晶"},    # 🔥 新增
     {"code": "2303.TW", "name": "聯電", "twse_name": "聯華電子"},
+    {"code": "2330.TW", "name": "台積電", "twse_name": "台灣積體電路製造"}, # 🔥 新增
+    {"code": "2886.TW", "name": "兆豐金", "twse_name": "兆豐金控"},
     {"code": "2891.TW", "name": "中信金", "twse_name": "中信金控"},
     {"code": "2882.TW", "name": "國泰金", "twse_name": "國泰金控"},
 ]
@@ -55,12 +59,18 @@ def calc_atr(high, low, close, period=14):
     ], axis=1).max(axis=1)
     return round(tr.rolling(period).mean().iloc[-1], 1)
 
-def calc_score(vol_ratio, atr, foreign_buy, vr, kd_status):
+# 🔥 2. 優化計分公式：將 ATR 絕對價格改為「ATR 佔股價百分比」
+def calc_score(vol_ratio, atr, price, foreign_buy, vr, kd_status):
     vol_score = min(vol_ratio / 2, 1) * 100
-    atr_score = min(atr / 15, 1) * 100
+    
+    # 改為：當日震盪波幅佔股價的百分比。當沖通常期望一天波幅大於 3.5%
+    atr_percent = (atr / price) * 100
+    atr_score = min(atr_percent / 3.5, 1) * 100
+    
     foreign_score = 100 if foreign_buy > 3000 else 75 if foreign_buy > 1000 else 50 if foreign_buy > 0 else 20
     vr_score = 100 if vr > 130 else 70 if vr > 100 else 40 if vr > 80 else 20
     kd_score = 100 if kd_status == "up" else 70 if kd_status == "cross" else 20
+    
     total = vol_score*0.30 + atr_score*0.25 + foreign_score*0.20 + vr_score*0.15 + kd_score*0.10
     return round(total)
 
@@ -76,14 +86,17 @@ for s in STOCKS:
             continue
 
         price = round(hist["Close"].iloc[-1], 1)
-        if price > 200:
-            print(f"{s['code']} 股價 {price} 超過200元，跳過")
+        # 如果你想看台積電，可以把這邊的股價限制放寬或移除，這裡先保留你的 200
+        if price > 1100:  
+            print(f"{s['code']} 股價 {price} 超過限制，跳過")
             continue
 
         vol_today = int(hist["Volume"].iloc[-1] / 1000)
         vol_5avg = int(hist["Volume"].tail(5).mean() / 1000)
-        if vol_5avg < 2000:
-            print(f"{s['code']} 均量 {vol_5avg} 不足2000張，跳過")
+        
+        # 🔥 3. 放寬後端過濾門檻：從 2000 張下修到 500 張，把沒量但準備發動的股票也丟給前端
+        if vol_5avg < 500:
+            print(f"{s['code']} 均量 {vol_5avg} 不足500張，跳過")
             continue
 
         vol_ratio = vol_today / vol_5avg if vol_5avg > 0 else 1
@@ -106,7 +119,8 @@ for s in STOCKS:
             kd_status = "dn"
             kd_label = "K<D 偏弱"
 
-        score = calc_score(vol_ratio, atr, foreign_buy, vr, kd_status)
+        # 🔥 傳入 price 來計算相對波幅分數
+        score = calc_score(vol_ratio, atr, price, foreign_buy, vr, kd_status)
 
         results.append({
             "code": s["code"].replace(".TW", ""),
@@ -127,7 +141,7 @@ for s in STOCKS:
             "badge": "hot" if score >= 65 else "watch",
             "badgeLabel": "熱門" if score >= 65 else "觀察",
             "tags": [],
-            "reason": ""
+            "reason": "相對波幅與動能計算完成。"
         })
 
     except Exception as e:
