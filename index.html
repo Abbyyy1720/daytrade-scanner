@@ -82,4 +82,158 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
     <button class="filter-btn" onclick="setFilter('hot',this)">熱門</button>
     <button class="filter-btn" onclick="setFilter('volume',this)">高量</button>
     <button class="filter-btn" onclick="setFilter('kd',this)">KD 向上</button>
-    <button class="filter-btn"
+    <button class="filter-btn" onclick="setFilter('score',this)">推薦排序</button>
+  </div>
+  <div class="section-title">候選股票</div>
+  <div class="stock-list" id="stock-list"><div class="loading">資料載入中...</div></div>
+  <div class="detail-panel" id="detail-panel">
+    <div class="dp-header"><span class="dp-title" id="dp-title">點選股票查看分析</span><span class="dp-sub" id="dp-sub"></span></div>
+    <div class="score-breakdown" id="score-breakdown"></div>
+    <div class="dp-reason" id="dp-reason" style="color:#999;">選擇上方任一候選股票，查看推薦摘要與指標分析。</div>
+    <div class="dp-tags" id="dp-tags"></div>
+  </div>
+  <div class="section-title">5日成交量趨勢</div>
+  <div class="chart-area"><canvas id="volChart"></canvas></div>
+  <p class="disclaimer">⚠️ 本工具為輔助參考，不構成投資建議。推薦指數為多項技術指標加權估算，非保證獲利依據。資料每日收盤後自動更新。</p>
+</div>
+
+<script>
+const REPO = 'Abbyyy1720/daytrade-scanner';
+const DATA_URL = `https://raw.githubusercontent.com/${REPO}/main/data.json`;
+
+let stocks = [];
+let activeIdx = 0;
+let activeFilter = 'all';
+let volChartInst = null;
+
+function scoreColor(n) {
+  return n >= 70 ? '#1D9E75' : n >= 50 ? '#BA7517' : '#D85A30';
+}
+
+function calcScoreBreakdown(s) {
+  const volRatio = s.vol / s.avgVol;
+  const volScore = Math.round(Math.min(volRatio / 2, 1) * 100);
+  const atrScore = Math.round(Math.min(s.atr / 15, 1) * 100);
+  const fScore = s.foreignBuy > 3000 ? 100 : s.foreignBuy > 1000 ? 75 : s.foreignBuy > 0 ? 50 : 20;
+  const vrScore = s.vr > 130 ? 100 : s.vr > 100 ? 70 : s.vr > 80 ? 40 : 20;
+  const kdScore = s.kdStatus === 'up' ? 100 : s.kdStatus === 'cross' ? 70 : 20;
+  return { volScore, atrScore, fScore, vrScore, kdScore };
+}
+
+function setFilter(f, btn) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  renderList();
+}
+
+function filtered() {
+  let data = [...stocks];
+  if (activeFilter === 'hot') data = data.filter(s => s.badge === 'hot');
+  else if (activeFilter === 'volume') data = data.filter(s => s.vol > s.avgVol);
+  else if (activeFilter === 'kd') data = data.filter(s => s.kdStatus === 'up' || s.kdStatus === 'cross');
+  else if (activeFilter === 'score') data = [...data].sort((a, b) => b.score - a.score);
+  return data;
+}
+
+function renderList() {
+  const list = document.getElementById('stock-list');
+  const data = filtered();
+  if (!data.length) { list.innerHTML = '<div class="empty">目前篩選條件下無符合股票</div>'; return; }
+  list.innerHTML = '';
+  data.forEach(s => {
+    const ri = stocks.indexOf(s);
+    const kdColor = s.kdStatus === 'up' ? 'kd-up' : s.kdStatus === 'cross' ? 'kd-cross' : 'kd-dn';
+    const card = document.createElement('div');
+    card.className = 'stock-card' + (ri === activeIdx ? ' active' : '');
+    card.innerHTML = `
+      <div class="sc-header">
+        <span class="sc-code">${s.code}</span>
+        <span class="sc-name">${s.name}</span>
+        <span class="badge ${s.badge === 'hot' ? 'badge-hot' : 'badge-watch'}">${s.badgeLabel}</span>
+        <span class="${s.chg.startsWith('+') ? 'up' : 'dn'}" style="font-size:13px;font-weight:600;">${s.chg}</span>
+        <span style="font-size:12px;color:#888;">$${s.price}</span>
+        <div class="score-wrap">
+          <span style="font-size:11px;color:#999;">推薦指數</span>
+          <div class="score-bar"><div class="score-fill" style="width:${s.score}%;background:${scoreColor(s.score)};"></div></div>
+          <span class="score-num" style="color:${scoreColor(s.score)};">${s.score}</span>
+        </div>
+      </div>
+      <div class="sc-grid">
+        <div class="sc-metric"><div class="ml">昨日成交量</div><div class="mv">${s.vol.toLocaleString()}</div></div>
+        <div class="sc-metric"><div class="ml">5日均量</div><div class="mv">${s.avgVol.toLocaleString()}</div></div>
+        <div class="sc-metric"><div class="ml">ATR 波幅</div><div class="mv">$${s.atr}</div></div>
+        <div class="sc-metric"><div class="ml">VR 指標</div><div class="mv ${s.vr > 100 ? 'kd-up' : 'kd-dn'}">${s.vr}</div></div>
+        <div class="sc-metric"><div class="ml">KD 狀態</div><div class="mv ${kdColor}">${s.kdLabel}</div></div>
+      </div>`;
+    card.onclick = () => { activeIdx = ri; renderList(); renderDetail(); updateChart(); };
+    list.appendChild(card);
+  });
+}
+
+function renderDetail() {
+  const s = stocks[activeIdx];
+  if (!s) return;
+  const bd = calcScoreBreakdown(s);
+  document.getElementById('dp-title').textContent = `${s.code} ${s.name}　推薦指數 ${s.score}`;
+  document.getElementById('dp-title').style.color = scoreColor(s.score);
+  document.getElementById('dp-sub').textContent = `外資: ${s.foreignBuy > 0 ? '+' : ''}${s.foreignBuy.toLocaleString()} 張　一張成本: $${(s.price * 1000).toLocaleString()}`;
+  document.getElementById('score-breakdown').innerHTML = [
+    { label: '量能比', weight: '30%', val: bd.volScore },
+    { label: 'ATR 波動', weight: '25%', val: bd.atrScore },
+    { label: '外資方向', weight: '20%', val: bd.fScore },
+    { label: 'VR 指標', weight: '15%', val: bd.vrScore },
+    { label: 'KD 狀態', weight: '10%', val: bd.kdScore },
+  ].map(i => `<div class="sb-item">
+    <div class="sb-label">${i.label} <span class="sb-weight">(${i.weight})</span></div>
+    <div class="sb-val" style="color:${scoreColor(i.val)};">${i.val} 分</div>
+    <div style="height:4px;background:#eee;border-radius:2px;margin-top:4px;overflow:hidden;">
+      <div style="height:100%;width:${i.val}%;background:${scoreColor(i.val)};border-radius:2px;"></div>
+    </div>
+  </div>`).join('');
+  document.getElementById('dp-reason').textContent = s.reason || '指標計算完成，AI 推薦摘要功能開發中。';
+  document.getElementById('dp-tags').innerHTML = (s.tags || []).map(t => `<span class="tag">${t}</span>`).join('');
+}
+
+function updateChart() {
+  const s = stocks[activeIdx];
+  if (!s) return;
+  if (volChartInst) volChartInst.destroy();
+  volChartInst = new Chart(document.getElementById('volChart'), {
+    type: 'bar',
+    data: {
+      labels: ['5日前', '4日前', '3日前', '2日前', '昨日'],
+      datasets: [
+        { label: '成交量', data: s.vol5, backgroundColor: s.vol5.map((_, i) => i === 4 ? '#D85A30' : '#B5D4F4'), borderRadius: 4 },
+        { label: '5日均量', data: Array(5).fill(s.avgVol), type: 'line', borderColor: '#aaa', borderDash: [4, 3], borderWidth: 1.5, pointRadius: 0, fill: false }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { ticks: { callback: v => (v / 1000).toFixed(0) + 'K', font: { size: 11 } }, grid: { color: 'rgba(0,0,0,0.05)' } },
+        x: { ticks: { font: { size: 11 } }, grid: { display: false } }
+      }
+    }
+  });
+}
+
+async function loadData() {
+  try {
+    const res = await fetch(DATA_URL + '?t=' + Date.now());
+    const data = await res.json();
+    stocks = data.stocks || [];
+    document.getElementById('update-time').textContent = '更新時間：' + (data.updated || '—');
+    document.getElementById('stock-count').textContent = stocks.length + ' 支';
+    if (stocks.length > 0) { activeIdx = 0; renderList(); renderDetail(); updateChart(); }
+    else { document.getElementById('stock-list').innerHTML = '<div class="empty">今日無符合條件的候選股票</div>'; }
+  } catch (e) {
+    document.getElementById('stock-list').innerHTML = '<div class="empty">資料載入失敗，請稍後再試</div>';
+  }
+}
+
+loadData();
+</script>
+</body>
+</html>
