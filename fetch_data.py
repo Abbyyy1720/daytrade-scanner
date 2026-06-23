@@ -6,7 +6,7 @@ import datetime
 
 def fetch_top_volume_stocks(limit=60):
     """
-    全自動海選：直接從證交所 API 抓取今日成交量前 limit 名的股票
+    自動海選成交量前 limit 名的股票
     """
     print("正在從證交所獲取今日熱門成交量排行...")
     try:
@@ -16,14 +16,14 @@ def fetch_top_volume_stocks(limit=60):
         
         dynamic_stocks = []
         for row in data.get("data", [])[:limit]:
-            code = row[1].strip()     # 股票代號 (例如: 2303)
-            name = row[2].strip()     # 股票名稱 (例如: 聯電)
+            code = str(row[1]).strip()     # 確保是純字串去空格
+            name = str(row[2]).strip()     # 確保是純字串去空格
             
             if len(code) == 4 and not code.startswith('00'):
                 dynamic_stocks.append({
                     "code": f"{code}.TW",
                     "name": name,
-                    "stock_id": code  # 確保有這一個純數位代號
+                    "stock_id": code  
                 })
         print(f"成功自動鎖定今日最熱門的 {len(dynamic_stocks)} 檔台股個股！")
         return dynamic_stocks
@@ -33,8 +33,7 @@ def fetch_top_volume_stocks(limit=60):
 
 def fetch_all_foreign():
     """
-    終極正解版：完美對齊證交所實際回傳格式
-    row[1] 是代號，row[2] 是名稱，row[7] 是外資買賣超股數
+    完美防禦版：將證交所的所有代號與名稱徹底清洗
     """
     for i in range(5):
         target_date = (datetime.datetime.now() - datetime.timedelta(days=i)).strftime("%Y%m%d")
@@ -55,14 +54,13 @@ def fetch_all_foreign():
                     if len(row) < 8: 
                         continue
                         
-                    # 🎯 根據實測 Log 精準修正：row[1] 是代號，row[2] 是名稱
-                    code = row[1].strip() 
-                    name = row[2].strip() 
+                    # ⚡ 核心清洗：強制轉字串、徹底削掉所有隱藏空格
+                    code = str(row[1]).strip() 
+                    name = str(row[2]).strip() 
                     
                     try:
-                        # row[7] 是證交所真正的外資買賣超股數
-                        net_shares = int(row[7].replace(",", ""))
-                        net_vols = net_shares // 1000 # 換算成張數
+                        net_shares = int(str(row[7]).replace(",", ""))
+                        net_vols = net_shares // 1000 
                         
                         result_by_id[code] = net_vols
                         result_by_name[name] = net_vols
@@ -116,6 +114,9 @@ STOCKS = fetch_top_volume_stocks(limit=60)
 foreign_data = fetch_all_foreign()
 results = []
 
+id_map = foreign_data.get("id_map", {})
+name_map = foreign_data.get("name_map", {})
+
 for s in STOCKS:
     try:
         ticker = yf.Ticker(s["code"])
@@ -140,33 +141,31 @@ for s in STOCKS:
         vol5 = [int(v/1000) for v in hist["Volume"].tail(5).tolist()]
         chg = round((hist["Close"].iloc[-1] - hist["Close"].iloc[-2]) / hist["Close"].iloc[-2] * 100, 1)
 
-        # 🎯 雙重全安全保險匹配邏輯
+        # 🎯 終極暴力清洗配對邏輯
         foreign_buy = 0
         try:
-            # 提取純數位代號，防止 s 字典中遺漏欄位
-            pure_id = s.get("stock_id", s["code"].split('.')[0]).strip()
-            stock_name = s["name"].strip()
+            # 確保提取出來的比較基准絕對沒有任何前後空格
+            pure_id = str(s.get("stock_id", s["code"].split('.')[0])).strip()
+            stock_name = str(s["name"]).strip()
             
-            id_map = foreign_data.get("id_map", {})
-            name_map = foreign_data.get("name_map", {})
-            
-            # 1. 第一層：純代號精準配對
+            # 1. 數位代號精準碰撞
             if pure_id in id_map:
                 foreign_buy = id_map[pure_id]
-            # 2. 第二層：名稱精準配對
+            # 2. 股票名稱精準碰撞
             elif stock_name in name_map:
                 foreign_buy = name_map[stock_name]
-            # 3. 第三層：名稱模糊配對
+            # 3. 萬無一失的雙向模糊包含比對
             else:
                 for k, v in name_map.items():
-                    if stock_name in k or k in stock_name:
+                    clean_k = str(k).strip()
+                    if stock_name in clean_k or clean_k in stock_name:
                         foreign_buy = v
                         break
         except Exception as f_err:
             foreign_buy = 0
 
-        # 📢 偵錯明細：讓我們在 Log 直接看到是否成功匹配
-        print(f"👉 個股 {s['name']}({s['code']}) 最終成功匹配外資買賣超: {foreign_buy} 張")
+        # 📢 Log 明細監控：這一次絕對要看到正確張數印出來
+        print(f"👉 最終匹配結果 - {s['name']}({pure_id}): {foreign_buy} 張")
 
         if kd_k > kd_d + 3:
             kd_status = "up"
