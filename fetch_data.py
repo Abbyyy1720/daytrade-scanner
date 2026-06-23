@@ -6,46 +6,46 @@ from datetime import datetime
 
 def fetch_top_volume_stocks(limit=50):
     """
-    🔥 全自動海選：直接從證交所 API 抓取今日成交量前 limit 名的股票
+    全自動海選：直接從證交所 API 抓取今日成交量前 limit 名的股票
     """
     print("正在從證交所獲取今日熱門成交量排行...")
     try:
-        # 抓取今日大盤成交量排行 API
         url = "https://www.twse.com.tw/rwd/zh/afterTrading/MI_INDEX20?response=json"
         res = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
         data = res.json()
         
         dynamic_stocks = []
-        # 解析證交所的名單 (前 limit 名)
         for row in data.get("data", [])[:limit]:
             code = row[1].strip()     # 股票代號 (例如: 2330)
             name = row[2].strip()     # 股票名稱 (例如: 台積電)
             
-            # 過濾掉權證(代號通常6碼)、ETF(00開頭或含有英文字母)
             if len(code) == 4 and not code.startswith('00'):
                 dynamic_stocks.append({
                     "code": f"{code}.TW",
                     "name": name,
-                    "twse_name": name if "控" in name or "銀" in name or "鋼" in name else name
+                    "stock_id": code  # 儲存純數字代號方便外資比對
                 })
         print(f"成功自動鎖定今日最熱門的 {len(dynamic_stocks)} 檔台股個股！")
         return dynamic_stocks
     except Exception as e:
-        print(f"自動抓取熱門股失敗: {e}，改用備用基本清單。")
-        # 萬一證交所 API 斷線的備用基本款
-        return [{"code": "2317.TW", "name": "鴻海", "twse_name": "鴻海精密"}]
+        print(f"自動抓取熱門股失敗: {e}")
+        return [{"code": "2317.TW", "name": "鴻海", "stock_id": "2317"}]
 
 def fetch_all_foreign():
+    """
+    修改此處：改用『股票代號』作為 Key 儲存外資買賣超張數
+    """
     try:
         url = "https://www.twse.com.tw/rwd/zh/fund/TWT38U?response=json"
         res = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
         data = res.json()
         result = {}
         for row in data.get("data", []):
-            name = row[0].strip()
+            code = row[1].strip() # 🔥 證交所外資 API 的第二個欄位就是股票代號
             buy = int(row[2].replace(",", ""))
             sell = int(row[3].replace(",", ""))
-            result[name] = (buy - sell) // 1000
+            result[code] = (buy - sell) // 1000 # 換算成「張」
+        print(f"外資資料抓取成功，共 {len(result)} 筆")
         return result
     except Exception as e:
         print(f"外資資料抓取失敗: {e}")
@@ -84,8 +84,8 @@ def calc_score(vol_ratio, atr, price, foreign_buy, vr, kd_status):
     total = vol_score*0.30 + atr_score*0.25 + foreign_score*0.20 + vr_score*0.15 + kd_score*0.10
     return round(total)
 
-# 执行海选
-STOCKS = fetch_top_volume_stocks(limit=60) # 抓前 60 名來過濾
+# 執行
+STOCKS = fetch_top_volume_stocks(limit=60)
 foreign_data = fetch_all_foreign()
 results = []
 
@@ -97,13 +97,12 @@ for s in STOCKS:
             continue
 
         price = round(hist["Close"].iloc[-1], 1)
-        if price > 200: # 延續你的股價 200 以下限制
+        if price > 200:
             continue
 
         vol_today = int(hist["Volume"].iloc[-1] / 1000)
         vol_5avg = int(hist["Volume"].tail(5).mean() / 1000)
         
-        # 只要 5 日均量大於 500 張的熱門股通通進來
         if vol_5avg < 500:
             continue
 
@@ -114,12 +113,9 @@ for s in STOCKS:
         vol5 = [int(v/1000) for v in hist["Volume"].tail(5).tolist()]
         chg = round((hist["Close"].iloc[-1] - hist["Close"].iloc[-2]) / hist["Close"].iloc[-2] * 100, 1)
 
-        # 模糊比對外資名稱
-        foreign_buy = 0
-        for k, v in foreign_data.items():
-            if s["name"] in k or k in s["name"]:
-                foreign_buy = v
-                break
+        # 🔥 修正此處：直接用不重複的「股票代號」精準抓取外資買賣超張數
+        foreign_buy = foreign_data.get(s["stock_id"], 0)
+        print(f"{s['name']}({s['stock_id']}) 精準外資買賣超: {foreign_buy} 張")
 
         if kd_k > kd_d + 3:
             kd_status = "up"
@@ -168,4 +164,4 @@ output = {
 with open("data.json", "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=2)
 
-print(f"全自動化完成，共 {len(results)} 支爆量熱門股寫入 data.json")
+print(f"精準對應優化完成，共 {len(results)} 支爆量熱門股寫入 data.json")
