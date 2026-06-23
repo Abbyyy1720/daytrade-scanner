@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>當沖選股 Dashboard</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; padding: 1rem; }
+.container { max-width: 900px; margin: 0 auto; }
+.top-bar { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #e0e0e0; margin-bottom: 1rem; }
+.top-bar h1 { font-size: 16px; font-weight: 600; }
+.top-bar span { font-size: 12px; color: #888; }
+.market-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 1rem; }
+.mcard { background: #fff; border-radius: 8px; padding: 0.65rem 0.85rem; border: 1px solid #eee; }
+.mcard .label { font-size: 11px; color: #888; margin-bottom: 2px; }
+.mcard .val { font-size: 14px; font-weight: 600; }
+.filter-bar { background: #fff; border-radius: 8px; padding: 8px 12px; margin-bottom: 1rem; font-size: 12px; color: #666; display: flex; gap: 16px; flex-wrap: wrap; border: 1px solid #eee; }
+.filter-row { display: flex; gap: 8px; margin-bottom: 0.75rem; flex-wrap: wrap; }
+.filter-btn { font-size: 12px; padding: 4px 14px; border-radius: 20px; border: 1px solid #ddd; background: #fff; color: #666; cursor: pointer; }
+.filter-btn.on { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+.section-title { font-size: 12px; font-weight: 600; color: #888; margin-bottom: 0.5rem; letter-spacing: 0.04em; text-transform: uppercase; }
+.stock-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.5rem; }
+.stock-card { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 0.9rem 1rem; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; }
+.stock-card:hover { border-color: #bbb; }
+.stock-card.active { border: 2px solid #378ADD; }
+.sc-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+.sc-code { font-size: 15px; font-weight: 700; }
+.sc-name { font-size: 12px; color: #888; }
+.badge { font-size: 11px; padding: 2px 8px; border-radius: 20px; }
+.badge-hot { background: #FAECE7; color: #993C1D; }
+.badge-watch { background: #E6F1FB; color: #185FA5; }
+.up { color: #D85A30; } .dn { color: #1D9E75; }
+.score-wrap { margin-left: auto; display: flex; align-items: center; gap: 6px; }
+.score-bar { width: 72px; height: 6px; background: #eee; border-radius: 3px; overflow: hidden; }
+.score-fill { height: 100%; border-radius: 3px; }
+.score-num { font-size: 13px; font-weight: 700; min-width: 28px; text-align: right; }
+.sc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.sc-metric { background: #f8f8f8; border-radius: 8px; padding: 5px 8px; }
+.sc-metric .ml { font-size: 10px; color: #999; margin-bottom: 1px; }
+.sc-metric .mv { font-size: 13px; font-weight: 600; }
+.kd-up { color: #D85A30; } .kd-dn { color: #1D9E75; } .kd-cross { color: #BA7517; }
+.detail-panel { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 1rem 1.1rem; margin-bottom: 1.5rem; }
+.dp-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 6px; }
+.dp-title { font-size: 15px; font-weight: 700; }
+.dp-sub { font-size: 12px; color: #888; }
+.score-breakdown { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 0.75rem; }
+.sb-item { background: #f8f8f8; border-radius: 8px; padding: 6px 8px; }
+.sb-label { font-size: 10px; color: #999; margin-bottom: 2px; }
+.sb-val { font-size: 13px; font-weight: 600; }
+.sb-weight { font-size: 10px; color: #bbb; }
+.dp-reason { font-size: 13px; line-height: 1.7; margin-bottom: 0.75rem; border-left: 3px solid #378ADD; padding-left: 10px; color: #333; }
+.dp-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: #f5f5f5; color: #666; border: 1px solid #eee; }
+.chart-area { position: relative; height: 160px; margin-bottom: 1.5rem; }
+.empty { padding: 2rem; text-align: center; color: #999; font-size: 13px; }
+.loading { padding: 3rem; text-align: center; color: #999; font-size: 14px; }
+.disclaimer { font-size: 11px; color: #bbb; padding-top: 0.75rem; border-top: 1px solid #eee; line-height: 1.6; }
+@media (max-width: 600px) {
+  .market-bar { grid-template-columns: repeat(2, 1fr); }
+  .sc-grid { grid-template-columns: repeat(3, 1fr); }
+  .score-breakdown { grid-template-columns: repeat(3, 1fr); }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="top-bar">
+    <h1>📊 當沖候選清單 — 盤後分析</h1>
+    <span id="update-time">載入中...</span>
+  </div>
+  <div class="market-bar">
+    <div class="mcard"><div class="label">篩選條件</div><div class="val" style="font-size:12px;">股價 ≤ $200</div></div>
+    <div class="mcard"><div class="label">日均量門檻</div><div class="val" style="font-size:12px;">≥ 2,000 張</div></div>
+    <div class="mcard"><div class="label">一張成本上限</div><div class="val" style="font-size:12px;">≤ 20 萬</div></div>
+    <div class="mcard"><div class="label">候選股數</div><div class="val" id="stock-count">—</div></div>
+  </div>
+  <div class="filter-row">
+    <button class="filter-btn on" onclick="setFilter('all',this)">全部</button>
+    <button class="filter-btn" onclick="setFilter('hot',this)">熱門</button>
+    <button class="filter-btn" onclick="setFilter('volume',this)">高量</button>
+    <button class="filter-btn" onclick="setFilter('kd',this)">KD 向上</button>
+    <button class="filter-btn"
