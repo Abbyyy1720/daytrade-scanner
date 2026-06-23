@@ -143,15 +143,24 @@ for s in STOCKS:
         vol5 = [int(v/1000) for v in hist["Volume"].tail(5).tolist()]
         chg = round((hist["Close"].iloc[-1] - hist["Close"].iloc[-2]) / hist["Close"].iloc[-2] * 100, 1)
 
-        # 雙重比對機制
+        # 🎯 直覺流對應機制：精準去抓我們校正欄位後的 id_map 與 name_map
         foreign_buy = 0
-        if "id_map" in foreign_data:
-            foreign_buy = foreign_data["id_map"].get(s["stock_id"], 0)
-            if foreign_buy == 0:
-                for k, v in foreign_data["name_map"].items():
-                    if s["name"] in k or k in s["name"]:
-                        foreign_buy = v
-                        break
+        try:
+            if "id_map" in foreign_data:
+                # 1. 優先用股票代號精準比對 (例如: "2303")
+                if s["stock_id"] in foreign_data["id_map"]:
+                    foreign_buy = foreign_data["id_map"][s["stock_id"]]
+                # 2. 如果代號沒對到，再用名字模糊比對
+                else:
+                    for k, v in foreign_data.get("name_map", {}).items():
+                        if s["name"] in k or k in s["name"]:
+                            foreign_buy = v
+                            break
+        except Exception as f_err:
+            print(f"比對 {s['name']} 外資資料時發生輕微錯誤: {f_err}")
+            foreign_buy = 0
+
+        print(f"👉 {s['name']}({s['stock_id']}) 最終成功匹配外資買賣超: {foreign_buy} 張")
 
         if kd_k > kd_d + 3:
             kd_status = "up"
