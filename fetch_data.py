@@ -48,11 +48,33 @@ def calc_score(vol_ratio, atr, foreign_buy, vr, kd_status):
     total = vol_score*0.30 + atr_score*0.25 + foreign_score*0.20 + vr_score*0.15 + kd_score*0.10
     return round(total)
 
-def fetch_foreign_buy(code):
-    # 證交所外資買賣超（模擬，實際串接需額外處理）
-    import random
-    return random.randint(-2000, 5000)
+def fetch_all_foreign():
+    try:
+        url = "https://www.twse.com.tw/rwd/zh/fund/TWT38U?response=json"
+        res = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
+        data = res.json()
+        result = {}
+        for row in data.get("data", []):
+            name = row[0].strip()
+            buy = int(row[2].replace(",", ""))
+            sell = int(row[3].replace(",", ""))
+            result[name] = (buy - sell) // 1000
+        return result
+    except Exception as e:
+        print(f"外資資料抓取失敗: {e}")
+        return {}
 
+NAME_MAP = {
+    "2382.TW": "廣達電腦",
+    "2317.TW": "鴻海精密",
+    "2603.TW": "長榮海運",
+    "3481.TW": "群創光電",
+    "2886.TW": "兆豐金控",
+    "2303.TW": "聯華電子",
+    "2891.TW": "中信金控",
+    "2882.TW": "國泰金控",
+}
+foreign_data = fetch_all_foreign()
 results = []
 
 for s in STOCKS:
@@ -77,7 +99,8 @@ for s in STOCKS:
         kd_k, kd_d = calc_kd(hist["High"], hist["Low"], hist["Close"])
         vol5 = [int(v/1000) for v in hist["Volume"].tail(5).tolist()]
         chg = round((hist["Close"].iloc[-1] - hist["Close"].iloc[-2]) / hist["Close"].iloc[-2] * 100, 1)
-        foreign_buy = fetch_foreign_buy(s["code"])
+        tw_name = NAME_MAP.get(s["code"], "")
+foreign_buy = foreign_data.get(tw_name, 0)
 
         if kd_k > kd_d + 3:
             kd_status = "up"
