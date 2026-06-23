@@ -4,20 +4,36 @@ import json
 import requests
 from datetime import datetime
 
-# 🔥 1. 擴充股票清單，把友達、彩晶以及其他有當沖量能的股票加進來
-STOCKS = [
-    {"code": "2382.TW", "name": "廣達", "twse_name": "廣達電腦"},
-    {"code": "2317.TW", "name": "鴻海", "twse_name": "鴻海精密"},
-    {"code": "2603.TW", "name": "長榮", "twse_name": "長榮海運"},
-    {"code": "3481.TW", "name": "群創", "twse_name": "群創光電"},
-    {"code": "2409.TW", "name": "友達", "twse_name": "友達光電"},    # 🔥 新增
-    {"code": "6116.TW", "name": "彩晶", "twse_name": "瀚宇彩晶"},    # 🔥 新增
-    {"code": "2303.TW", "name": "聯電", "twse_name": "聯華電子"},
-    {"code": "2330.TW", "name": "台積電", "twse_name": "台灣積體電路製造"}, # 🔥 新增
-    {"code": "2886.TW", "name": "兆豐金", "twse_name": "兆豐金控"},
-    {"code": "2891.TW", "name": "中信金", "twse_name": "中信金控"},
-    {"code": "2882.TW", "name": "國泰金", "twse_name": "國泰金控"},
-]
+def fetch_top_volume_stocks(limit=50):
+    """
+    🔥 全自動海選：直接從證交所 API 抓取今日成交量前 limit 名的股票
+    """
+    print("正在從證交所獲取今日熱門成交量排行...")
+    try:
+        # 抓取今日大盤成交量排行 API
+        url = "https://www.twse.com.tw/rwd/zh/afterTrading/MI_INDEX20?response=json"
+        res = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
+        data = res.json()
+        
+        dynamic_stocks = []
+        # 解析證交所的名單 (前 limit 名)
+        for row in data.get("data", [])[:limit]:
+            code = row[1].strip()     # 股票代號 (例如: 2330)
+            name = row[2].strip()     # 股票名稱 (例如: 台積電)
+            
+            # 過濾掉權證(代號通常6碼)、ETF(00開頭或含有英文字母)
+            if len(code) == 4 and not code.startswith('00'):
+                dynamic_stocks.append({
+                    "code": f"{code}.TW",
+                    "name": name,
+                    "twse_name": name if "控" in name or "銀" in name or "鋼" in name else name
+                })
+        print(f"成功自動鎖定今日最熱門的 {len(dynamic_stocks)} 檔台股個股！")
+        return dynamic_stocks
+    except Exception as e:
+        print(f"自動抓取熱門股失敗: {e}，改用備用基本清單。")
+        # 萬一證交所 API 斷線的備用基本款
+        return [{"code": "2317.TW", "name": "鴻海", "twse_name": "鴻海精密"}]
 
 def fetch_all_foreign():
     try:
@@ -30,7 +46,6 @@ def fetch_all_foreign():
             buy = int(row[2].replace(",", ""))
             sell = int(row[3].replace(",", ""))
             result[name] = (buy - sell) // 1000
-        print(f"外資資料抓取成功，共 {len(result)} 筆")
         return result
     except Exception as e:
         print(f"外資資料抓取失敗: {e}")
@@ -49,7 +64,7 @@ def calc_vr(close, volume, period=26):
     up_vol = volume.where(price_change > 0, 0).rolling(period).sum()
     dn_vol = volume.where(price_change < 0, 0).rolling(period).sum()
     vr = (up_vol / dn_vol * 100).iloc[-1]
-    return round(vr, 1)
+    return round(vr, 1) if not pd.isna(vr) else 100.0
 
 def calc_atr(high, low, close, period=14):
     tr = pd.concat([
@@ -59,21 +74,18 @@ def calc_atr(high, low, close, period=14):
     ], axis=1).max(axis=1)
     return round(tr.rolling(period).mean().iloc[-1], 1)
 
-# 🔥 2. 優化計分公式：將 ATR 絕對價格改為「ATR 佔股價百分比」
 def calc_score(vol_ratio, atr, price, foreign_buy, vr, kd_status):
     vol_score = min(vol_ratio / 2, 1) * 100
-    
-    # 改為：當日震盪波幅佔股價的百分比。當沖通常期望一天波幅大於 3.5%
     atr_percent = (atr / price) * 100
     atr_score = min(atr_percent / 3.5, 1) * 100
-    
     foreign_score = 100 if foreign_buy > 3000 else 75 if foreign_buy > 1000 else 50 if foreign_buy > 0 else 20
     vr_score = 100 if vr > 130 else 70 if vr > 100 else 40 if vr > 80 else 20
     kd_score = 100 if kd_status == "up" else 70 if kd_status == "cross" else 20
-    
     total = vol_score*0.30 + atr_score*0.25 + foreign_score*0.20 + vr_score*0.15 + kd_score*0.10
     return round(total)
 
+# 执行海选
+STOCKS = fetch_top_volume_stocks(limit=60) # 抓前 60 名來過濾
 foreign_data = fetch_all_foreign()
 results = []
 
@@ -82,21 +94,17 @@ for s in STOCKS:
         ticker = yf.Ticker(s["code"])
         hist = ticker.history(period="60d")
         if hist.empty or len(hist) < 20:
-            print(f"{s['code']} 資料不足，跳過")
             continue
 
         price = round(hist["Close"].iloc[-1], 1)
-        # 如果你想看台積電，可以把這邊的股價限制放寬或移除，這裡先保留你的 200
-        if price > 1100:  
-            print(f"{s['code']} 股價 {price} 超過限制，跳過")
+        if price > 200: # 延續你的股價 200 以下限制
             continue
 
         vol_today = int(hist["Volume"].iloc[-1] / 1000)
         vol_5avg = int(hist["Volume"].tail(5).mean() / 1000)
         
-        # 🔥 3. 放寬後端過濾門檻：從 2000 張下修到 500 張，把沒量但準備發動的股票也丟給前端
+        # 只要 5 日均量大於 500 張的熱門股通通進來
         if vol_5avg < 500:
-            print(f"{s['code']} 均量 {vol_5avg} 不足500張，跳過")
             continue
 
         vol_ratio = vol_today / vol_5avg if vol_5avg > 0 else 1
@@ -106,8 +114,12 @@ for s in STOCKS:
         vol5 = [int(v/1000) for v in hist["Volume"].tail(5).tolist()]
         chg = round((hist["Close"].iloc[-1] - hist["Close"].iloc[-2]) / hist["Close"].iloc[-2] * 100, 1)
 
-        foreign_buy = foreign_data.get(s["twse_name"], 0)
-        print(f"{s['name']} 外資買賣超: {foreign_buy} 張")
+        # 模糊比對外資名稱
+        foreign_buy = 0
+        for k, v in foreign_data.items():
+            if s["name"] in k or k in s["name"]:
+                foreign_buy = v
+                break
 
         if kd_k > kd_d + 3:
             kd_status = "up"
@@ -119,7 +131,6 @@ for s in STOCKS:
             kd_status = "dn"
             kd_label = "K<D 偏弱"
 
-        # 🔥 傳入 price 來計算相對波幅分數
         score = calc_score(vol_ratio, atr, price, foreign_buy, vr, kd_status)
 
         results.append({
@@ -141,7 +152,7 @@ for s in STOCKS:
             "badge": "hot" if score >= 65 else "watch",
             "badgeLabel": "熱門" if score >= 65 else "觀察",
             "tags": [],
-            "reason": "相對波幅與動能計算完成。"
+            "reason": "動態爆量股追蹤中。"
         })
 
     except Exception as e:
@@ -157,4 +168,4 @@ output = {
 with open("data.json", "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=2)
 
-print(f"完成，共 {len(results)} 支股票寫入 data.json")
+print(f"全自動化完成，共 {len(results)} 支爆量熱門股寫入 data.json")
