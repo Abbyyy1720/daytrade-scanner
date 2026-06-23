@@ -33,8 +33,11 @@ def fetch_top_volume_stocks(limit=60):
 
 def fetch_all_foreign():
     """
-    智慧防退 + 雙重保險版：支援代號與名稱雙重對應，沒當天資料就自動往前找
+    精準對齊欄位版：修正證交所 API 欄位索引錯誤
+    row[0] 是代號，row[1] 是名稱，row[4] 是直接算好的買賣超股數
     """
+    import datetime
+    
     for i in range(5):
         target_date = (datetime.datetime.now() - datetime.timedelta(days=i)).strftime("%Y%m%d")
         url = f"https://www.twse.com.tw/rwd/zh/fund/TWT38U?date={target_date}&response=json"
@@ -49,19 +52,20 @@ def fetch_all_foreign():
                 result_by_name = {}
                 
                 for row in data.get("data", []):
-                    if len(row) < 4:
+                    if len(row) < 5: # 確保欄位至少有到買賣超股數
                         continue
-                    name = row[0].strip()
-                    code = row[1].strip()
+                        
+                    code = row[0].strip() # 🔥 修正：代號在第 0 個欄位
+                    name = row[1].strip() # 🔥 修正：名稱在第 1 個欄位
                     
                     try:
-                        buy = int(row[2].replace(",", ""))
-                        sell = int(row[3].replace(",", ""))
-                        net_shares = (buy - sell) // 1000
+                        # row[4] 是證交所直接算好的「買賣超股數」(有正負號)
+                        net_shares = int(row[4].replace(",", ""))
+                        net_vols = net_shares // 1000 # 換算成「張數」
                         
-                        result_by_id[code] = net_shares
-                        result_by_name[name] = net_shares
-                    except:
+                        result_by_id[code] = net_vols
+                        result_by_name[name] = net_vols
+                    except Exception as e:
                         continue
                         
                 print(f"🎉 成功抓到 {target_date} 的外資資料，共 {len(result_by_id)} 筆！")
