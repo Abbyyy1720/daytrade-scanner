@@ -2,9 +2,9 @@ import yfinance as yf
 import pandas as pd
 import json
 import requests
-from datetime import datetime
+import datetime
 
-def fetch_top_volume_stocks(limit=50):
+def fetch_top_volume_stocks(limit=60):
     """
     全自動海選：直接從證交所 API 抓取今日成交量前 limit 名的股票
     """
@@ -23,7 +23,7 @@ def fetch_top_volume_stocks(limit=50):
                 dynamic_stocks.append({
                     "code": f"{code}.TW",
                     "name": name,
-                    "stock_id": code  # 儲存純數字代號方便外資比對
+                    "stock_id": code  
                 })
         print(f"成功自動鎖定今日最熱門的 {len(dynamic_stocks)} 檔台股個股！")
         return dynamic_stocks
@@ -33,23 +33,45 @@ def fetch_top_volume_stocks(limit=50):
 
 def fetch_all_foreign():
     """
-    修改此處：改用『股票代號』作為 Key 儲存外資買賣超張數
+    智慧防退 + 雙重保險版：支援代號與名稱雙重對應，沒當天資料就自動往前找
     """
-    try:
-        url = "https://www.twse.com.tw/rwd/zh/fund/TWT38U?response=json"
-        res = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
-        data = res.json()
-        result = {}
-        for row in data.get("data", []):
-            code = row[1].strip() # 🔥 證交所外資 API 的第二個欄位就是股票代號
-            buy = int(row[2].replace(",", ""))
-            sell = int(row[3].replace(",", ""))
-            result[code] = (buy - sell) // 1000 # 換算成「張」
-        print(f"外資資料抓取成功，共 {len(result)} 筆")
-        return result
-    except Exception as e:
-        print(f"外資資料抓取失敗: {e}")
-        return {}
+    for i in range(5):
+        target_date = (datetime.datetime.now() - datetime.timedelta(days=i)).strftime("%Y%m%d")
+        url = f"https://www.twse.com.tw/rwd/zh/fund/TWT38U?date={target_date}&response=json"
+        
+        try:
+            print(f"正在嘗試抓取日期 {target_date} 的外資資料...")
+            res = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
+            data = res.json()
+            
+            if data.get("stat") == "OK" and data.get("data"):
+                result_by_id = {}
+                result_by_name = {}
+                
+                for row in data.get("data", []):
+                    if len(row) < 4:
+                        continue
+                    name = row[0].strip()
+                    code = row[1].strip()
+                    
+                    try:
+                        buy = int(row[2].replace(",", ""))
+                        sell = int(row[3].replace(",", ""))
+                        net_shares = (buy - sell) // 1000
+                        
+                        result_by_id[code] = net_shares
+                        result_by_name[name] = net_shares
+                    except:
+                        continue
+                        
+                print(f"🎉 成功抓到 {target_date} 的外資資料，共 {len(result_by_id)} 筆！")
+                return {"id_map": result_by_id, "name_map": result_by_name}
+            else:
+                print(f"📅 日期 {target_date} 證交所尚未公告或無資料，嘗試前一天...")
+        except Exception as e:
+            print(f"抓取 {target_date} 資料時發生異常: {e}")
+            
+    return {"id_map": {}, "name_map": {}}
 
 def calc_kd(high, low, close, period=9):
     lowest_low = low.rolling(window=period).min()
@@ -84,7 +106,7 @@ def calc_score(vol_ratio, atr, price, foreign_buy, vr, kd_status):
     total = vol_score*0.30 + atr_score*0.25 + foreign_score*0.20 + vr_score*0.15 + kd_score*0.10
     return round(total)
 
-# 執行
+# 執行核心流程
 STOCKS = fetch_top_volume_stocks(limit=60)
 foreign_data = fetch_all_foreign()
 results = []
@@ -113,9 +135,15 @@ for s in STOCKS:
         vol5 = [int(v/1000) for v in hist["Volume"].tail(5).tolist()]
         chg = round((hist["Close"].iloc[-1] - hist["Close"].iloc[-2]) / hist["Close"].iloc[-2] * 100, 1)
 
-        # 🔥 修正此處：直接用不重複的「股票代號」精準抓取外資買賣超張數
-        foreign_buy = foreign_data.get(s["stock_id"], 0)
-        print(f"{s['name']}({s['stock_id']}) 精準外資買賣超: {foreign_buy} 張")
+        # 雙重比對機制
+        foreign_buy = 0
+        if "id_map" in foreign_data:
+            foreign_buy = foreign_data["id_map"].get(s["stock_id"], 0)
+            if foreign_buy == 0:
+                for k, v in foreign_data["name_map"].items():
+                    if s["name"] in k or k in s["name"]:
+                        foreign_buy = v
+                        break
 
         if kd_k > kd_d + 3:
             kd_status = "up"
@@ -157,11 +185,11 @@ for s in STOCKS:
 results.sort(key=lambda x: x["score"], reverse=True)
 
 output = {
-    "updated": datetime.now().strftime("%Y/%m/%d %H:%M"),
+    "updated": datetime.datetime.now().strftime("%Y/%m/%d %H:%M"),
     "stocks": results
 }
 
 with open("data.json", "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=2)
 
-print(f"精準對應優化完成，共 {len(results)} 支爆量熱門股寫入 data.json")
+print(f"優化完成，共 {len(results)} 檔熱門爆量股成功寫入！")
