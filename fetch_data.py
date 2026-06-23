@@ -33,8 +33,7 @@ def fetch_top_volume_stocks(limit=60):
 
 def fetch_all_foreign():
     """
-    精準對齊欄位版：修正證交所 API 欄位索引錯誤
-    row[0] 是代號，row[1] 是名稱，row[4] 是直接算好的買賣超股數
+    加強排錯偵錯版：會直接印出前幾筆資料到 Log 中，讓我們抓出 Bug
     """
     import datetime
     
@@ -48,26 +47,37 @@ def fetch_all_foreign():
             data = res.json()
             
             if data.get("stat") == "OK" and data.get("data"):
+                raw_data = data.get("data", [])
+                
+                # 📢 偵錯關鍵：直接在 Log 裡印出證交所回傳的前 3 筆原始資料長怎樣
+                print("===[ 證交所原始資料前 3 筆範例 ]===")
+                for test_row in raw_data[:3]:
+                    print(test_row)
+                print("==================================")
+                
                 result_by_id = {}
                 result_by_name = {}
                 
-                for row in data.get("data", []):
-                    if len(row) < 5: # 確保欄位至少有到買賣超股數
+                for row in raw_data:
+                    if len(row) < 5:
                         continue
                         
-                    code = row[0].strip() # 🔥 修正：代號在第 0 個欄位
-                    name = row[1].strip() # 🔥 修正：名稱在第 1 個欄位
+                    code = row[0].strip() 
+                    name = row[1].strip() 
                     
                     try:
-                        # row[4] 是證交所直接算好的「買賣超股數」(有正負號)
                         net_shares = int(row[4].replace(",", ""))
-                        net_vols = net_shares // 1000 # 換算成「張數」
+                        net_vols = net_shares // 1000 
                         
                         result_by_id[code] = net_vols
                         result_by_name[name] = net_vols
                     except Exception as e:
                         continue
                         
+                # 📢 偵錯關鍵：隨便印一下有沒有抓到聯電或力積電
+                print(f"檢查測試 - 聯電(2303)是否在代號表中: {'2303' in result_by_id}")
+                print(f"檢查測試 - 力積電(6770)是否在代號表中: {'6770' in result_by_id}")
+                
                 print(f"🎉 成功抓到 {target_date} 的外資資料，共 {len(result_by_id)} 筆！")
                 return {"id_map": result_by_id, "name_map": result_by_name}
             else:
