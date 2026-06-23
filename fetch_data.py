@@ -32,48 +32,33 @@ def fetch_top_volume_stocks(limit=60):
         return [{"code": "2303.TW", "name": "聯電", "stock_id": "2303"}]
 
 def fetch_all_foreign():
-    """
-    完美防禦版：將證交所的所有代號與名稱徹底清洗
-    """
     for i in range(5):
         target_date = (datetime.datetime.now() - datetime.timedelta(days=i)).strftime("%Y%m%d")
-        url = f"https://www.twse.com.tw/rwd/zh/fund/TWT38U?date={target_date}&response=json"
-        
+        url = f"https://www.twse.com.tw/rwd/zh/fund/T86?date={target_date}&response=json"
         try:
-            print(f"正在嘗試抓取日期 {target_date} 的外資資料...")
+            print(f"正在抓取 {target_date} 個股外資資料...")
             res = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
             data = res.json()
-            
             if data.get("stat") == "OK" and data.get("data"):
-                raw_data = data.get("data", [])
-                
                 result_by_id = {}
                 result_by_name = {}
-                
-                for row in raw_data:
-                    if len(row) < 8: 
+                for row in data.get("data", []):
+                    if len(row) < 5:
                         continue
-                        
-                    # ⚡ 核心清洗：強制轉字串、徹底削掉所有隱藏空格
-                    code = str(row[1]).strip() 
-                    name = str(row[2]).strip() 
-                    
+                    code = str(row[0]).strip()
+                    name = str(row[1]).strip()
                     try:
-                        net_shares = int(str(row[7]).replace(",", ""))
-                        net_vols = net_shares // 1000 
-                        
-                        result_by_id[code] = net_vols
-                        result_by_name[name] = net_vols
-                    except Exception as e:
+                        net = int(str(row[4]).replace(",", "").replace("+", ""))
+                        result_by_id[code] = net // 1000
+                        result_by_name[name] = net // 1000
+                    except:
                         continue
-                        
-                print(f"🎉 成功抓到 {target_date} 的外資資料，共 {len(result_by_id)} 筆！")
+                print(f"成功抓到 {target_date} 個股外資資料，共 {len(result_by_id)} 筆")
                 return {"id_map": result_by_id, "name_map": result_by_name}
             else:
-                print(f"📅 日期 {target_date} 證交所尚未公告或無資料，嘗試前一天...")
+                print(f"日期 {target_date} 無資料，嘗試前一天...")
         except Exception as e:
-            print(f"抓取 {target_date} 資料時發生異常: {e}")
-            
+            print(f"抓取失敗: {e}")
     return {"id_map": {}, "name_map": {}}
 
 def calc_kd(high, low, close, period=9):
