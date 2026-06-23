@@ -33,7 +33,8 @@ def fetch_top_volume_stocks(limit=60):
 
 def fetch_all_foreign():
     """
-    加強排錯偵錯版：會直接印出前幾筆資料到 Log 中，讓我們抓出 Bug
+    終極正解版：完美對齊證交所回傳格式
+    row[1] 是代號，row[2] 是名稱，row[7] 是外資買賣超股數
     """
     import datetime
     
@@ -49,35 +50,28 @@ def fetch_all_foreign():
             if data.get("stat") == "OK" and data.get("data"):
                 raw_data = data.get("data", [])
                 
-                # 📢 偵錯關鍵：直接在 Log 裡印出證交所回傳的前 3 筆原始資料長怎樣
-                print("===[ 證交所原始資料前 3 筆範例 ]===")
-                for test_row in raw_data[:3]:
-                    print(test_row)
-                print("==================================")
-                
                 result_by_id = {}
                 result_by_name = {}
                 
                 for row in raw_data:
-                    if len(row) < 5:
+                    if len(row) < 8: # 確保欄位長度足夠拿到 row[7]
                         continue
                         
-                    code = row[0].strip() 
-                    name = row[1].strip() 
+                    # 🎯 根據實測 Log 精準修正索引與去除隱含空格
+                    code = row[1].strip() 
+                    name = row[2].strip() 
                     
                     try:
-                        net_shares = int(row[4].replace(",", ""))
-                        net_vols = net_shares // 1000 
+                        # row[7] 是證交所真正的外資買賣超股數
+                        net_shares = int(row[7].replace(",", ""))
+                        net_vols = net_shares // 1000 # 換算成張數
                         
                         result_by_id[code] = net_vols
                         result_by_name[name] = net_vols
                     except Exception as e:
                         continue
                         
-                # 📢 偵錯關鍵：隨便印一下有沒有抓到聯電或力積電
                 print(f"檢查測試 - 聯電(2303)是否在代號表中: {'2303' in result_by_id}")
-                print(f"檢查測試 - 力積電(6770)是否在代號表中: {'6770' in result_by_id}")
-                
                 print(f"🎉 成功抓到 {target_date} 的外資資料，共 {len(result_by_id)} 筆！")
                 return {"id_map": result_by_id, "name_map": result_by_name}
             else:
