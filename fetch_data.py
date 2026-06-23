@@ -23,7 +23,7 @@ def fetch_top_volume_stocks(limit=60):
                 dynamic_stocks.append({
                     "code": f"{code}.TW",
                     "name": name,
-                    "stock_id": code  
+                    "stock_id": code  # 確保有這一個純數位代號
                 })
         print(f"成功自動鎖定今日最熱門的 {len(dynamic_stocks)} 檔台股個股！")
         return dynamic_stocks
@@ -52,7 +52,7 @@ def fetch_all_foreign():
                 result_by_name = {}
                 
                 for row in raw_data:
-                    if len(row) < 8: # 確保欄位長度足夠拿到 row[7]
+                    if len(row) < 8: 
                         continue
                         
                     # 🎯 根據實測 Log 精準修正：row[1] 是代號，row[2] 是名稱
@@ -140,25 +140,33 @@ for s in STOCKS:
         vol5 = [int(v/1000) for v in hist["Volume"].tail(5).tolist()]
         chg = round((hist["Close"].iloc[-1] - hist["Close"].iloc[-2]) / hist["Close"].iloc[-2] * 100, 1)
 
-        # 🎯 直覺流對應機制：精準去抓剛才下載好的 id_map 與 name_map，消滅變數名稱對不上的問題
+        # 🎯 雙重全安全保險匹配邏輯
         foreign_buy = 0
         try:
-            if "id_map" in foreign_data:
-                # 1. 優先用股票代號精準比對 (例如: "2303")
-                if s["stock_id"] in foreign_data["id_map"]:
-                    foreign_buy = foreign_data["id_map"][s["stock_id"]]
-                # 2. 如果代號沒對到，再用名字模糊比對
-                else:
-                    for k, v in foreign_data.get("name_map", {}).items():
-                        if s["name"] in k or k in s["name"]:
-                            foreign_buy = v
-                            break
+            # 提取純數位代號，防止 s 字典中遺漏欄位
+            pure_id = s.get("stock_id", s["code"].split('.')[0]).strip()
+            stock_name = s["name"].strip()
+            
+            id_map = foreign_data.get("id_map", {})
+            name_map = foreign_data.get("name_map", {})
+            
+            # 1. 第一層：純代號精準配對
+            if pure_id in id_map:
+                foreign_buy = id_map[pure_id]
+            # 2. 第二層：名稱精準配對
+            elif stock_name in name_map:
+                foreign_buy = name_map[stock_name]
+            # 3. 第三層：名稱模糊配對
+            else:
+                for k, v in name_map.items():
+                    if stock_name in k or k in stock_name:
+                        foreign_buy = v
+                        break
         except Exception as f_err:
-            print(f"比對 {s['name']} 外資資料時發生輕微錯誤: {f_err}")
             foreign_buy = 0
 
-        # 📢 偵錯明細：會在 Actions 裡印出每一隻個股最終匹配到的張數
-        print(f"👉 {s['name']}({s['stock_id']}) 最終成功匹配外資買賣超: {foreign_buy} 張")
+        # 📢 偵錯明細：讓我們在 Log 直接看到是否成功匹配
+        print(f"👉 個股 {s['name']}({s['code']}) 最終成功匹配外資買賣超: {foreign_buy} 張")
 
         if kd_k > kd_d + 3:
             kd_status = "up"
