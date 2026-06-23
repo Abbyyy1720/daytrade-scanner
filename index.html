@@ -296,7 +296,26 @@ async function loadData() {
     const res = await fetch(DATA_URL + '?t=' + Date.now());
     const data = await res.json();
     stocks = data.stocks || [];
-    document.getElementById('update-time').textContent = '更新時間：' + (data.updated || '—');
+    
+    // 📊 自動換算台灣時間 (UTC+8) 的邏輯
+    if (data.updated) {
+      // 把 "2026/06/23 05:19" 轉換成 JavaScript 的 Date 物件
+      const utcStatusDate = new Date(data.updated + ' GMT'); 
+      
+      // 格式化輸出成台灣當地的時間格式 (年/月/日 時:分)
+      const twTimeStr = utcStatusDate.toLocaleString('zh-TW', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false // 使用 24 小時制
+      }).replace(/-/g, '/'); // 確保斜線格式一致
+      
+      document.getElementById('update-time').textContent = '更新時間（台北）：' + twTimeStr;
+    } else {
+      document.getElementById('update-time').textContent = '更新時間：—';
+    }
     
     if (stocks.length > 0) { 
       activeIdx = 0; 
