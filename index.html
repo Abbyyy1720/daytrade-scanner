@@ -18,9 +18,12 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .mcard .label { font-size: 11px; color: #888; margin-bottom: 2px; }
 .mcard .val { font-size: 14px; font-weight: 600; }
 .filter-bar { background: #fff; border-radius: 8px; padding: 8px 12px; margin-bottom: 1rem; font-size: 12px; color: #666; display: flex; gap: 16px; flex-wrap: wrap; border: 1px solid #eee; }
-.filter-row { display: flex; gap: 8px; margin-bottom: 0.75rem; flex-wrap: wrap; }
+.filter-row { display: flex; gap: 8px; margin-bottom: 0.75rem; flex-wrap: wrap; align-items: center; }
 .filter-btn { font-size: 12px; padding: 4px 14px; border-radius: 20px; border: 1px solid #ddd; background: #fff; color: #666; cursor: pointer; }
 .filter-btn.on { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+.toggle-btn { font-size: 12px; padding: 4px 14px; border-radius: 20px; border: 1px solid #ddd; background: #fff; color: #d85a30; cursor: pointer; font-weight: 600; }
+.toggle-btn.active { background: #faece7; color: #d85a30; border-color: #d85a30; }
+.vol-select { font-size: 12px; padding: 4px 10px; border-radius: 20px; border: 1px solid #ddd; background: #fff; color: #666; cursor: pointer; outline: none; }
 .section-title { font-size: 12px; font-weight: 600; color: #888; margin-bottom: 0.5rem; letter-spacing: 0.04em; text-transform: uppercase; }
 .stock-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.5rem; }
 .stock-card { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 0.9rem 1rem; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; }
@@ -73,7 +76,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
   </div>
   <div class="market-bar">
     <div class="mcard"><div class="label">篩選條件</div><div class="val" style="font-size:12px;">股價 ≤ $200</div></div>
-    <div class="mcard"><div class="label">日均量門檻</div><div class="val" style="font-size:12px;">≥ 2,000 張</div></div>
+    <div class="mcard"><div class="label">日均量門檻</div><div class="val" id="vol-threshold-display" style="font-size:12px;">≥ 2,000 張</div></div>
     <div class="mcard"><div class="label">一張成本上限</div><div class="val" style="font-size:12px;">≤ 20 萬</div></div>
     <div class="mcard"><div class="label">候選股數</div><div class="val" id="stock-count">—</div></div>
   </div>
@@ -83,6 +86,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
     <button class="filter-btn" onclick="setFilter('volume',this)">高量</button>
     <button class="filter-btn" onclick="setFilter('kd',this)">KD 向上</button>
     <button class="filter-btn" onclick="setFilter('score',this)">推薦排序</button>
+    
+    <span style="color: #ccc; margin: 0 4px;">|</span>
+    
+    <button id="exclude-finance-btn" class="toggle-btn active" onclick="toggleFinance(this)">❌ 排除金融股</button>
+    <select id="vol-select" class="vol-select" onchange="changeVolThreshold(this.value)">
+      <option value="2000">日均量 ≥ 2,000張</option>
+      <option value="1000">日均量 ≥ 1,000張 (擴展)</option>
+      <option value="500">日均量 ≥ 500張 (極限)</option>
+    </select>
   </div>
   <div class="section-title">候選股票</div>
   <div class="stock-list" id="stock-list"><div class="loading">資料載入中...</div></div>
@@ -106,6 +118,10 @@ let activeIdx = 0;
 let activeFilter = 'all';
 let volChartInst = null;
 
+// 🔥 新增：實戰篩選狀態
+let excludeFinance = true; 
+let minVolumeThreshold = 2000;
+
 function scoreColor(n) {
   return n >= 70 ? '#1D9E75' : n >= 50 ? '#BA7517' : '#D85A30';
 }
@@ -124,28 +140,75 @@ function setFilter(f, btn) {
   activeFilter = f;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('on'));
   btn.classList.add('on');
+  activeIdx = 0; // 切換 Tab 時重設選中項，避免 index 錯位
   renderList();
+  renderDetail();
+  updateChart();
+}
+
+// 🔥 新增：切換金融股排除
+function toggleFinance(btn) {
+  excludeFinance = !excludeFinance;
+  if (excludeFinance) {
+    btn.classList.add('active');
+    btn.textContent = '❌ 排除金融股';
+  } else {
+    btn.classList.remove('active');
+    btn.textContent = '顯示金融股';
+  }
+  activeIdx = 0;
+  renderList();
+  renderDetail();
+  updateChart();
+}
+
+// 🔥 新增：動態改變日均量門檻
+function changeVolThreshold(val) {
+  minVolumeThreshold = parseInt(val, 10);
+  document.getElementById('vol-threshold-display').textContent = `≥ ${minVolumeThreshold.toLocaleString()} 張`;
+  activeIdx = 0;
+  renderList();
+  renderDetail();
+  updateChart();
 }
 
 function filtered() {
   let data = [...stocks];
+  
+  // 核心動態過濾一：排除金融股（台股金融股代碼皆為 28 開頭）
+  if (excludeFinance) {
+    data = data.filter(s => !s.code.toString().startsWith('28'));
+  }
+  
+  // 核心動態過濾二：放寬日均量門檻
+  data = data.filter(s => s.avgVol >= minVolumeThreshold);
+
+  // 原本的分類按鈕篩選
   if (activeFilter === 'hot') data = data.filter(s => s.badge === 'hot');
   else if (activeFilter === 'volume') data = data.filter(s => s.vol > s.avgVol);
   else if (activeFilter === 'kd') data = data.filter(s => s.kdStatus === 'up' || s.kdStatus === 'cross');
   else if (activeFilter === 'score') data = [...data].sort((a, b) => b.score - a.score);
+  
+  // 動態更新看板上的即時候選股數
+  document.getElementById('stock-count').textContent = data.length + ' 支';
+  
   return data;
 }
 
 function renderList() {
   const list = document.getElementById('stock-list');
   const data = filtered();
-  if (!data.length) { list.innerHTML = '<div class="empty">目前篩選條件下無符合股票</div>'; return; }
+  
+  if (!data.length) { 
+    list.innerHTML = '<div class="empty">目前篩選條件下無符合股票</div>'; 
+    return; 
+  }
+  
   list.innerHTML = '';
-  data.forEach(s => {
-    const ri = stocks.indexOf(s);
+  data.forEach((s, currentFilteredIdx) => {
     const kdColor = s.kdStatus === 'up' ? 'kd-up' : s.kdStatus === 'cross' ? 'kd-cross' : 'kd-dn';
     const card = document.createElement('div');
-    card.className = 'stock-card' + (ri === activeIdx ? ' active' : '');
+    card.className = 'stock-card' + (currentFilteredIdx === activeIdx ? ' active' : '');
     card.innerHTML = `
       <div class="sc-header">
         <span class="sc-code">${s.code}</span>
@@ -166,18 +229,28 @@ function renderList() {
         <div class="sc-metric"><div class="ml">VR 指標</div><div class="mv ${s.vr > 100 ? 'kd-up' : 'kd-dn'}">${s.vr}</div></div>
         <div class="sc-metric"><div class="ml">KD 狀態</div><div class="mv ${kdColor}">${s.kdLabel}</div></div>
       </div>`;
-    card.onclick = () => { activeIdx = ri; renderList(); renderDetail(); updateChart(); };
+    card.onclick = () => { activeIdx = currentFilteredIdx; renderList(); renderDetail(); updateChart(); };
     list.appendChild(card);
   });
 }
 
 function renderDetail() {
-  const s = stocks[activeIdx];
-  if (!s) return;
+  const data = filtered();
+  const s = data[activeIdx]; // 從篩選後的陣列拿取對應選中項
+  
+  if (!s) {
+    document.getElementById('dp-title').textContent = '無符合股票';
+    document.getElementById('dp-sub').textContent = '';
+    document.getElementById('score-breakdown').innerHTML = '';
+    document.getElementById('dp-reason').textContent = '請調整上方的篩選條件或日均量門檻。';
+    document.getElementById('dp-tags').innerHTML = '';
+    return;
+  }
+  
   const bd = calcScoreBreakdown(s);
-  document.getElementById('dp-title').textContent = `${s.code} ${s.name}　推薦指數 ${s.score}`;
+  document.getElementById('dp-title').textContent = `${s.code} ${s.name} 推薦指數 ${s.score}`;
   document.getElementById('dp-title').style.color = scoreColor(s.score);
-  document.getElementById('dp-sub').textContent = `外資: ${s.foreignBuy > 0 ? '+' : ''}${s.foreignBuy.toLocaleString()} 張　一張成本: $${(s.price * 1000).toLocaleString()}`;
+  document.getElementById('dp-sub').textContent = `外資: ${s.foreignBuy > 0 ? '+' : ''}${s.foreignBuy.toLocaleString()} 張 一張成本: $${(s.price * 1000).toLocaleString()}`;
   document.getElementById('score-breakdown').innerHTML = [
     { label: '量能比', weight: '30%', val: bd.volScore },
     { label: 'ATR 波動', weight: '25%', val: bd.atrScore },
@@ -196,8 +269,12 @@ function renderDetail() {
 }
 
 function updateChart() {
-  const s = stocks[activeIdx];
-  if (!s) return;
+  const data = filtered();
+  const s = data[activeIdx];
+  if (!s) {
+    if (volChartInst) volChartInst.destroy();
+    return;
+  }
   if (volChartInst) volChartInst.destroy();
   volChartInst = new Chart(document.getElementById('volChart'), {
     type: 'bar',
@@ -225,9 +302,15 @@ async function loadData() {
     const data = await res.json();
     stocks = data.stocks || [];
     document.getElementById('update-time').textContent = '更新時間：' + (data.updated || '—');
-    document.getElementById('stock-count').textContent = stocks.length + ' 支';
-    if (stocks.length > 0) { activeIdx = 0; renderList(); renderDetail(); updateChart(); }
-    else { document.getElementById('stock-list').innerHTML = '<div class="empty">今日無符合條件的候選股票</div>'; }
+    
+    if (stocks.length > 0) { 
+      activeIdx = 0; 
+      renderList(); 
+      renderDetail(); 
+      updateChart(); 
+    } else { 
+      document.getElementById('stock-list').innerHTML = '<div class="empty">今日無符合條件的候選股票</div>'; 
+    }
   } catch (e) {
     document.getElementById('stock-list').innerHTML = '<div class="empty">資料載入失敗，請稍後再試</div>';
   }
