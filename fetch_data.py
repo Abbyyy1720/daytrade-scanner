@@ -16,8 +16,8 @@ def fetch_top_volume_stocks(limit=60):
         
         dynamic_stocks = []
         for row in data.get("data", [])[:limit]:
-            code = row[1].strip()     # 股票代號 (例如: 2330)
-            name = row[2].strip()     # 股票名稱 (例如: 台積電)
+            code = row[1].strip()     # 股票代號 (例如: 2303)
+            name = row[2].strip()     # 股票名稱 (例如: 聯電)
             
             if len(code) == 4 and not code.startswith('00'):
                 dynamic_stocks.append({
@@ -29,15 +29,13 @@ def fetch_top_volume_stocks(limit=60):
         return dynamic_stocks
     except Exception as e:
         print(f"自動抓取熱門股失敗: {e}")
-        return [{"code": "2317.TW", "name": "鴻海", "stock_id": "2317"}]
+        return [{"code": "2303.TW", "name": "聯電", "stock_id": "2303"}]
 
 def fetch_all_foreign():
     """
-    終極正解版：完美對齊證交所回傳格式
+    終極正解版：完美對齊證交所實際回傳格式
     row[1] 是代號，row[2] 是名稱，row[7] 是外資買賣超股數
     """
-    import datetime
-    
     for i in range(5):
         target_date = (datetime.datetime.now() - datetime.timedelta(days=i)).strftime("%Y%m%d")
         url = f"https://www.twse.com.tw/rwd/zh/fund/TWT38U?date={target_date}&response=json"
@@ -57,7 +55,7 @@ def fetch_all_foreign():
                     if len(row) < 8: # 確保欄位長度足夠拿到 row[7]
                         continue
                         
-                    # 🎯 根據實測 Log 精準修正索引與去除隱含空格
+                    # 🎯 根據實測 Log 精準修正：row[1] 是代號，row[2] 是名稱
                     code = row[1].strip() 
                     name = row[2].strip() 
                     
@@ -71,7 +69,6 @@ def fetch_all_foreign():
                     except Exception as e:
                         continue
                         
-                print(f"檢查測試 - 聯電(2303)是否在代號表中: {'2303' in result_by_id}")
                 print(f"🎉 成功抓到 {target_date} 的外資資料，共 {len(result_by_id)} 筆！")
                 return {"id_map": result_by_id, "name_map": result_by_name}
             else:
@@ -114,7 +111,7 @@ def calc_score(vol_ratio, atr, price, foreign_buy, vr, kd_status):
     total = vol_score*0.30 + atr_score*0.25 + foreign_score*0.20 + vr_score*0.15 + kd_score*0.10
     return round(total)
 
-# 執行核心流程
+# ==================== 執行核心流程 ====================
 STOCKS = fetch_top_volume_stocks(limit=60)
 foreign_data = fetch_all_foreign()
 results = []
@@ -143,7 +140,7 @@ for s in STOCKS:
         vol5 = [int(v/1000) for v in hist["Volume"].tail(5).tolist()]
         chg = round((hist["Close"].iloc[-1] - hist["Close"].iloc[-2]) / hist["Close"].iloc[-2] * 100, 1)
 
-        # 🎯 直覺流對應機制：精準去抓我們校正欄位後的 id_map 與 name_map
+        # 🎯 直覺流對應機制：精準去抓剛才下載好的 id_map 與 name_map，消滅變數名稱對不上的問題
         foreign_buy = 0
         try:
             if "id_map" in foreign_data:
@@ -160,6 +157,7 @@ for s in STOCKS:
             print(f"比對 {s['name']} 外資資料時發生輕微錯誤: {f_err}")
             foreign_buy = 0
 
+        # 📢 偵錯明細：會在 Actions 裡印出每一隻個股最終匹配到的張數
         print(f"👉 {s['name']}({s['stock_id']}) 最終成功匹配外資買賣超: {foreign_buy} 張")
 
         if kd_k > kd_d + 3:
