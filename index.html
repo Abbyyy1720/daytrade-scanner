@@ -82,25 +82,26 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
     <span id="update-time">載入中...</span>
   </div>
   <div class="market-bar">
-    <div class="mcard"><div class="label">篩選條件</div><div class="val" style="font-size:12px;">股價 ≤ $100</div></div>
+    <div class="mcard"><div class="label">篩選條件</div><div class="val" style="font-size:12px;">股價 ≤ $200</div></div>
     <div class="mcard"><div class="label">日均量門檻</div><div class="val" id="vol-threshold-display" style="font-size:12px;">≥ 2,000 張</div></div>
-    <div class="mcard"><div class="label">一張成本上限</div><div class="val" style="font-size:12px;">≤ 10 萬</div></div>
+    <div class="mcard"><div class="label">一張成本上限</div><div class="val" style="font-size:12px;">≤ 20 萬</div></div>
     <div class="mcard"><div class="label">候選股數</div><div class="val" id="stock-count">—</div></div>
   </div>
   <div class="filter-row">
-    <button class="filter-btn on" onclick="setFilter('all',this)">全部</button>
-    <button class="filter-btn" onclick="setFilter('hot',this)">熱門</button>
-    <button class="filter-btn" onclick="setFilter('volume',this)">高量</button>
-    <button class="filter-btn" onclick="setFilter('kd',this)">KD 向上</button>
-    <button class="filter-btn" onclick="setFilter('score',this)">推薦排序</button>
-    
-    <span style="color: #ccc; margin: 0 4px;">|</span>
-    
-    <button id="exclude-finance-btn" class="toggle-btn active" onclick="toggleFinance(this)">❌ 排除金融股</button>
+    <select id="sort-select" class="vol-select" onchange="changeSort(this.value)">
+      <option value="score_desc">推薦指數：高到低</option>
+      <option value="score_asc">推薦指數：低到高</option>
+      <option value="vol_desc">成交量：多到少</option>
+      <option value="vol_asc">成交量：少到多</option>
+      <option value="chg_desc">漲幅：高到低</option>
+      <option value="chg_asc">漲幅：低到高</option>
+      <option value="avgvol_desc">五日均量：多到少</option>
+      <option value="avgvol_asc">五日均量：少到多</option>
+    </select>
     <select id="vol-select" class="vol-select" onchange="changeVolThreshold(this.value)">
       <option value="2000">日均量 ≥ 2,000張</option>
-      <option value="1000">日均量 ≥ 1,000張 (擴展)</option>
-      <option value="500">日均量 ≥ 500張 (極限)</option>
+      <option value="1000">日均量 ≥ 1,000張</option>
+      <option value="500">日均量 ≥ 500張</option>
     </select>
   </div>
   
@@ -116,9 +117,8 @@ const DATA_URL = `https://raw.githubusercontent.com/${REPO}/main/data.json`;
 
 let stocks = [];
 let activeIdx = 0;
-let activeFilter = 'all';
+let sortMode = 'score_desc';
 let volChartInst = null;
-let excludeFinance = true; 
 let minVolumeThreshold = 2000;
 
 function scoreColor(n) {
@@ -136,23 +136,8 @@ function calcScoreBreakdown(s) {
   return { volScore, atrScore, fScore, vrScore, kdScore };
 }
 
-function setFilter(f, btn) {
-  activeFilter = f;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('on'));
-  btn.classList.add('on');
-  activeIdx = 0; 
-  renderList();
-}
-
-function toggleFinance(btn) {
-  excludeFinance = !excludeFinance;
-  if (excludeFinance) {
-    btn.classList.add('active');
-    btn.textContent = '❌ 排除金融股';
-  } else {
-    btn.classList.remove('active');
-    btn.textContent = '顯示金融股';
-  }
+function changeSort(val) {
+  sortMode = val;
   activeIdx = 0;
   renderList();
 }
@@ -166,16 +151,19 @@ function changeVolThreshold(val) {
 
 function filtered() {
   let data = [...stocks];
-  if (excludeFinance) {
-    data = data.filter(s => !s.isFinance);
-  }
   data = data.filter(s => s.avgVol >= minVolumeThreshold);
 
-  if (activeFilter === 'hot') data = data.filter(s => s.badge === 'hot');
-  else if (activeFilter === 'volume') data = data.filter(s => s.vol > s.avgVol);
-  else if (activeFilter === 'kd') data = data.filter(s => s.kdStatus === 'up' || s.kdStatus === 'cross');
-  else if (activeFilter === 'score') data = [...data].sort((a, b) => b.score - a.score);
-  
+  const chgVal = s => parseFloat(s.chg.replace('%','').replace('+',''));
+
+  if (sortMode === 'score_desc') data.sort((a,b) => b.score - a.score);
+  else if (sortMode === 'score_asc') data.sort((a,b) => a.score - b.score);
+  else if (sortMode === 'vol_desc') data.sort((a,b) => b.vol - a.vol);
+  else if (sortMode === 'vol_asc') data.sort((a,b) => a.vol - b.vol);
+  else if (sortMode === 'chg_desc') data.sort((a,b) => chgVal(b) - chgVal(a));
+  else if (sortMode === 'chg_asc') data.sort((a,b) => chgVal(a) - chgVal(b));
+  else if (sortMode === 'avgvol_desc') data.sort((a,b) => b.avgVol - a.avgVol);
+  else if (sortMode === 'avgvol_asc') data.sort((a,b) => a.avgVol - b.avgVol);
+
   document.getElementById('stock-count').textContent = data.length + ' 支';
   return data;
 }
