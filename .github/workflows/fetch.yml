@@ -2,7 +2,7 @@ name: 每日盤後抓股票資料
 
 on:
   schedule:
-    - cron: '45 6 * * 1-5'  # 台灣時間 14:45，週一到週五
+    - cron: '0 9 * * 1-5'  # 台灣時間 14:45，週一到週五
   workflow_dispatch:          # 允許手動觸發
 
 jobs:
