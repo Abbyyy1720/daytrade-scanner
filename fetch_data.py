@@ -4,32 +4,60 @@ import json
 import requests
 import datetime
 
-def fetch_top_volume_stocks(limit=60):
-    """
-    自動海選成交量前 limit 名的股票
-    """
+FINANCE_CODES = {'27', '28', '29', '25'}
+
+def fetch_top_volume_stocks(limit=100):
     print("正在從證交所獲取今日熱門成交量排行...")
     try:
+        # 用成交量排行（取前100名）
         url = "https://www.twse.com.tw/rwd/zh/afterTrading/MI_INDEX20?response=json"
         res = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
         data = res.json()
-        
         dynamic_stocks = []
         for row in data.get("data", [])[:limit]:
-            code = str(row[1]).strip()     # 確保是純字串去空格
-            name = str(row[2]).strip()     # 確保是純字串去空格
-            
-            if len(code) == 4 and not code.startswith('00'):
+            code = str(row[1]).strip()
+            name = str(row[2]).strip()
+            if len(code) == 4 and code.isdigit():
                 dynamic_stocks.append({
                     "code": f"{code}.TW",
                     "name": name,
-                    "stock_id": code  
+                    "stock_id": code
                 })
-        print(f"成功自動鎖定今日最熱門的 {len(dynamic_stocks)} 檔台股個股！")
+        print(f"從MI_INDEX20 抓到 {len(dynamic_stocks)} 檔")
+
+        # 補充抓每日收盤行情的所有股票（量大的）
+        url2 = "https://www.twse.com.tw/rwd/zh/afterTrading/STOCK_DAY_ALL?response=json"
+        res2 = requests.get(url2, timeout=15, headers={"User-Agent": "Mozilla/5.0"})
+        data2 = res2.json()
+        existing_codes = {s["stock_id"] for s in dynamic_stocks}
+        extra = []
+        for row in data2.get("data", []):
+            if len(row) < 9:
+                continue
+            code = str(row[0]).strip()
+            name = str(row[1]).strip()
+            if len(code) == 4 and code.isdigit() and code not in existing_codes:
+                try:
+                    vol = int(str(row[2]).replace(",", ""))
+                    if vol > 5000000:  # 成交量超過500萬股（約5000張）才納入
+                        extra.append({
+                            "code": f"{code}.TW",
+                            "name": name,
+                            "stock_id": code
+                        })
+                        existing_codes.add(code)
+                except:
+                    continue
+        dynamic_stocks.extend(extra)
+        print(f"合計鎖定 {len(dynamic_stocks)} 檔候選個股")
         return dynamic_stocks
     except Exception as e:
         print(f"自動抓取熱門股失敗: {e}")
-        return [{"code": "2303.TW", "name": "聯電", "stock_id": "2303"}]
+        return [
+            {"code": "2303.TW", "name": "聯電", "stock_id": "2303"},
+            {"code": "2317.TW", "name": "鴻海", "stock_id": "2317"},
+            {"code": "2409.TW", "name": "友達", "stock_id": "2409"},
+        ]
 
 def fetch_all_foreign():
     for i in range(5):
@@ -43,17 +71,23 @@ def fetch_all_foreign():
                 result_by_id = {}
                 result_by_name = {}
                 for row in data.get("data", []):
-                    if len(row) < 5:
+                    if len(row) < 8:
                         continue
                     code = str(row[0]).strip()
                     name = str(row[1]).strip()
                     try:
-                        net = int(str(row[4]).replace(",", "").replace("+", ""))
-                        result_by_id[code] = net // 1000
-                        result_by_name[name] = net // 1000
+                        # row[4] 是外資買超股數（股），除以1000換算成張
+                        net_str = str(row[4]).replace(",", "").replace("+", "").strip()
+                        net_shares = int(net_str)
+                        net_lots = net_shares // 1000
+                        result_by_id[code] = net_lots
+                        result_by_name[name] = net_lots
                     except:
                         continue
-                print(f"成功抓到 {target_date} 個股外資資料，共 {len(result_by_id)} 筆")
+                print(f"成功抓到 {target_date} 外資資料，共 {len(result_by_id)} 筆")
+                # 印出前5筆確認格式正確
+                for k, v in list(result_by_id.items())[:5]:
+                    print(f"  範例: {k} = {v} 張")
                 return {"id_map": result_by_id, "name_map": result_by_name}
             else:
                 print(f"日期 {target_date} 無資料，嘗試前一天...")
@@ -64,7 +98,9 @@ def fetch_all_foreign():
 def calc_kd(high, low, close, period=9):
     lowest_low = low.rolling(window=period).min()
     highest_high = high.rolling(window=period).max()
-    rsv = (close - lowest_low) / (highest_high - lowest_low) * 100
+    denom = highest_high - lowest_low
+    denom = denom.replace(0, 1)
+    rsv = (close - lowest_low) / denom * 100
     k = rsv.ewm(com=2).mean()
     d = k.ewm(com=2).mean()
     return round(k.iloc[-1], 1), round(d.iloc[-1], 1)
@@ -73,6 +109,7 @@ def calc_vr(close, volume, period=26):
     price_change = close.diff()
     up_vol = volume.where(price_change > 0, 0).rolling(period).sum()
     dn_vol = volume.where(price_change < 0, 0).rolling(period).sum()
+    dn_vol = dn_vol.replace(0, 1)
     vr = (up_vol / dn_vol * 100).iloc[-1]
     return round(vr, 1) if not pd.isna(vr) else 100.0
 
@@ -82,11 +119,12 @@ def calc_atr(high, low, close, period=14):
         (high - close.shift()).abs(),
         (low - close.shift()).abs()
     ], axis=1).max(axis=1)
-    return round(tr.rolling(period).mean().iloc[-1], 1)
+    val = tr.rolling(period).mean().iloc[-1]
+    return round(val, 1) if not pd.isna(val) else 0.0
 
 def calc_score(vol_ratio, atr, price, foreign_buy, vr, kd_status):
     vol_score = min(vol_ratio / 2, 1) * 100
-    atr_percent = (atr / price) * 100
+    atr_percent = (atr / price) * 100 if price > 0 else 0
     atr_score = min(atr_percent / 3.5, 1) * 100
     foreign_score = 100 if foreign_buy > 3000 else 75 if foreign_buy > 1000 else 50 if foreign_buy > 0 else 20
     vr_score = 100 if vr > 130 else 70 if vr > 100 else 40 if vr > 80 else 20
@@ -94,8 +132,12 @@ def calc_score(vol_ratio, atr, price, foreign_buy, vr, kd_status):
     total = vol_score*0.30 + atr_score*0.25 + foreign_score*0.20 + vr_score*0.15 + kd_score*0.10
     return round(total)
 
-# ==================== 執行核心流程 ====================
-STOCKS = fetch_top_volume_stocks(limit=60)
+def is_finance(code):
+    prefix = code[:2]
+    return prefix in FINANCE_CODES
+
+# ==================== 主流程 ====================
+STOCKS = fetch_top_volume_stocks(limit=100)
 foreign_data = fetch_all_foreign()
 results = []
 
@@ -115,7 +157,8 @@ for s in STOCKS:
 
         vol_today = int(hist["Volume"].iloc[-1] / 1000)
         vol_5avg = int(hist["Volume"].tail(5).mean() / 1000)
-        
+
+        # 後端只過濾最低門檻500張，讓前端做動態篩選
         if vol_5avg < 500:
             continue
 
@@ -126,31 +169,22 @@ for s in STOCKS:
         vol5 = [int(v/1000) for v in hist["Volume"].tail(5).tolist()]
         chg = round((hist["Close"].iloc[-1] - hist["Close"].iloc[-2]) / hist["Close"].iloc[-2] * 100, 1)
 
-        # 🎯 終極暴力清洗配對邏輯
+        # 外資配對：先用代號，再用名稱
+        pure_id = s["stock_id"]
+        stock_name = s["name"]
         foreign_buy = 0
-        try:
-            # 確保提取出來的比較基准絕對沒有任何前後空格
-            pure_id = str(s.get("stock_id", s["code"].split('.')[0])).strip()
-            stock_name = str(s["name"]).strip()
-            
-            # 1. 數位代號精準碰撞
-            if pure_id in id_map:
-                foreign_buy = id_map[pure_id]
-            # 2. 股票名稱精準碰撞
-            elif stock_name in name_map:
-                foreign_buy = name_map[stock_name]
-            # 3. 萬無一失的雙向模糊包含比對
-            else:
-                for k, v in name_map.items():
-                    clean_k = str(k).strip()
-                    if stock_name in clean_k or clean_k in stock_name:
-                        foreign_buy = v
-                        break
-        except Exception as f_err:
-            foreign_buy = 0
 
-        # 📢 Log 明細監控：這一次絕對要看到正確張數印出來
-        print(f"👉 最終匹配結果 - {s['name']}({pure_id}): {foreign_buy} 張")
+        if pure_id in id_map:
+            foreign_buy = id_map[pure_id]
+        elif stock_name in name_map:
+            foreign_buy = name_map[stock_name]
+        else:
+            for k, v in name_map.items():
+                if stock_name in k or k in stock_name:
+                    foreign_buy = v
+                    break
+
+        print(f"{s['name']}({pure_id}): 外資={foreign_buy}張 價={price} 均量={vol_5avg}")
 
         if kd_k > kd_d + 3:
             kd_status = "up"
@@ -164,9 +198,21 @@ for s in STOCKS:
 
         score = calc_score(vol_ratio, atr, price, foreign_buy, vr, kd_status)
 
+        # 標籤邏輯
+        tags = []
+        if vol_ratio > 1.3: tags.append("量能放大")
+        if kd_status == "up": tags.append("KD 向上")
+        if kd_status == "cross": tags.append("KD 交叉")
+        if foreign_buy > 1000: tags.append("外資大買")
+        elif foreign_buy > 0: tags.append("外資買超")
+        elif foreign_buy < 0: tags.append("外資賣超")
+        if vr > 130: tags.append("VR 強勢")
+        if is_finance(pure_id): tags.append("金融股")
+        tags.append("可當沖")
+
         results.append({
-            "code": s["code"].replace(".TW", ""),
-            "name": s["name"],
+            "code": pure_id,
+            "name": stock_name,
             "price": price,
             "chg": f"+{chg}%" if chg >= 0 else f"{chg}%",
             "vol": vol_today,
@@ -180,14 +226,15 @@ for s in STOCKS:
             "foreignBuy": foreign_buy,
             "vol5": vol5,
             "score": score,
-            "badge": "hot" if score >= 65 else "watch",
-            "badgeLabel": "熱門" if score >= 65 else "觀察",
-            "tags": [],
-            "reason": "動態爆量股追蹤中。"
+            "badge": "hot" if score >= 70 else "watch",
+            "badgeLabel": "熱門" if score >= 70 else "觀察",
+            "isFinance": is_finance(pure_id),
+            "tags": tags,
+            "reason": ""
         })
 
     except Exception as e:
-        print(f"Error fetching {s['code']}: {e}")
+        print(f"Error {s['code']}: {e}")
 
 results.sort(key=lambda x: x["score"], reverse=True)
 
@@ -199,4 +246,4 @@ output = {
 with open("data.json", "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=2)
 
-print(f"優化完成，共 {len(results)} 檔熱門爆量股成功寫入！")
+print(f"\n完成，共 {len(results)} 檔寫入 data.json")
