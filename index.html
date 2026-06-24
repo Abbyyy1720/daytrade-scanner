@@ -4,62 +4,70 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>當沖選股 Dashboard</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; padding: 1rem; }
-.container { max-width: 920px; margin: 0 auto; }
+.container { max-width: 900px; margin: 0 auto; }
 .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #e0e0e0; margin-bottom: 1rem; }
-.top-bar h1 { font-size: 16px; font-weight: 700; }
+.top-bar h1 { font-size: 16px; font-weight: 600; }
 .top-bar span { font-size: 12px; color: #888; }
 .market-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 1rem; }
 .mcard { background: #fff; border-radius: 8px; padding: 0.65rem 0.85rem; border: 1px solid #eee; }
 .mcard .label { font-size: 11px; color: #888; margin-bottom: 2px; }
-.mcard .val { font-size: 14px; font-weight: 700; }
-.controls { display: flex; gap: 8px; margin-bottom: 0.75rem; flex-wrap: wrap; align-items: center; }
-.filter-btn { font-size: 12px; padding: 5px 14px; border-radius: 20px; border: 1px solid #ddd; background: #fff; color: #555; cursor: pointer; transition: all 0.15s; }
-.filter-btn:hover { border-color: #aaa; }
+.mcard .val { font-size: 14px; font-weight: 600; }
+.filter-row { display: flex; gap: 8px; margin-bottom: 0.75rem; flex-wrap: wrap; align-items: center; }
+.filter-btn { font-size: 12px; padding: 4px 14px; border-radius: 20px; border: 1px solid #ddd; background: #fff; color: #666; cursor: pointer; }
 .filter-btn.on { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
-.divider { color: #ddd; }
-.toggle-btn { font-size: 12px; padding: 5px 14px; border-radius: 20px; border: 1.5px solid #ddd; background: #fff; color: #888; cursor: pointer; transition: all 0.15s; }
-.toggle-btn.on { background: #faece7; color: #993C1D; border-color: #D85A30; font-weight: 600; }
-.vol-select { font-size: 12px; padding: 5px 10px; border-radius: 20px; border: 1px solid #ddd; background: #fff; color: #555; cursor: pointer; outline: none; }
-.section-title { font-size: 11px; font-weight: 700; color: #aaa; margin-bottom: 0.5rem; letter-spacing: 0.05em; text-transform: uppercase; }
-.stock-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.5rem; }
-.stock-card { background: #fff; border: 1px solid #eee; border-radius: 12px; overflow: hidden; cursor: pointer; transition: border-color 0.15s; }
-.stock-card:hover { border-color: #ccc; }
-.stock-card.active { border: 2px solid #378ADD; }
-.sc-main { padding: 0.85rem 1rem; }
+.toggle-btn { font-size: 12px; padding: 4px 14px; border-radius: 20px; border: 1px solid #ddd; background: #fff; color: #d85a30; cursor: pointer; font-weight: 600; }
+.toggle-btn.active { background: #faece7; color: #d85a30; border-color: #d85a30; }
+.vol-select { font-size: 12px; padding: 4px 10px; border-radius: 20px; border: 1px solid #ddd; background: #fff; color: #666; cursor: pointer; outline: none; }
+.section-title { font-size: 12px; font-weight: 600; color: #888; margin-bottom: 0.5rem; letter-spacing: 0.04em; text-transform: uppercase; }
+
+/* 🚀 股票卡片主體優化 */
+.stock-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.5rem; }
+.stock-card { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 0.9rem 1rem; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; overflow: hidden; }
+.stock-card:hover { border-color: #bbb; }
+.stock-card.active { border: 2px solid #378ADD; cursor: default; }
 .sc-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
 .sc-code { font-size: 15px; font-weight: 700; }
 .sc-name { font-size: 12px; color: #888; }
-.badge { font-size: 11px; padding: 2px 9px; border-radius: 20px; font-weight: 600; }
+.badge { font-size: 11px; padding: 2px 8px; border-radius: 20px; }
 .badge-hot { background: #FAECE7; color: #993C1D; }
-.badge-watch { background: #E8F0FE; color: #1a56db; }
+.badge-watch { background: #E6F1FB; color: #185FA5; }
 .up { color: #D85A30; } .dn { color: #1D9E75; }
 .score-wrap { margin-left: auto; display: flex; align-items: center; gap: 6px; }
-.score-bar { width: 72px; height: 5px; background: #eee; border-radius: 3px; overflow: hidden; }
+.score-bar { width: 72px; height: 6px; background: #eee; border-radius: 3px; overflow: hidden; }
 .score-fill { height: 100%; border-radius: 3px; }
-.score-num { font-size: 14px; font-weight: 700; min-width: 28px; text-align: right; }
-.sc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
-.sc-metric { background: #f8f8f8; border-radius: 7px; padding: 5px 8px; }
-.sc-metric .ml { font-size: 10px; color: #bbb; margin-bottom: 1px; }
-.sc-metric .mv { font-size: 12px; font-weight: 700; color: #333; }
-.kd-up { color: #D85A30 !important; } .kd-dn { color: #1D9E75 !important; } .kd-cross { color: #BA7517 !important; }
-.sc-detail { display: none; padding: 0 1rem 1rem; border-top: 1px dashed #f0f0f0; }
-.stock-card.active .sc-detail { display: block; }
-.detail-meta { font-size: 12px; color: #555; background: #f0f7fd; border-radius: 6px; padding: 5px 10px; margin-bottom: 8px; display: flex; gap: 16px; flex-wrap: wrap; margin-top: 10px; }
-.score-breakdown { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-bottom: 8px; }
-.sb-item { background: #fafafa; border: 1px solid #f0f0f0; border-radius: 7px; padding: 5px 8px; }
-.sb-label { font-size: 10px; color: #aaa; margin-bottom: 2px; }
-.sb-val { font-size: 12px; font-weight: 700; }
-.dp-reason { font-size: 12px; line-height: 1.6; border-left: 3px solid #378ADD; padding-left: 10px; color: #444; margin-bottom: 8px; }
-.dp-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
-.tag { font-size: 11px; padding: 2px 9px; border-radius: 20px; background: #f5f5f5; color: #666; border: 1px solid #eee; }
-.chart-wrap { height: 140px; background: #fafafa; border-radius: 8px; padding: 8px; }
-.empty { padding: 2.5rem; text-align: center; color: #aaa; font-size: 13px; }
-.loading { padding: 3rem; text-align: center; color: #aaa; font-size: 14px; }
-.disclaimer { font-size: 11px; color: #ccc; padding-top: 0.75rem; border-top: 1px solid #eee; line-height: 1.7; }
+.score-num { font-size: 13px; font-weight: 700; min-width: 28px; text-align: right; }
+.sc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.sc-metric { background: #f8f8f8; border-radius: 8px; padding: 5px 8px; }
+.sc-metric .ml { font-size: 10px; color: #999; margin-bottom: 1px; }
+.sc-metric .mv { font-size: 13px; font-weight: 600; }
+.kd-up { color: #D85A30; } .kd-dn { color: #1D9E75; } .kd-cross { color: #BA7517; }
+
+/* 🚀 下拉式內嵌面板樣式 */
+.sc-dropdown-panel { display: none; margin-top: 12px; padding-top: 12px; border-top: 1px dashed #eee; cursor: default; }
+.stock-card.active .sc-dropdown-panel { display: block; animation: slideDown 0.2s ease-out; }
+.dp-sub { font-size: 12px; color: #666; font-weight: 600; margin-bottom: 8px; background: #f0f7fd; padding: 4px 8px; border-radius: 4px; display: inline-block; }
+.score-breakdown { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 10px; }
+.sb-item { background: #fdfdfd; border: 1px solid #f0f0f0; border-radius: 8px; padding: 6px 8px; }
+.sb-label { font-size: 10px; color: #999; margin-bottom: 2px; }
+.sb-val { font-size: 13px; font-weight: 600; }
+.sb-weight { font-size: 10px; color: #bbb; }
+.dp-reason { font-size: 13px; line-height: 1.6; margin-bottom: 12px; border-left: 3px solid #378ADD; padding-left: 10px; color: #444; }
+.chart-container { position: relative; height: 150px; margin-top: 8px; background: #fafafa; border-radius: 8px; padding: 8px; }
+
+.empty { padding: 2rem; text-align: center; color: #999; font-size: 13px; }
+.loading { padding: 3rem; text-align: center; color: #999; font-size: 14px; }
+.disclaimer { font-size: 11px; color: #bbb; padding-top: 0.75rem; border-top: 1px solid #eee; line-height: 1.6; }
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @media (max-width: 600px) {
   .market-bar { grid-template-columns: repeat(2, 1fr); }
   .sc-grid { grid-template-columns: repeat(3, 1fr); }
@@ -73,53 +81,55 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
     <h1>📊 當沖候選清單 — 盤後分析</h1>
     <span id="update-time">載入中...</span>
   </div>
-
   <div class="market-bar">
-    <div class="mcard"><div class="label">股價篩選</div><div class="val" style="font-size:12px;">≤ $200 元</div></div>
-    <div class="mcard"><div class="label">日均量門檻</div><div class="val" id="vol-display" style="font-size:12px;">≥ 2,000 張</div></div>
-    <div class="mcard"><div class="label">一張成本</div><div class="val" style="font-size:12px;">≤ 20 萬</div></div>
-    <div class="mcard"><div class="label">符合股數</div><div class="val" id="stock-count">—</div></div>
+    <div class="mcard"><div class="label">篩選條件</div><div class="val" style="font-size:12px;">股價 ≤ $100</div></div>
+    <div class="mcard"><div class="label">日均量門檻</div><div class="val" id="vol-threshold-display" style="font-size:12px;">≥ 2,000 張</div></div>
+    <div class="mcard"><div class="label">一張成本上限</div><div class="val" style="font-size:12px;">≤ 10 萬</div></div>
+    <div class="mcard"><div class="label">候選股數</div><div class="val" id="stock-count">—</div></div>
   </div>
-
-  <div class="controls">
+  <div class="filter-row">
     <button class="filter-btn on" onclick="setFilter('all',this)">全部</button>
     <button class="filter-btn" onclick="setFilter('hot',this)">熱門</button>
-    <button class="filter-btn" onclick="setFilter('watch',this)">觀察</button>
     <button class="filter-btn" onclick="setFilter('volume',this)">高量</button>
     <button class="filter-btn" onclick="setFilter('kd',this)">KD 向上</button>
     <button class="filter-btn" onclick="setFilter('score',this)">推薦排序</button>
-    <span class="divider">|</span>
-    <button id="fin-btn" class="toggle-btn on" onclick="toggleFinance()">排除金融股</button>
-    <select id="vol-select" class="vol-select" onchange="changeVol(this.value)">
-      <option value="2000">日均量 ≥ 2,000 張</option>
-      <option value="1000">日均量 ≥ 1,000 張</option>
-      <option value="500">日均量 ≥ 500 張</option>
+    
+    <span style="color: #ccc; margin: 0 4px;">|</span>
+    
+    <button id="exclude-finance-btn" class="toggle-btn active" onclick="toggleFinance(this)">❌ 排除金融股</button>
+    <select id="vol-select" class="vol-select" onchange="changeVolThreshold(this.value)">
+      <option value="2000">日均量 ≥ 2,000張</option>
+      <option value="1000">日均量 ≥ 1,000張 (擴展)</option>
+      <option value="500">日均量 ≥ 500張 (極限)</option>
     </select>
   </div>
-
-  <div class="section-title">候選股票（點擊展開詳細分析）</div>
+  
+  <div class="section-title">候選股票 (點擊展開詳細指標與趨勢圖)</div>
   <div class="stock-list" id="stock-list"><div class="loading">資料載入中...</div></div>
-  <p class="disclaimer">⚠️ 本工具為輔助參考，不構成投資建議。推薦指數為多項技術指標加權估算，非保證獲利依據。資料每日收盤後自動更新，外資資料來源：台灣證交所 T86。</p>
+  
+  <p class="disclaimer">⚠️ 本工具為輔助參考，不構成投資建議。推薦指數為多項技術指標加權估算，非保證獲利依據。資料每日收盤後自動更新。</p>
 </div>
 
 <script>
 const REPO = 'Abbyyy1720/daytrade-scanner';
 const DATA_URL = `https://raw.githubusercontent.com/${REPO}/main/data.json`;
 
-let allStocks = [];
+let stocks = [];
+let activeIdx = 0;
 let activeFilter = 'all';
-let excludeFinance = true;
-let minVol = 2000;
-let openCode = null;
-let charts = {};
+let volChartInst = null;
+let excludeFinance = true; 
+let minVolumeThreshold = 2000;
 
 function scoreColor(n) {
   return n >= 70 ? '#1D9E75' : n >= 50 ? '#BA7517' : '#D85A30';
 }
 
-function calcBreakdown(s) {
-  const volScore = Math.round(Math.min((s.vol / s.avgVol) / 2, 1) * 100);
-  const atrScore = Math.round(Math.min(((s.atr / s.price) * 100) / 3.5, 1) * 100);
+function calcScoreBreakdown(s) {
+  const volRatio = s.vol / s.avgVol;
+  const volScore = Math.round(Math.min(volRatio / 2, 1) * 100);
+  const atrPercent = (s.atr / s.price) * 100;
+  const atrScore = Math.round(Math.min(atrPercent / 3.5, 1) * 100);
   const fScore = s.foreignBuy > 3000 ? 100 : s.foreignBuy > 1000 ? 75 : s.foreignBuy > 0 ? 50 : 20;
   const vrScore = s.vr > 130 ? 100 : s.vr > 100 ? 70 : s.vr > 80 ? 40 : 20;
   const kdScore = s.kdStatus === 'up' ? 100 : s.kdStatus === 'cross' ? 70 : 20;
@@ -130,145 +140,153 @@ function setFilter(f, btn) {
   activeFilter = f;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('on'));
   btn.classList.add('on');
+  activeIdx = 0; 
   renderList();
 }
 
-function toggleFinance() {
+function toggleFinance(btn) {
   excludeFinance = !excludeFinance;
-  const btn = document.getElementById('fin-btn');
-  btn.classList.toggle('on', excludeFinance);
-  btn.textContent = excludeFinance ? '排除金融股' : '含金融股';
+  if (excludeFinance) {
+    btn.classList.add('active');
+    btn.textContent = '❌ 排除金融股';
+  } else {
+    btn.classList.remove('active');
+    btn.textContent = '顯示金融股';
+  }
+  activeIdx = 0;
   renderList();
 }
 
-function changeVol(val) {
-  minVol = parseInt(val);
-  document.getElementById('vol-display').textContent = `≥ ${minVol.toLocaleString()} 張`;
+function changeVolThreshold(val) {
+  minVolumeThreshold = parseInt(val, 10);
+  document.getElementById('vol-threshold-display').textContent = `≥ ${minVolumeThreshold.toLocaleString()} 張`;
+  activeIdx = 0;
   renderList();
 }
 
-function getFiltered() {
-  let data = [...allStocks];
-  // 日均量篩選
-  data = data.filter(s => s.avgVol >= minVol);
-  // 金融股篩選
-  if (excludeFinance) data = data.filter(s => !s.isFinance);
-  // 分類篩選
+function filtered() {
+  let data = [...stocks];
+  if (excludeFinance) {
+    data = data.filter(s => !s.isFinance);
+  }
+  data = data.filter(s => s.avgVol >= minVolumeThreshold);
+
   if (activeFilter === 'hot') data = data.filter(s => s.badge === 'hot');
-  else if (activeFilter === 'watch') data = data.filter(s => s.badge === 'watch');
-  else if (activeFilter === 'volume') data = data.filter(s => s.vol > s.avgVol * 1.2);
+  else if (activeFilter === 'volume') data = data.filter(s => s.vol > s.avgVol);
   else if (activeFilter === 'kd') data = data.filter(s => s.kdStatus === 'up' || s.kdStatus === 'cross');
   else if (activeFilter === 'score') data = [...data].sort((a, b) => b.score - a.score);
+  
+  document.getElementById('stock-count').textContent = data.length + ' 支';
   return data;
 }
 
 function renderList() {
   const list = document.getElementById('stock-list');
-  const data = getFiltered();
-  document.getElementById('stock-count').textContent = data.length + ' 支';
-
-  if (!data.length) {
-    list.innerHTML = '<div class="empty">目前篩選條件下無符合股票<br><small style="color:#ccc;margin-top:4px;display:block;">試試調低日均量門檻或取消排除金融股</small></div>';
-    return;
+  const data = filtered();
+  
+  if (!data.length) { 
+    list.innerHTML = '<div class="empty">目前篩選條件下無符合股票</div>'; 
+    return; 
   }
-
-  // 清除舊圖表
-  Object.values(charts).forEach(c => c.destroy());
-  charts = {};
-
+  
   list.innerHTML = '';
-  data.forEach(s => {
+  data.forEach((s, currentFilteredIdx) => {
     const kdColor = s.kdStatus === 'up' ? 'kd-up' : s.kdStatus === 'cross' ? 'kd-cross' : 'kd-dn';
-    const bd = calcBreakdown(s);
-    const isOpen = s.code === openCode;
-
+    const bd = calcScoreBreakdown(s);
+    
     const card = document.createElement('div');
-    card.className = 'stock-card' + (isOpen ? ' active' : '');
-    card.dataset.code = s.code;
-
-    const foreignText = s.foreignBuy === 0 ? '0 張（待確認）'
-      : (s.foreignBuy > 0 ? `+${s.foreignBuy.toLocaleString()} 張` : `${s.foreignBuy.toLocaleString()} 張`);
-
+    card.className = 'stock-card' + (currentFilteredIdx === activeIdx ? ' active' : '');
+    
+    // 💡 核心改動：直接將下拉選單結構嵌入至每張卡片內部
     card.innerHTML = `
-      <div class="sc-main">
-        <div class="sc-header">
-          <span class="sc-code">${s.code}</span>
-          <span class="sc-name">${s.name}</span>
-          <span class="badge ${s.badge === 'hot' ? 'badge-hot' : 'badge-watch'}">${s.badgeLabel}</span>
-          <span class="${s.chg.startsWith('+') ? 'up' : 'dn'}" style="font-size:13px;font-weight:700;">${s.chg}</span>
-          <span style="font-size:12px;color:#999;">$${s.price}</span>
-          <div class="score-wrap">
-            <span style="font-size:11px;color:#bbb;">推薦</span>
-            <div class="score-bar"><div class="score-fill" style="width:${s.score}%;background:${scoreColor(s.score)};"></div></div>
-            <span class="score-num" style="color:${scoreColor(s.score)};">${s.score}</span>
+      <div class="sc-header">
+        <span class="sc-code">${s.code}</span>
+        <span class="sc-name">${s.name}</span>
+        <span class="badge ${s.badge === 'hot' ? 'badge-hot' : 'badge-watch'}">${s.badgeLabel}</span>
+        <span class="${s.chg.startsWith('+') ? 'up' : 'dn'}" style="font-size:13px;font-weight:600;">${s.chg}</span>
+        <span style="font-size:12px;color:#888;">$${s.price}</span>
+        <div class="score-wrap">
+          <span style="font-size:11px;color:#999;">推薦指數</span>
+          <div class="score-bar"><div class="score-fill" style="width:${s.score}%;background:${scoreColor(s.score)};"></div></div>
+          <span class="score-num" style="color:${scoreColor(s.score)};">${s.score}</span>
+        </div>
+      </div>
+      <div class="sc-grid">
+        <div class="sc-metric"><div class="ml">昨日成交量</div><div class="mv">${s.vol.toLocaleString()}</div></div>
+        <div class="sc-metric"><div class="ml">5日均量</div><div class="mv">${s.avgVol.toLocaleString()}</div></div>
+        <div class="sc-metric"><div class="ml">ATR 波幅</div><div class="mv">$${s.atr}</div></div>
+        <div class="sc-metric"><div class="ml">VR 指標</div><div class="mv ${s.vr > 100 ? 'kd-up' : 'kd-dn'}">${s.vr}</div></div>
+        <div class="sc-metric"><div class="ml">KD 狀態</div><div class="mv ${kdColor}">${s.kdLabel}</div></div>
+      </div>
+      
+      <div class="sc-dropdown-panel" onclick="event.stopPropagation();">
+        <div class="dp-sub">外資: ${s.foreignBuy > 0 ? '+' : ''}${s.foreignBuy.toLocaleString()} 張 ｜ 一張成本: $${(s.price * 1000).toLocaleString()}</div>
+        <div class="score-breakdown">
+          <div class="sb-item">
+            <div class="sb-label">量能比 (30%)</div>
+            <div class="sb-val" style="color:${scoreColor(bd.volScore)};">${bd.volScore} 分</div>
+          </div>
+          <div class="sb-item">
+            <div class="sb-label">ATR 波動 (25%)</div>
+            <div class="sb-val" style="color:${scoreColor(bd.atrScore)};">${bd.atrScore} 分</div>
+          </div>
+          <div class="sb-item">
+            <div class="sb-label">外資方向 (20%)</div>
+            <div class="sb-val" style="color:${scoreColor(bd.fScore)};">${bd.fScore} 分</div>
+          </div>
+          <div class="sb-item">
+            <div class="sb-label">VR 指標 (15%)</div>
+            <div class="sb-val" style="color:${scoreColor(bd.vrScore)};">${bd.vrScore} 分</div>
+          </div>
+          <div class="sb-item">
+            <div class="sb-label">KD 狀態 (10%)</div>
+            <div class="sb-val" style="color:${scoreColor(bd.kdScore)};">${bd.kdScore} 分</div>
           </div>
         </div>
-        <div class="sc-grid">
-          <div class="sc-metric"><div class="ml">昨日成交量</div><div class="mv">${s.vol.toLocaleString()}</div></div>
-          <div class="sc-metric"><div class="ml">5日均量</div><div class="mv">${s.avgVol.toLocaleString()}</div></div>
-          <div class="sc-metric"><div class="ml">ATR 波幅</div><div class="mv">$${s.atr}</div></div>
-          <div class="sc-metric"><div class="ml">VR 指標</div><div class="mv ${s.vr > 100 ? 'kd-up' : 'kd-dn'}">${s.vr}</div></div>
-          <div class="sc-metric"><div class="ml">KD 狀態</div><div class="mv ${kdColor}">${s.kdLabel}</div></div>
+        <div class="dp-reason">${s.reason || '相對波幅與動能計算完成。'}</div>
+        <div class="chart-container">
+          <canvas id="chart-${s.code}"></canvas>
         </div>
-      </div>
-      <div class="sc-detail">
-        <div class="detail-meta">
-          <span>外資買賣超：<strong>${foreignText}</strong></span>
-          <span>一張成本：<strong>$${(s.price * 1000).toLocaleString()}</strong></span>
-          <span>KD：K=${s.kdK} / D=${s.kdD}</span>
-        </div>
-        <div class="score-breakdown">
-          ${[
-            {l:'量能比',w:'30%',v:bd.volScore},
-            {l:'ATR波動',w:'25%',v:bd.atrScore},
-            {l:'外資方向',w:'20%',v:bd.fScore},
-            {l:'VR指標',w:'15%',v:bd.vrScore},
-            {l:'KD狀態',w:'10%',v:bd.kdScore}
-          ].map(i=>`<div class="sb-item">
-            <div class="sb-label">${i.l} <span style="color:#ddd;">(${i.w})</span></div>
-            <div class="sb-val" style="color:${scoreColor(i.v)};">${i.v} 分</div>
-            <div style="height:3px;background:#eee;border-radius:2px;margin-top:3px;overflow:hidden;">
-              <div style="height:100%;width:${i.v}%;background:${scoreColor(i.v)};border-radius:2px;"></div>
-            </div>
-          </div>`).join('')}
-        </div>
-        <div class="dp-reason">${s.reason || '動態爆量股，各項技術指標計算完成。建議開盤前確認大盤期貨方向再評估進場。'}</div>
-        <div class="dp-tags">${(s.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}</div>
-        <div class="chart-wrap"><canvas id="c-${s.code}"></canvas></div>
       </div>
     `;
-
-    card.querySelector('.sc-main').onclick = () => {
-      openCode = (openCode === s.code) ? null : s.code;
-      renderList();
+    
+    // 點擊事件：切換 activeIdx 並重新渲染，實現點擊其他股票時，原本的會自動縮回
+    card.onclick = () => {
+      if (currentFilteredIdx === activeIdx) return; // 已展開則不重複觸發
+      activeIdx = currentFilteredIdx;
+      renderList(); 
     };
-
+    
     list.appendChild(card);
+  });
 
-    if (isOpen) {
-      requestAnimationFrame(() => {
-        const ctx = document.getElementById(`c-${s.code}`);
-        if (!ctx) return;
-        if (charts[s.code]) charts[s.code].destroy();
-        charts[s.code] = new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: ['5日前','4日前','3日前','2日前','昨日'],
-            datasets: [
-              { data: s.vol5, backgroundColor: s.vol5.map((_,i)=>i===4?'#D85A30':'#B5D4F4'), borderRadius: 4 },
-              { data: Array(5).fill(s.avgVol), type:'line', borderColor:'#aaa', borderDash:[4,3], borderWidth:1.5, pointRadius:0, fill:false }
-            ]
-          },
-          options: {
-            responsive:true, maintainAspectRatio:false,
-            plugins:{legend:{display:false}},
-            scales:{
-              y:{ticks:{callback:v=>(v/1000).toFixed(0)+'K',font:{size:10}},grid:{color:'rgba(0,0,0,0.04)'}},
-              x:{ticks:{font:{size:10}},grid:{display:false}}
-            }
-          }
-        });
-      });
+  // 渲染當前展開卡片的 Chart.js 圖表
+  updateInlineChart(data[activeIdx]);
+}
+
+function updateInlineChart(s) {
+  if (!s) return;
+  if (volChartInst) volChartInst.destroy();
+  
+  const ctx = document.getElementById(`chart-${s.code}`);
+  if (!ctx) return;
+  
+  volChartInst = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['5日前', '4日前', '3日前', '2日前', '昨日'],
+      datasets: [
+        { label: '成交量', data: s.vol5, backgroundColor: s.vol5.map((_, i) => i === 4 ? '#D85A30' : '#B5D4F4'), borderRadius: 4 },
+        { label: '5日均量', data: Array(5).fill(s.avgVol), type: 'line', borderColor: '#aaa', borderDash: [4, 3], borderWidth: 1.5, pointRadius: 0, fill: false }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { ticks: { callback: v => (v / 1000).toFixed(0) + 'K', font: { size: 10 } }, grid: { color: 'rgba(0,0,0,0.05)' } },
+        x: { ticks: { font: { size: 10 } }, grid: { display: false } }
+      }
     }
   });
 }
@@ -277,22 +295,36 @@ async function loadData() {
   try {
     const res = await fetch(DATA_URL + '?t=' + Date.now());
     const data = await res.json();
-    allStocks = data.stocks || [];
-
+    stocks = data.stocks || [];
+    
+    // 📊 自動換算台灣時間 (UTC+8) 的邏輯
     if (data.updated) {
-      const d = new Date(data.updated.replace(/\//g, '-') + ':00+08:00');
-      document.getElementById('update-time').textContent = '更新時間（台北）：' + data.updated;
-    }
-
-    if (allStocks.length > 0) {
-      renderList();
+      // 把 "2026/06/23 05:19" 轉換成 JavaScript 的 Date 物件
+      const utcStatusDate = new Date(data.updated + ' GMT'); 
+      
+      // 格式化輸出成台灣當地的時間格式 (年/月/日 時:分)
+      const twTimeStr = utcStatusDate.toLocaleString('zh-TW', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false // 使用 24 小時制
+      }).replace(/-/g, '/'); // 確保斜線格式一致
+      
+      document.getElementById('update-time').textContent = '更新時間（台北）：' + twTimeStr;
     } else {
-      document.getElementById('stock-list').innerHTML = '<div class="empty">今日無符合條件的候選股票</div>';
-      document.getElementById('stock-count').textContent = '0 支';
+      document.getElementById('update-time').textContent = '更新時間：—';
+    }
+    
+    if (stocks.length > 0) { 
+      activeIdx = 0; 
+      renderList(); 
+    } else { 
+      document.getElementById('stock-list').innerHTML = '<div class="empty">今日無符合條件的候選股票</div>'; 
     }
   } catch (e) {
     document.getElementById('stock-list').innerHTML = '<div class="empty">資料載入失敗，請稍後再試</div>';
-    console.error(e);
   }
 }
 
