@@ -52,9 +52,13 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .search-input { width: 100%; font-size: 14px; padding: 10px 14px; border-radius: 10px; border: 1px solid #ddd; outline: none; background: #fff; }
 .search-input:focus { border-color: #378ADD; }
 
-/* 載入更多 */
-.load-more-btn { display: block; width: 100%; padding: 10px; margin-top: 4px; border-radius: 10px; border: 1px dashed #ddd; background: #fafafa; color: #888; font-size: 13px; cursor: pointer; }
-.load-more-btn:hover { background: #f0f0f0; color: #555; }
+/* 頁碼分頁 */
+.pagination { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px; margin-top: 14px; padding: 8px 0; }
+.page-btn { min-width: 34px; height: 34px; padding: 0 8px; border-radius: 8px; border: 1px solid #ddd; background: #fff; color: #666; font-size: 13px; cursor: pointer; }
+.page-btn:hover:not(:disabled) { border-color: #999; color: #222; }
+.page-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+.page-btn:disabled { opacity: 0.35; cursor: default; }
+.page-ellipsis { color: #bbb; padding: 0 2px; font-size: 13px; }
 
 .section-title { font-size: 11px; font-weight: 700; color: #aaa; margin-bottom: 0.5rem; letter-spacing: 0.05em; text-transform: uppercase; }
 .stock-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.5rem; }
@@ -146,10 +150,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 
     <div class="divider"></div>
 
-    <!-- 日均量門檻 -->
-    <div class="filter-group">
+    <!-- 日均量門檻（僅推薦股頁籤適用；全部股頁籤本來就要顯示全部，不受此篩選影響） -->
+    <div class="filter-group" id="vol-filter-group">
       <span class="filter-label">日均量</span>
       <select class="f-select" id="vol-select" onchange="applyFilters()">
+        <option value="0">不限</option>
         <option value="2000">≥ 2,000 張</option>
         <option value="1000">≥ 1,000 張</option>
         <option value="500">≥ 500 張</option>
@@ -180,25 +185,31 @@ let sortKey = 'score';
 let sortDir = 'desc'; // 預設推薦指數高到低
 let currentTab = 'recommend'; // 'recommend' = 推薦股（僅熱門） | 'all' = 全部股（全市場）
 let searchQuery = '';
-let visibleCount = 50; // 分頁顯示，避免全市場一次全塞進畫面卡頓
+let currentPage = 1;
+const pageSize = 20; // 每頁20筆
 
 function switchTab(tab) {
   currentTab = tab;
-  visibleCount = 50;
+  currentPage = 1;
   document.getElementById('tab-recommend').classList.toggle('active', tab === 'recommend');
   document.getElementById('tab-all').classList.toggle('active', tab === 'all');
+  // 全部股頁籤：不套用日均量門檻（就算0張也要顯示），並把該篩選控制項隱藏避免混淆
+  document.getElementById('vol-filter-group').style.display = tab === 'all' ? 'none' : '';
+  minVol = tab === 'all' ? 0 : 2000;
+  document.getElementById('vol-select').value = String(minVol);
   renderList();
 }
 
 function onSearchInput() {
   searchQuery = document.getElementById('search-input').value.trim().toLowerCase();
-  visibleCount = 50;
+  currentPage = 1;
   renderList();
 }
 
-function loadMore() {
-  visibleCount += 50;
+function goToPage(n) {
+  currentPage = n;
   renderList();
+  document.getElementById('stock-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function scoreColor(n) {
@@ -234,7 +245,7 @@ function toggleSort(key) {
     sortKey = key;
     sortDir = 'desc';
   }
-  visibleCount = 50;
+  currentPage = 1;
   updateSortBtns();
   applyFilters();
 }
@@ -257,20 +268,20 @@ function updateSortBtns() {
 function applyFilters() {
   priceRange = document.getElementById('price-select').value;
   minVol = parseInt(document.getElementById('vol-select').value);
-  visibleCount = 50;
+  currentPage = 1;
   renderList();
 }
 
 function clearFilters() {
   document.getElementById('price-select').value = 'all';
-  document.getElementById('vol-select').value = '2000';
+  document.getElementById('vol-select').value = currentTab === 'all' ? '0' : '2000';
   document.getElementById('search-input').value = '';
   priceRange = 'all';
-  minVol = 2000;
+  minVol = currentTab === 'all' ? 0 : 2000;
   sortKey = 'score';
   sortDir = 'desc';
   searchQuery = '';
-  visibleCount = 50;
+  currentPage = 1;
   updateSortBtns();
   renderList();
 }
@@ -290,8 +301,10 @@ function getFiltered() {
     if (currentTab === 'recommend') {
       data = data.filter(s => s.badge === 'hot');
     }
-    // 日均量篩選
-    data = data.filter(s => s.avgVol >= minVol);
+    // 日均量篩選：只在推薦股頁籤套用；全部股頁籤永遠不篩，就算0張也要顯示
+    if (currentTab === 'recommend') {
+      data = data.filter(s => s.avgVol >= minVol);
+    }
     // 股價區間
     if (priceRange === '0-100') data = data.filter(s => s.price <= 100);
     else if (priceRange === '100-300') data = data.filter(s => s.price > 100 && s.price <= 300);
@@ -324,8 +337,10 @@ function renderList() {
     return;
   }
 
-  const data = filtered.slice(0, visibleCount);
-  const hasMore = filtered.length > visibleCount;
+  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+  if (currentPage > totalPages) currentPage = totalPages;
+  if (currentPage < 1) currentPage = 1;
+  const data = filtered.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
   Object.values(charts).forEach(c => c.destroy());
   charts = {};
@@ -429,13 +444,47 @@ function renderList() {
     }
   });
 
-  if (hasMore) {
-    const btn = document.createElement('button');
-    btn.className = 'load-more-btn';
-    btn.textContent = `顯示更多（還有 ${filtered.length - visibleCount} 支）`;
-    btn.onclick = loadMore;
-    list.appendChild(btn);
+  if (totalPages > 1) {
+    list.appendChild(renderPagination(currentPage, totalPages));
   }
+}
+
+function renderPagination(page, totalPages) {
+  const wrap = document.createElement('div');
+  wrap.className = 'pagination';
+
+  const makeBtn = (label, target, opts = {}) => {
+    const btn = document.createElement('button');
+    btn.className = 'page-btn' + (opts.active ? ' active' : '');
+    btn.textContent = label;
+    btn.disabled = !!opts.disabled;
+    if (!opts.disabled) btn.onclick = () => goToPage(target);
+    return btn;
+  };
+
+  wrap.appendChild(makeBtn('‹', page - 1, { disabled: page === 1 }));
+
+  // 頁碼：目前頁前後各2頁，加上頭尾，中間用省略號
+  const pages = new Set([1, totalPages]);
+  for (let p = page - 2; p <= page + 2; p++) {
+    if (p >= 1 && p <= totalPages) pages.add(p);
+  }
+  const sorted = [...pages].sort((a, b) => a - b);
+
+  let prev = 0;
+  sorted.forEach(p => {
+    if (p - prev > 1) {
+      const dots = document.createElement('span');
+      dots.className = 'page-ellipsis';
+      dots.textContent = '…';
+      wrap.appendChild(dots);
+    }
+    wrap.appendChild(makeBtn(String(p), p, { active: p === page }));
+    prev = p;
+  });
+
+  wrap.appendChild(makeBtn('›', page + 1, { disabled: page === totalPages }));
+  return wrap;
 }
 
 async function loadData() {
