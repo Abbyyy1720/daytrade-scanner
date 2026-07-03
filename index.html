@@ -37,6 +37,16 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 
 .divider { width: 1px; height: 20px; background: #eee; margin: 0 2px; }
 
+/* 頁籤 */
+.tab-bar { display: flex; gap: 6px; margin-bottom: 0.75rem; }
+.tab-btn { flex: 1; font-size: 13px; font-weight: 600; padding: 9px 0; border-radius: 10px; border: 1px solid #eee; background: #fff; color: #999; cursor: pointer; transition: all 0.15s; }
+.tab-btn:hover { border-color: #ccc; color: #666; }
+.tab-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+.vr-trend { font-size: 10px; margin-left: 2px; }
+.vr-trend.up { color: #D85A30; }
+.vr-trend.down { color: #1D9E75; }
+.vr-trend.flat { color: #ccc; }
+
 .section-title { font-size: 11px; font-weight: 700; color: #aaa; margin-bottom: 0.5rem; letter-spacing: 0.05em; text-transform: uppercase; }
 .stock-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.5rem; }
 
@@ -92,8 +102,13 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
   </div>
 
   <div class="info-bar">
-    <div class="mcard"><div class="label">資料涵蓋</div><div class="val" style="font-size:12px;">上市 + 上櫃全市場</div></div>
+    <div class="mcard"><div class="label">資料涵蓋</div><div class="val" style="font-size:12px;">上市 + 上櫃全市場普通股</div></div>
     <div class="mcard"><div class="label">符合股數</div><div class="val" id="stock-count">—</div></div>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" id="tab-recommend" onclick="switchTab('recommend')">⭐ 推薦股</button>
+    <button class="tab-btn" id="tab-all" onclick="switchTab('all')">📋 全部股</button>
   </div>
 
   <div class="filter-bar">
@@ -150,9 +165,23 @@ let priceRange = 'all';
 let minVol = 2000;
 let sortKey = 'score';
 let sortDir = 'desc'; // 預設推薦指數高到低
+let currentTab = 'recommend'; // 'recommend' = 推薦股（僅熱門） | 'all' = 全部股（候選清單全部）
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.getElementById('tab-recommend').classList.toggle('active', tab === 'recommend');
+  document.getElementById('tab-all').classList.toggle('active', tab === 'all');
+  renderList();
+}
 
 function scoreColor(n) {
   return n >= 70 ? '#1D9E75' : n >= 50 ? '#BA7517' : '#D85A30';
+}
+
+function vrTrendArrow(trend) {
+  if (trend === 'up') return '<span class="vr-trend up">▲</span>';
+  if (trend === 'down') return '<span class="vr-trend down">▼</span>';
+  return '<span class="vr-trend flat">–</span>';
 }
 
 function chgVal(s) {
@@ -217,6 +246,11 @@ function clearFilters() {
 function getFiltered() {
   let data = [...allStocks];
 
+  // 推薦股頁籤：只看系統判定「熱門」的標的；全部股頁籤：候選清單內全部股票都顯示
+  if (currentTab === 'recommend') {
+    data = data.filter(s => s.badge === 'hot');
+  }
+
   // 日均量篩選
   data = data.filter(s => s.avgVol >= minVol);
 
@@ -244,7 +278,10 @@ function renderList() {
   document.getElementById('stock-count').textContent = data.length + ' 支';
 
   if (!data.length) {
-    list.innerHTML = '<div class="empty">目前篩選條件下無符合股票<br><small>試試調整股價區間或降低日均量門檻</small></div>';
+    const hint = currentTab === 'recommend'
+      ? '試試調整股價區間、降低日均量門檻，或切換到「全部股」查看完整清單'
+      : '試試調整股價區間或降低日均量門檻';
+    list.innerHTML = `<div class="empty">目前篩選條件下無符合股票<br><small>${hint}</small></div>`;
     return;
   }
 
@@ -284,7 +321,7 @@ function renderList() {
           <div class="sc-metric"><div class="ml">昨日成交量</div><div class="mv">${s.vol.toLocaleString()}</div></div>
           <div class="sc-metric"><div class="ml">5日均量</div><div class="mv">${s.avgVol.toLocaleString()}</div></div>
           <div class="sc-metric"><div class="ml">ATR 波幅</div><div class="mv">$${s.atr}</div></div>
-          <div class="sc-metric"><div class="ml">VR 指標</div><div class="mv ${s.vr > 100 ? 'kd-up' : 'kd-dn'}">${s.vr}</div></div>
+          <div class="sc-metric"><div class="ml">VR 指標</div><div class="mv ${s.vr > 100 ? 'kd-up' : 'kd-dn'}">${s.vr}${vrTrendArrow(s.vrTrend)}</div></div>
           <div class="sc-metric"><div class="ml">KD 狀態</div><div class="mv ${kdColor}">${s.kdLabel}</div></div>
         </div>
       </div>
