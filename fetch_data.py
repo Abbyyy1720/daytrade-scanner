@@ -3,69 +3,74 @@ import pandas as pd
 import json
 import requests
 import datetime
+import time
+import re
+from bs4 import BeautifulSoup
 
-FINANCE_CODES = {'27', '28', '29', '25'}
+INDUSTRY_MAP = {}  # code -> 產業別，由 fetch_stock_universe() 填入
 
 def is_finance(code):
-    return code[:2] in FINANCE_CODES
+    return INDUSTRY_MAP.get(code) == "金融保險業"
 
 def is_dr(name):
     return 'DR' in name or '-DR' in name
 
-STOCK_LIST = [
-    # 半導體
-    ("2330", "台積電", "twse"), ("2303", "聯電", "twse"), ("2317", "鴻海", "twse"),
-    ("2454", "聯發科", "twse"), ("2379", "瑞昱", "twse"), ("2337", "旺宏", "twse"),
-    ("6770", "力積電", "twse"), ("2408", "南亞科", "twse"), ("3034", "聯詠", "twse"),
-    ("2449", "京元電子", "twse"), ("3711", "日月光投控", "twse"), ("5483", "中美晶", "twse"),
-    ("6239", "力成", "twse"), ("3443", "創意", "twse"), ("2383", "台光電", "twse"),
-    # 面板
-    ("2409", "友達", "twse"), ("3481", "群創", "twse"), ("6116", "彩晶", "twse"),
-    # 航運
-    ("2603", "長榮", "twse"), ("2615", "萬海", "twse"), ("2609", "陽明", "twse"),
-    ("2606", "裕民", "twse"), ("2605", "新興", "twse"),
-    # 航空
-    ("2610", "華航", "twse"), ("2618", "長榮航", "twse"),
-    # 金融
-    ("2882", "國泰金", "twse"), ("2881", "富邦金", "twse"), ("2880", "華南金", "twse"),
-    ("2884", "玉山金", "twse"), ("2885", "元大金", "twse"), ("2886", "兆豐金", "twse"),
-    ("2887", "台新金", "twse"), ("2888", "新光金", "twse"), ("2890", "永豐金", "twse"),
-    ("2891", "中信金", "twse"), ("2892", "第一金", "twse"), ("2883", "開發金", "twse"),
-    ("5880", "合庫金", "twse"), ("2801", "彰銀", "twse"), ("2834", "臺企銀", "twse"),
-    # 石化/塑化
-    ("1301", "台塑", "twse"), ("1303", "南亞", "twse"), ("1326", "台化", "twse"),
-    ("6505", "台塑化", "twse"),
-    # 鋼鐵
-    ("2002", "中鋼", "twse"), ("2006", "東和鋼鐵", "twse"),
-    # 電腦/伺服器
-    ("2382", "廣達", "twse"), ("2356", "英業達", "twse"), ("2376", "技嘉", "twse"),
-    ("2385", "群光", "twse"), ("2392", "正崴", "twse"), ("4938", "和碩", "twse"),
-    ("3231", "緯創", "twse"), ("6669", "緯穎", "twse"), ("3037", "欣興", "twse"),
-    # 電信
-    ("3045", "台灣大", "twse"), ("4904", "遠傳", "twse"),
-    # 汽車
-    ("2201", "裕隆", "twse"), ("2207", "和泰車", "twse"),
-    # 玻璃/建材
-    ("1802", "台玻", "twse"),
-    # 生技/醫療
-    ("6547", "高端疫苗", "twse"),
-    # 電子零組件
-    ("2395", "研華", "twse"), ("4958", "臻鼎-KY", "twse"), ("8046", "南電", "twse"),
-    ("6285", "啟碁", "twse"), ("5871", "中租-KY", "twse"), ("2460", "建邦", "twse"),
-    ("6415", "矽力-KY", "twse"), ("6456", "GIS-KY", "twse"),
-    # 光學
-    ("3008", "大立光", "twse"),
-    # 上櫃熱門
-    ("3591", "艾笛森", "otc"), ("5347", "世界", "otc"), ("3714", "富采", "otc"),
-    ("6488", "環球晶", "otc"), ("3702", "大聯大", "otc"), ("3260", "威剛", "otc"),
-    ("6278", "台表科", "otc"), ("3533", "嘉澤", "otc"), ("3017", "奇鋐", "otc"),
-    ("8454", "富邦媒", "otc"), ("6271", "同欣電", "otc"), ("6274", "台燿", "otc"),
-]
+def fetch_stock_universe():
+    """動態抓取台股上市＋上櫃「全市場」普通股清單，取代原本手動維護的90檔候選清單。
+    資料源：證交所 ISIN 公告表（官方、免金鑰）
+      上市：https://isin.twse.com.tw/isin/C_public.jsp?strMode=2
+      上櫃：https://isin.twse.com.tw/isin/C_public.jsp?strMode=4
+    只保留 CFICode 開頭 'ESVUFR'（一般普通股）的標的，藉此自動排除
+    ETF、權證、TDR、特別股、受益證券等非個股標的，不用再靠猜代碼前綴。
+    同時把「產業別」記錄下來，讓 is_finance() 用官方分類而不是猜代碼開頭。
+    """
+    urls = {
+        "twse": "https://isin.twse.com.tw/isin/C_public.jsp?strMode=2",
+        "otc": "https://isin.twse.com.tw/isin/C_public.jsp?strMode=4",
+    }
+    universe = []
+    industry_map = {}
+    for market, url in urls.items():
+        try:
+            res = requests.get(url, timeout=20, headers={"User-Agent": "Mozilla/5.0"})
+            res.encoding = "big5"
+            soup = BeautifulSoup(res.text, "html.parser")
+            table = soup.find("table", {"class": "h4"}) or soup.find("table")
+            if not table:
+                print(f"{market} 清單抓取失敗：找不到表格")
+                continue
+            count = 0
+            for row in table.find_all("tr")[1:]:
+                cells = row.find_all("td")
+                if len(cells) != 7:
+                    continue  # 這是分類標題列（股票/ETF/權證...），跳過
+                code_name = cells[0].get_text().strip()
+                if "\u3000" not in code_name:
+                    continue
+                code, name = code_name.split("\u3000", 1)
+                code, name = code.strip(), name.strip()
+                if not re.match(r"^\d{4}$", code):
+                    continue  # 只留4位數字代碼的個股，排除權證等特殊代碼
+                cfi = cells[5].get_text().strip()
+                if not cfi.startswith("ESVUFR"):
+                    continue  # 只留一般普通股
+                industry = cells[4].get_text().strip()
+                universe.append((code, name, market))
+                industry_map[code] = industry
+                count += 1
+            print(f"{market} 普通股清單：{count} 檔")
+        except Exception as e:
+            print(f"{market} 清單抓取失敗: {e}")
+    return universe, industry_map
 
 def fetch_twse_foreign():
+    """上市（TWSE）三大法人外資買賣超。
+    關鍵：T86 這支 API 一定要帶 selectType 參數，否則永遠回傳空資料。
+    這是原本版本一直抓不到外資資料的根本原因。
+    """
     for i in range(5):
         target_date = (datetime.datetime.now() - datetime.timedelta(days=i)).strftime("%Y%m%d")
-        url = f"https://www.twse.com.tw/rwd/zh/fund/T86?date={target_date}&response=json"
+        url = f"https://www.twse.com.tw/rwd/zh/fund/T86?date={target_date}&selectType=ALL&response=json"
         try:
             res = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
             data = res.json()
@@ -77,6 +82,7 @@ def fetch_twse_foreign():
                     code = str(row[0]).strip()
                     name = str(row[1]).strip()
                     try:
+                        # 「外陸資買賣超股數(不含外資自營商)」欄位
                         net = int(str(row[4]).replace(",", "").replace("+", ""))
                         id_map[code] = net // 1000
                         name_map[name] = net // 1000
@@ -85,20 +91,62 @@ def fetch_twse_foreign():
                 print(f"上市外資 {target_date}：{len(id_map)} 筆")
                 return {"id_map": id_map, "name_map": name_map}
             else:
-                print(f"上市外資 {target_date} 無資料")
+                print(f"上市外資 {target_date} 無資料（可能非交易日）")
         except Exception as e:
             print(f"上市外資失敗: {e}")
     return {"id_map": {}, "name_map": {}}
 
-def match_foreign(stock_id, stock_name, foreign):
+def fetch_tpex_foreign():
+    """上櫃（TPEx）三大法人外資買賣超。
+    原本的程式完全沒有抓上櫃法人資料，導致上櫃股票的外資分數永遠是「待確認」。
+    資料源（data.gov.tw 開放資料集 11856）：
+    https://www.tpex.org.tw/web/stock/3insti/daily_trade/3itrade_hedge_result.php
+    """
+    for i in range(5):
+        d = datetime.datetime.now() - datetime.timedelta(days=i)
+        roc_date = f"{d.year - 1911}/{d.month:02d}/{d.day:02d}"
+        url = (
+            "https://www.tpex.org.tw/web/stock/3insti/daily_trade/"
+            f"3itrade_hedge_result.php?l=zh-tw&se=EW&t=D&d={roc_date}&o=json"
+        )
+        try:
+            res = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
+            data = res.json()
+            rows = data.get("aaData")
+            if not rows:
+                print(f"上櫃外資 {roc_date} 無資料（可能非交易日）")
+                continue
+            id_map, name_map = {}, {}
+            for row in rows:
+                if len(row) < 5:
+                    continue
+                code = str(row[0]).strip()
+                name = str(row[1]).strip()
+                try:
+                    # 「外資及陸資買賣超股數」欄位，位置隨櫃買中心格式可能微調，
+                    # 若比對後發現偏移，請用 print(rows[0]) 對照欄位順序調整 idx
+                    net = int(str(row[4]).replace(",", "").replace("+", ""))
+                    id_map[code] = net // 1000
+                    name_map[name] = net // 1000
+                except:
+                    continue
+            print(f"上櫃外資 {roc_date}：{len(id_map)} 筆")
+            return {"id_map": id_map, "name_map": name_map}
+        except Exception as e:
+            print(f"上櫃外資失敗: {e}")
+    return {"id_map": {}, "name_map": {}}
+
+def match_foreign(stock_id, stock_name, market, twse_foreign, tpex_foreign):
+    foreign = tpex_foreign if market == "otc" else twse_foreign
     id_map = foreign.get("id_map", {})
     name_map = foreign.get("name_map", {})
     if stock_id in id_map:
         return id_map[stock_id], True
     if stock_name in name_map:
         return name_map[stock_name], True
+    # 名稱模糊比對僅在雙方名稱都至少2字時才採用，降低誤配風險
     for k, v in name_map.items():
-        if stock_name in k or k in stock_name:
+        if len(k) >= 2 and len(stock_name) >= 2 and (stock_name in k or k in stock_name):
             return v, True
     return 0, False
 
@@ -112,12 +160,27 @@ def calc_kd(high, low, close, period=9):
     return round(k.iloc[-1], 1), round(d.iloc[-1], 1)
 
 def calc_vr(close, volume, period=26):
+    """回傳今日 VR 值，以及相對於昨日 VR 的趨勢方向（up/down/flat）。"""
     price_change = close.diff()
     up_vol = volume.where(price_change > 0, 0).rolling(period).sum()
     dn_vol = volume.where(price_change < 0, 0).rolling(period).sum()
     dn_vol = dn_vol.replace(0, 1)
-    vr = (up_vol / dn_vol * 100).iloc[-1]
-    return round(vr, 1) if not pd.isna(vr) else 100.0
+    vr_series = (up_vol / dn_vol * 100)
+
+    vr_today = vr_series.iloc[-1]
+    vr_today = round(vr_today, 1) if not pd.isna(vr_today) else 100.0
+
+    vr_trend = "flat"
+    if len(vr_series) >= 2:
+        vr_yesterday = vr_series.iloc[-2]
+        if not pd.isna(vr_yesterday):
+            diff = vr_today - round(vr_yesterday, 1)
+            if diff > 0.5:
+                vr_trend = "up"
+            elif diff < -0.5:
+                vr_trend = "down"
+
+    return vr_today, vr_trend
 
 def calc_atr(high, low, close, period=14):
     tr = pd.concat([
@@ -174,19 +237,68 @@ def generate_reason(kd_status, kd_k, kd_d, vol_ratio, atr_pct, foreign_buy, fore
         points.append(f"波動率僅 {atr_pct:.1f}%，波動偏小，當沖空間有限")
     return "。".join(points) + "。"
 
+def fetch_batch_history(ticker_map, chunk_size=100, period="60d"):
+    """分批＋多執行緒下載歷史股價，取代逐檔 yf.Ticker().history() 的做法。
+    全市場約1700+檔，如果逐一呼叫會很慢，且容易被 Yahoo Finance 判定異常流量。
+    這裡改用 yf.download() 一次帶入一批 ticker，批次之間間隔一下降低風險。
+    注意：Yahoo Finance 對雲端機房 IP（含 GitHub Actions）較常見限流/封鎖，
+    若正式跑起來發現大量失敗，請告知我，我們再評估要不要換官方資料源。
+    """
+    all_tickers = list(ticker_map.keys())
+    hist_map = {}
+    total = len(all_tickers)
+    for i in range(0, total, chunk_size):
+        chunk = all_tickers[i:i + chunk_size]
+        try:
+            df = yf.download(
+                tickers=chunk, period=period, group_by="ticker",
+                threads=True, progress=False, auto_adjust=False
+            )
+        except Exception as e:
+            print(f"批次下載失敗（第 {i}-{i+len(chunk)} 檔）: {e}")
+            continue
+
+        for t in chunk:
+            try:
+                if len(chunk) == 1:
+                    sub = df
+                elif t in df.columns.get_level_values(0):
+                    sub = df[t]
+                else:
+                    continue
+                sub = sub.dropna(how="all")
+                if len(sub) >= 20:
+                    hist_map[t] = sub
+            except Exception:
+                continue
+
+        print(f"歷史股價下載進度：{min(i + chunk_size, total)}/{total}")
+        time.sleep(1.5)  # 批次間停頓，降低被限流風險
+
+    return hist_map
+
 # ==================== 主流程 ====================
-print(f"候選清單共 {len(STOCK_LIST)} 檔，開始抓取...")
+STOCK_LIST, INDUSTRY_MAP = fetch_stock_universe()
+print(f"候選清單共 {len(STOCK_LIST)} 檔（上市＋上櫃全市場普通股），開始抓取...")
+
+ticker_map = {}  # yfinance代號 -> (code, name, market)
+for (stock_id, name, market) in STOCK_LIST:
+    if is_dr(name):
+        continue
+    suffix = ".TW" if market == "twse" else ".TWO"
+    ticker_map[f"{stock_id}{suffix}"] = (stock_id, name, market)
+
+hist_data = fetch_batch_history(ticker_map, chunk_size=100)
+print(f"成功取得歷史價量資料：{len(hist_data)}/{len(ticker_map)} 檔")
+
 twse_foreign = fetch_twse_foreign()
+tpex_foreign = fetch_tpex_foreign()
 results = []
 
-for (stock_id, name, market) in STOCK_LIST:
+for ticker, (stock_id, name, market) in ticker_map.items():
     try:
-        if is_dr(name):
-            continue
-        suffix = ".TW" if market == "twse" else ".TWO"
-        ticker = yf.Ticker(f"{stock_id}{suffix}")
-        hist = ticker.history(period="60d")
-        if hist.empty or len(hist) < 20:
+        hist = hist_data.get(ticker)
+        if hist is None or hist.empty or len(hist) < 20:
             continue
 
         price = round(hist["Close"].iloc[-1], 1)
@@ -199,13 +311,13 @@ for (stock_id, name, market) in STOCK_LIST:
 
         vol_ratio = round(vol_today / vol_5avg, 2) if vol_5avg > 0 else 1
         atr = calc_atr(hist["High"], hist["Low"], hist["Close"])
-        vr = calc_vr(hist["Close"], hist["Volume"])
+        vr, vr_trend = calc_vr(hist["Close"], hist["Volume"])
         kd_k, kd_d = calc_kd(hist["High"], hist["Low"], hist["Close"])
         vol5 = [int(v/1000) for v in hist["Volume"].tail(5).tolist()]
         chg = round((hist["Close"].iloc[-1] - hist["Close"].iloc[-2]) / hist["Close"].iloc[-2] * 100, 1)
         atr_pct = round(atr / price * 100, 1) if price > 0 else 0
 
-        foreign_buy, foreign_found = match_foreign(stock_id, name, twse_foreign)
+        foreign_buy, foreign_found = match_foreign(stock_id, name, market, twse_foreign, tpex_foreign)
 
         if kd_k > kd_d + 3:
             kd_status, kd_label = "up", "K>D 向上"
@@ -251,6 +363,7 @@ for (stock_id, name, market) in STOCK_LIST:
             "atr": atr,
             "atrPct": atr_pct,
             "vr": vr,
+            "vrTrend": vr_trend,
             "kdK": kd_k,
             "kdD": kd_d,
             "kdStatus": kd_status,
