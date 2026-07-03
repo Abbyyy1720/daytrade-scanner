@@ -2,12 +2,13 @@ name: 每日盤後抓股票資料
 
 on:
   schedule:
-    - cron: '0 9 * * 1-5'  # 台灣時間 14:45，週一到週五
+    - cron: '0 9 * * 1-5'  # 台灣時間 17:00（UTC 09:00 + 8小時），週一到週五
   workflow_dispatch:          # 允許手動觸發
 
 jobs:
   fetch:
     runs-on: ubuntu-latest
+    timeout-minutes: 60  # 全市場約1700+檔分批下載，抓緊一點避免卡住時無限跑下去；如常態性超時可再拉長
     permissions:
       contents: write
 
@@ -21,7 +22,7 @@ jobs:
           python-version: '3.11'
 
       - name: 安裝套件
-        run: pip install yfinance pandas requests
+        run: pip install yfinance pandas requests beautifulsoup4
 
       - name: 執行抓資料腳本
         run: python fetch_data.py
