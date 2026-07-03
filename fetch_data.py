@@ -305,9 +305,8 @@ for ticker, (stock_id, name, market) in ticker_map.items():
         vol_today = int(hist["Volume"].iloc[-1] / 1000)
         vol_5avg = int(hist["Volume"].tail(5).mean() / 1000)
 
-        # 只過濾極低量，股價不設上限
-        if vol_5avg < 500:
-            continue
+        # 注意：這裡不再過濾低量股，全部股頁籤需要顯示全市場，
+        # 交易量高低改由前端篩選器處理，不在後端就砍掉資料
 
         vol_ratio = round(vol_today / vol_5avg, 2) if vol_5avg > 0 else 1
         atr = calc_atr(hist["High"], hist["Low"], hist["Close"])
