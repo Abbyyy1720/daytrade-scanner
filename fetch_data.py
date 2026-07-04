@@ -9,6 +9,13 @@ from bs4 import BeautifulSoup
 
 INDUSTRY_MAP = {}  # code -> 產業別，由 fetch_stock_universe() 填入
 
+# GitHub Actions 伺服器系統時間是 UTC，直接用 datetime.now() 會少8小時。
+# 台灣不實施日光節約時間，用固定 +8 時區即可，不需要額外裝 tzdata。
+TAIPEI_TZ = datetime.timezone(datetime.timedelta(hours=8))
+
+def now_tw():
+    return datetime.datetime.now(TAIPEI_TZ)
+
 def is_finance(code):
     return INDUSTRY_MAP.get(code) == "金融保險業"
 
@@ -69,7 +76,7 @@ def fetch_twse_foreign():
     這是原本版本一直抓不到外資資料的根本原因。
     """
     for i in range(5):
-        target_date = (datetime.datetime.now() - datetime.timedelta(days=i)).strftime("%Y%m%d")
+        target_date = (now_tw() - datetime.timedelta(days=i)).strftime("%Y%m%d")
         url = f"https://www.twse.com.tw/rwd/zh/fund/T86?date={target_date}&selectType=ALL&response=json"
         try:
             res = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
@@ -103,7 +110,7 @@ def fetch_tpex_foreign():
     https://www.tpex.org.tw/web/stock/3insti/daily_trade/3itrade_hedge_result.php
     """
     for i in range(5):
-        d = datetime.datetime.now() - datetime.timedelta(days=i)
+        d = now_tw() - datetime.timedelta(days=i)
         roc_date = f"{d.year - 1911}/{d.month:02d}/{d.day:02d}"
         url = (
             "https://www.tpex.org.tw/web/stock/3insti/daily_trade/"
@@ -384,7 +391,7 @@ for ticker, (stock_id, name, market) in ticker_map.items():
 results.sort(key=lambda x: x["score"], reverse=True)
 
 output = {
-    "updated": datetime.datetime.now().strftime("%Y/%m/%d %H:%M"),
+    "updated": now_tw().strftime("%Y/%m/%d %H:%M"),
     "stocks": results
 }
 
