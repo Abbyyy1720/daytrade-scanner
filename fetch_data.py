@@ -23,13 +23,16 @@ def is_dr(name):
     return 'DR' in name or '-DR' in name
 
 def fetch_stock_universe():
-    """動態抓取台股上市＋上櫃「全市場」普通股清單，取代原本手動維護的90檔候選清單。
+    """動態抓取台股上市＋上櫃「全市場」普通股＋ETF清單，取代原本手動維護的90檔候選清單。
     資料源：證交所 ISIN 公告表（官方、免金鑰）
       上市：https://isin.twse.com.tw/isin/C_public.jsp?strMode=2
       上櫃：https://isin.twse.com.tw/isin/C_public.jsp?strMode=4
-    只保留 CFICode 開頭 'ESVUFR'（一般普通股）的標的，藉此自動排除
-    ETF、權證、TDR、特別股、受益證券等非個股標的，不用再靠猜代碼前綴。
-    同時把「產業別」記錄下來，讓 is_finance() 用官方分類而不是猜代碼開頭。
+    CFICode 前兩碼判斷類別（ISO 10962 CFI 分類標準）：
+      'ES' = 一般普通股（例如 ESVUFR、ESVTFR 等變體都算）
+      'CE' = 集合投資工具／ETF（例如 0050、0056、006208 這類）
+    藉此排除權證(RW開頭)、公司債、特別股等其他標的，且不用再靠猜代碼前綴。
+    同時把「產業別」記錄下來，讓 is_finance() 用官方分類而不是猜代碼開頭
+    （ETF沒有產業別，is_finance() 對ETF自然回傳False，不影響判斷）。
     """
     urls = {
         "twse": "https://isin.twse.com.tw/isin/C_public.jsp?strMode=2",
@@ -56,16 +59,17 @@ def fetch_stock_universe():
                     continue
                 code, name = code_name.split("\u3000", 1)
                 code, name = code.strip(), name.strip()
-                if not re.match(r"^\d{4}$", code):
-                    continue  # 只留4位數字代碼的個股，排除權證等特殊代碼
+                # 代碼放寬到4~6位數字、可帶一個英文字母後綴（涵蓋 006208、00675L 這類ETF代碼）
+                if not re.match(r"^\d{4,6}[A-Z]?$", code):
+                    continue
                 cfi = cells[5].get_text().strip()
-                if not cfi.startswith("ESVUFR"):
-                    continue  # 只留一般普通股
+                if not (cfi.startswith("ES") or cfi.startswith("CE")):
+                    continue  # 只留一般普通股(ES)與ETF(CE)，排除權證(RW)、公司債等
                 industry = cells[4].get_text().strip()
                 universe.append((code, name, market))
                 industry_map[code] = industry
                 count += 1
-            print(f"{market} 普通股清單：{count} 檔")
+            print(f"{market} 普通股+ETF清單：{count} 檔")
         except Exception as e:
             print(f"{market} 清單抓取失敗: {e}")
     return universe, industry_map
