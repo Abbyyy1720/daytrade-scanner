@@ -168,7 +168,12 @@ def calc_kd(high, low, close, period=9):
     rsv = (close - lowest_low) / denom * 100
     k = rsv.ewm(com=2).mean()
     d = k.ewm(com=2).mean()
-    return round(k.iloc[-1], 1), round(d.iloc[-1], 1)
+    k_val, d_val = k.iloc[-1], d.iloc[-1]
+    # 全市場掃描會碰到剛上市、資料不齊、或長期橫盤的邊緣個股，
+    # 這裡如果算出 NaN，寫進 JSON 會變成不合法的 NaN 字面值，前端 JSON.parse 會直接整包失敗。
+    k_val = 50.0 if pd.isna(k_val) else round(k_val, 1)
+    d_val = 50.0 if pd.isna(d_val) else round(d_val, 1)
+    return k_val, d_val
 
 def calc_vr(close, volume, period=26):
     """回傳今日 VR 值，以及相對於昨日 VR 的趨勢方向（up/down/flat）。"""
@@ -394,12 +399,27 @@ for ticker, (stock_id, name, market) in ticker_map.items():
 
 results.sort(key=lambda x: x["score"], reverse=True)
 
+def sanitize(obj):
+    """遞迴清掉所有 NaN/Infinity，統一換成 0，確保輸出一定是合法 JSON。
+    這是最後一道保險：就算未來哪個指標又漏算出 NaN，也不會讓整包 data.json 壞掉、
+    前端 JSON.parse 直接失敗（這正是這次全市場掃描踩到的問題）。
+    """
+    if isinstance(obj, float):
+        return 0 if (pd.isna(obj) or obj in (float("inf"), float("-inf"))) else obj
+    if isinstance(obj, dict):
+        return {k: sanitize(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [sanitize(v) for v in obj]
+    return obj
+
 output = {
     "updated": now_tw().strftime("%Y/%m/%d %H:%M"),
-    "stocks": results
+    "stocks": sanitize(results)
 }
 
 with open("data.json", "w", encoding="utf-8") as f:
-    json.dump(output, f, ensure_ascii=False, indent=2)
+    # allow_nan=False：如果清理後還是漏了NaN，這裡會直接報錯讓 Actions log 顯示出來，
+    # 比默默寫出壞掉的JSON、前端才發現「資料載入失敗」好除錯很多
+    json.dump(output, f, ensure_ascii=False, indent=2, allow_nan=False)
 
 print(f"\n完成，共 {len(results)} 檔寫入 data.json")
