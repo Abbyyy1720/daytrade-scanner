@@ -1,5 +1,5 @@
 {
-  "updated": "2026/07/07 16:32",
+  "updated": "2026/07/07 19:39",
   "stocks": [
     {
       "code": "3672",
@@ -17661,44 +17661,6 @@
         "可當沖"
       ],
       "reason": "量能持平，與均量相近。KD 偏弱（K=17.8 D=33.2），需觀察是否止跌。外資大買 17,075 張，籌碼正向。波動率 4.0%，日內價差空間充足，適合當沖。"
-    },
-    {
-      "code": "00867B",
-      "name": "新光A-BBB電信債",
-      "market": "otc",
-      "price": 31.5,
-      "priceRange": "0-100",
-      "chg": "+0.4%",
-      "vol": 300,
-      "avgVol": 87,
-      "atr": 0.1,
-      "atrPct": 0.3,
-      "vr": 267.3,
-      "vrTrend": "up",
-      "kdK": 38.3,
-      "kdD": 50.2,
-      "kdStatus": "dn",
-      "kdLabel": "K<D 偏弱",
-      "foreignBuy": 0,
-      "foreignFound": false,
-      "vol5": [
-        123,
-        2,
-        6,
-        5,
-        300
-      ],
-      "score": 57,
-      "badge": "watch",
-      "badgeLabel": "觀察",
-      "isFinance": false,
-      "tags": [
-        "量能放大",
-        "VR 強勢",
-        "上櫃",
-        "可當沖"
-      ],
-      "reason": "成交量為均量 3.5 倍，爆量明顯。KD 偏弱（K=38.3 D=50.2），需觀察是否止跌。外資資料待確認。波動率僅 0.3%，波動偏小，當沖空間有限。"
     },
     {
       "code": "1777",
@@ -38012,6 +37974,43 @@
         "可當沖"
       ],
       "reason": "量能持平，與均量相近。KD 偏弱（K=22.7 D=32.1），需觀察是否止跌。外資資料待確認。波動率 9.3%，日內價差空間充足，適合當沖。"
+    },
+    {
+      "code": "1307",
+      "name": "三芳",
+      "market": "twse",
+      "price": 33.0,
+      "priceRange": "0-100",
+      "chg": "-0.5%",
+      "vol": 1340,
+      "avgVol": 1805,
+      "atr": 1.2,
+      "atrPct": 3.6,
+      "vr": 233.7,
+      "vrTrend": "down",
+      "kdK": 19.1,
+      "kdD": 25.2,
+      "kdStatus": "dn",
+      "kdLabel": "K<D 偏弱",
+      "foreignBuy": 69,
+      "foreignFound": true,
+      "vol5": [
+        1010,
+        1043,
+        2901,
+        2733,
+        1340
+      ],
+      "score": 48,
+      "badge": "watch",
+      "badgeLabel": "觀察",
+      "isFinance": false,
+      "tags": [
+        "外資買超",
+        "VR 強勢",
+        "可當沖"
+      ],
+      "reason": "量能持平，與均量相近。KD 偏弱（K=19.1 D=25.2），需觀察是否止跌。外資買超 69 張，小幅偏多。波動率 3.6%，波動中等。"
     },
     {
       "code": "1423",
@@ -67584,43 +67583,6 @@
       "reason": "量能持平，與均量相近。KD 偏弱（K=70.8 D=73.3），需觀察是否止跌。外資資料待確認。波動率僅 0.3%，波動偏小，當沖空間有限。"
     },
     {
-      "code": "00844B",
-      "name": "新光15年IG金融債",
-      "market": "otc",
-      "price": 32.2,
-      "priceRange": "0-100",
-      "chg": "+0.4%",
-      "vol": 123,
-      "avgVol": 104,
-      "atr": 0.1,
-      "atrPct": 0.3,
-      "vr": 216.2,
-      "vrTrend": "up",
-      "kdK": 59.9,
-      "kdD": 67.9,
-      "kdStatus": "dn",
-      "kdLabel": "K<D 偏弱",
-      "foreignBuy": 0,
-      "foreignFound": false,
-      "vol5": [
-        81,
-        106,
-        105,
-        105,
-        123
-      ],
-      "score": 38,
-      "badge": "watch",
-      "badgeLabel": "觀察",
-      "isFinance": false,
-      "tags": [
-        "VR 強勢",
-        "上櫃",
-        "可當沖"
-      ],
-      "reason": "量能持平，與均量相近。KD 偏弱（K=59.9 D=67.9），需觀察是否止跌。外資資料待確認。波動率僅 0.3%，波動偏小，當沖空間有限。"
-    },
-    {
       "code": "00858",
       "name": "永豐美國500大",
       "market": "otc",
@@ -83052,6 +83014,43 @@
       "reason": "量能持平，與均量相近。KD 偏弱（K=38.2 D=44.5），需觀察是否止跌。外資資料待確認。波動率僅 0.3%，波動偏小，當沖空間有限。"
     },
     {
+      "code": "00867B",
+      "name": "新光A-BBB電信債",
+      "market": "otc",
+      "price": 31.5,
+      "priceRange": "0-100",
+      "chg": "+0.0%",
+      "vol": 0,
+      "avgVol": 62,
+      "atr": 0.1,
+      "atrPct": 0.3,
+      "vr": 243.9,
+      "vrTrend": "down",
+      "kdK": 40.4,
+      "kdD": 47.0,
+      "kdStatus": "dn",
+      "kdLabel": "K<D 偏弱",
+      "foreignBuy": 0,
+      "foreignFound": false,
+      "vol5": [
+        2,
+        6,
+        5,
+        300,
+        0
+      ],
+      "score": 27,
+      "badge": "watch",
+      "badgeLabel": "觀察",
+      "isFinance": false,
+      "tags": [
+        "VR 強勢",
+        "上櫃",
+        "可當沖"
+      ],
+      "reason": "量能持平，與均量相近。KD 偏弱（K=40.4 D=47.0），需觀察是否止跌。外資資料待確認。波動率僅 0.3%，波動偏小，當沖空間有限。"
+    },
+    {
       "code": "00884B",
       "name": "中信低碳新興債",
       "market": "otc",
@@ -84505,6 +84504,43 @@
         "可當沖"
       ],
       "reason": "量能持平，與均量相近。KD 偏弱（K=49.0 D=57.3），需觀察是否止跌。外資資料待確認。波動率僅 0.4%，波動偏小，當沖空間有限。"
+    },
+    {
+      "code": "00844B",
+      "name": "新光15年IG金融債",
+      "market": "otc",
+      "price": 32.2,
+      "priceRange": "0-100",
+      "chg": "+0.0%",
+      "vol": 0,
+      "avgVol": 87,
+      "atr": 0.1,
+      "atrPct": 0.3,
+      "vr": 192.1,
+      "vrTrend": "down",
+      "kdK": 60.9,
+      "kdD": 65.6,
+      "kdStatus": "dn",
+      "kdLabel": "K<D 偏弱",
+      "foreignBuy": 0,
+      "foreignFound": false,
+      "vol5": [
+        106,
+        105,
+        105,
+        123,
+        0
+      ],
+      "score": 24,
+      "badge": "watch",
+      "badgeLabel": "觀察",
+      "isFinance": false,
+      "tags": [
+        "VR 強勢",
+        "上櫃",
+        "可當沖"
+      ],
+      "reason": "量能持平，與均量相近。KD 偏弱（K=60.9 D=65.6），需觀察是否止跌。外資資料待確認。波動率僅 0.3%，波動偏小，當沖空間有限。"
     },
     {
       "code": "00968B",
