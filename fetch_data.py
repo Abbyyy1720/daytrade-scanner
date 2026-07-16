@@ -120,11 +120,11 @@ def fetch_daytrade_stocks():
                 continue
             code = str(row[0]).strip()
             trade_type = str(row[2]).strip() if len(row) > 2 else ""
-            # 判斷類型：含「賣」字代表可雙向，否則先買
-            if "賣" in trade_type or "雙" in trade_type:
-                buy_sell.add(code)
-            else:
-                buy_only.add(code)
+print(f"DEBUG 現沖欄位: code={code} row[2]={trade_type} row={row[:4]}")
+if "賣" in trade_type or "雙" in trade_type:
+    buy_sell.add(code)
+else:
+    buy_only.add(code)
         print(f"上市可現沖：買賣現沖={len(buy_sell)} 先買現沖={len(buy_only)}")
     except Exception as e:
         print(f"上市現沖名單抓取失敗: {e}")
