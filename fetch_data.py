@@ -74,6 +74,75 @@ def fetch_stock_universe():
             print(f"{market} 清單抓取失敗: {e}")
     return universe, industry_map
 
+
+def fetch_attention_stocks():
+    """抓取注意股與處置股名單（證交所公告）"""
+    attention = set()
+    disposition = set()
+    try:
+        # 注意股
+        url = "https://www.twse.com.tw/rwd/zh/announcement/attention?response=json"
+        res = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
+        data = res.json()
+        for row in data.get("data", []):
+            if len(row) >= 1:
+                code = str(row[0]).strip()
+                attention.add(code)
+        print(f"注意股：{len(attention)} 檔")
+    except Exception as e:
+        print(f"注意股抓取失敗: {e}")
+    try:
+        # 處置股
+        url2 = "https://www.twse.com.tw/rwd/zh/announcement/disposition?response=json"
+        res2 = requests.get(url2, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
+        data2 = res2.json()
+        for row in data2.get("data", []):
+            if len(row) >= 1:
+                code = str(row[0]).strip()
+                disposition.add(code)
+        print(f"處置股：{len(disposition)} 檔")
+    except Exception as e:
+        print(f"處置股抓取失敗: {e}")
+    return attention, disposition
+
+
+def fetch_daytrade_stocks():
+    """抓取可現股當沖名單（買賣現沖 + 先買現沖）"""
+    buy_sell = set()   # 買賣現沖（雙向）
+    buy_only = set()   # 先買現沖（只能先買）
+    try:
+        # 上市可現沖
+        url = "https://www.twse.com.tw/rwd/zh/afterTrading/TWTASU?response=json"
+        res = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
+        data = res.json()
+        for row in data.get("data", []):
+            if len(row) < 3:
+                continue
+            code = str(row[0]).strip()
+            trade_type = str(row[2]).strip() if len(row) > 2 else ""
+            # 判斷類型：含「賣」字代表可雙向，否則先買
+            if "賣" in trade_type or "雙" in trade_type:
+                buy_sell.add(code)
+            else:
+                buy_only.add(code)
+        print(f"上市可現沖：買賣現沖={len(buy_sell)} 先買現沖={len(buy_only)}")
+    except Exception as e:
+        print(f"上市現沖名單抓取失敗: {e}")
+    try:
+        # 上櫃可現沖
+        url2 = "https://www.tpex.org.tw/web/stock/margin_trading/short_selling/SaleSimulate_result.php?l=zh-tw&o=json"
+        res2 = requests.get(url2, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
+        data2 = res2.json()
+        for row in data2.get("aaData", []):
+            if len(row) < 1:
+                continue
+            code = str(row[0]).strip()
+            buy_only.add(code)  # 上櫃預設先買現沖
+        print(f"上櫃可現沖：{len(data2.get('aaData', []))} 檔")
+    except Exception as e:
+        print(f"上櫃現沖名單抓取失敗: {e}")
+    return buy_sell, buy_only
+
 def fetch_twse_foreign():
     """上市（TWSE）三大法人外資買賣超。
     關鍵：T86 這支 API 一定要帶 selectType 參數，否則永遠回傳空資料。
@@ -307,6 +376,8 @@ for (stock_id, name, market) in STOCK_LIST:
 hist_data = fetch_batch_history(ticker_map, chunk_size=100)
 print(f"成功取得歷史價量資料：{len(hist_data)}/{len(ticker_map)} 檔")
 
+attention_stocks, disposition_stocks = fetch_attention_stocks()
+buy_sell_stocks, buy_only_stocks = fetch_daytrade_stocks()
 twse_foreign = fetch_twse_foreign()
 tpex_foreign = fetch_tpex_foreign()
 results = []
@@ -364,6 +435,16 @@ for ticker, (stock_id, name, market) in ticker_map.items():
         if market == "otc": tags.append("上櫃")
         tags.append("可當沖")
 
+        # 當沖狀態判斷
+        is_attention = stock_id in attention_stocks
+        is_disposition = stock_id in disposition_stocks
+        if stock_id in buy_sell_stocks:
+            daytrade_status = "buy_sell"   # 買賣現沖（雙向）
+        elif stock_id in buy_only_stocks:
+            daytrade_status = "buy_only"   # 先買現沖
+        else:
+            daytrade_status = "none"       # 不可現沖
+
         print(f"{name}({stock_id}) 價={price} [{price_range}] 均量={vol_5avg} 外資={foreign_buy}{'✓' if foreign_found else '?'} 分={score}")
 
         results.append({
@@ -391,7 +472,10 @@ for ticker, (stock_id, name, market) in ticker_map.items():
             "badgeLabel": "熱門" if score >= 65 else "觀察",
             "isFinance": is_finance(stock_id),
             "tags": tags,
-            "reason": reason
+            "reason": reason,
+            "isAttention": is_attention,
+            "isDisposition": is_disposition,
+            "daytradeStatus": daytrade_status
         })
 
     except Exception as e:
