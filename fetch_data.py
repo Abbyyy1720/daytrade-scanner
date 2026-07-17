@@ -102,37 +102,51 @@ def fetch_attention_stocks():
 
 
 def fetch_daytrade_stocks():
-    """抓取可現股當沖名單
-    證交所 TWTASU：row[0]=代號, row[1]=名稱, row[2]=買賣現沖註記
-    有「b」或空白代表先買現沖，有「bs」代表買賣現沖（雙向）
-    實際欄位以 row 長度和內容判斷
+    """
+    抓取可現股當沖名單
+    使用證交所「可現股當沖交易標的」API
+    row[0]=代號, row[1]=名稱
+    該名單所有股票均為「先買現沖」，若同時出現在融券名單則為「買賣現沖」
     """
     buy_sell = set()
     buy_only = set()
     try:
+        # 可現股當沖標的（先買現沖為主）
         url = "https://www.twse.com.tw/rwd/zh/shortSelling/TWTASU?response=json"
         res = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
         data = res.json()
         rows = data.get("data", [])
         if rows:
-            # 印出第一筆確認欄位格式
             print(f"現沖名單第一筆: {rows[0]}")
-        for row in rows:
-            if len(row) < 1:
-                continue
-            code = str(row[0]).strip()
-            # row長度>=3時看第3欄判斷類型，否則預設先買現沖
-            if len(row) >= 3:
-                trade_type = str(row[2]).strip().lower()
-                if "s" in trade_type or "賣" in trade_type or "雙" in trade_type:
-                    buy_sell.add(code)
-                else:
-                    buy_only.add(code)
-            else:
+            for row in rows:
+                if len(row) < 1:
+                    continue
+                code = str(row[0]).strip()
+                if not code.isdigit():
+                    continue  # 跳過 ETF（00400A 這類含字母的）
                 buy_only.add(code)
-        print(f"上市可現沖：買賣現沖={len(buy_sell)} 先買現沖={len(buy_only)}")
+        print(f"上市先買現沖：{len(buy_only)} 檔")
     except Exception as e:
         print(f"上市現沖名單抓取失敗: {e}")
+    try:
+        # 可借券賣出（有這個才能做買賣現沖）
+        url2 = "https://www.twse.com.tw/rwd/zh/marginTrading/TWT93U?response=json"
+        res2 = requests.get(url2, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
+        data2 = res2.json()
+        short_list = set()
+        for row in data2.get("data", []):
+            if len(row) >= 1:
+                code = str(row[0]).strip()
+                if code.isdigit():
+                    short_list.add(code)
+        # 同時在先買現沖 AND 可借券名單 = 買賣現沖
+        for code in list(buy_only):
+            if code in short_list:
+                buy_sell.add(code)
+                buy_only.discard(code)
+        print(f"上市買賣現沖：{len(buy_sell)} 先買現沖：{len(buy_only)}")
+    except Exception as e:
+        print(f"借券名單抓取失敗: {e}")
     return buy_sell, buy_only
 
 
