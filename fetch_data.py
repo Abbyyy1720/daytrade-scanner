@@ -79,7 +79,7 @@ def fetch_attention_stocks():
     attention = set()
     disposition = set()
     try:
-        url = "https://www.twse.com.tw/rwd/zh/announcement/attention?response=json"
+        url = "https://www.twse.com.tw/rwd/zh/shortSelling/TWTASU?response=json"
         res = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
         data = res.json()
         for row in data.get("data", []):
