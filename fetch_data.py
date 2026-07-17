@@ -74,32 +74,27 @@ def fetch_stock_universe():
             print(f"{market} 清單抓取失敗: {e}")
     return universe, industry_map
 
-
 def fetch_attention_stocks():
-    """抓取注意股與處置股名單（證交所公告）"""
+    """抓取注意股與處置股名單"""
     attention = set()
     disposition = set()
     try:
-        # 注意股
         url = "https://www.twse.com.tw/rwd/zh/announcement/attention?response=json"
         res = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
         data = res.json()
         for row in data.get("data", []):
             if len(row) >= 1:
-                code = str(row[0]).strip()
-                attention.add(code)
+                attention.add(str(row[0]).strip())
         print(f"注意股：{len(attention)} 檔")
     except Exception as e:
         print(f"注意股抓取失敗: {e}")
     try:
-        # 處置股
         url2 = "https://www.twse.com.tw/rwd/zh/announcement/disposition?response=json"
         res2 = requests.get(url2, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
         data2 = res2.json()
         for row in data2.get("data", []):
             if len(row) >= 1:
-                code = str(row[0]).strip()
-                disposition.add(code)
+                disposition.add(str(row[0]).strip())
         print(f"處置股：{len(disposition)} 檔")
     except Exception as e:
         print(f"處置股抓取失敗: {e}")
@@ -107,41 +102,39 @@ def fetch_attention_stocks():
 
 
 def fetch_daytrade_stocks():
-    """抓取可現股當沖名單（買賣現沖 + 先買現沖）"""
-    buy_sell = set()   # 買賣現沖（雙向）
-    buy_only = set()   # 先買現沖（只能先買）
+    """抓取可現股當沖名單
+    證交所 TWTASU：row[0]=代號, row[1]=名稱, row[2]=買賣現沖註記
+    有「b」或空白代表先買現沖，有「bs」代表買賣現沖（雙向）
+    實際欄位以 row 長度和內容判斷
+    """
+    buy_sell = set()
+    buy_only = set()
     try:
-        # 上市可現沖
         url = "https://www.twse.com.tw/rwd/zh/afterTrading/TWTASU?response=json"
         res = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
         data = res.json()
-        for row in data.get("data", []):
-            if len(row) < 3:
-                continue
-            code = str(row[0]).strip()
-            trade_type = str(row[2]).strip() if len(row) > 2 else ""
-print(f"DEBUG 現沖欄位: code={code} row[2]={trade_type} row={row[:4]}")
-if "賣" in trade_type or "雙" in trade_type:
-    buy_sell.add(code)
-else:
-    buy_only.add(code)
-        print(f"上市可現沖：買賣現沖={len(buy_sell)} 先買現沖={len(buy_only)}")
-    except Exception as e:
-        print(f"上市現沖名單抓取失敗: {e}")
-    try:
-        # 上櫃可現沖
-        url2 = "https://www.tpex.org.tw/web/stock/margin_trading/short_selling/SaleSimulate_result.php?l=zh-tw&o=json"
-        res2 = requests.get(url2, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
-        data2 = res2.json()
-        for row in data2.get("aaData", []):
+        rows = data.get("data", [])
+        if rows:
+            # 印出第一筆確認欄位格式
+            print(f"現沖名單第一筆: {rows[0]}")
+        for row in rows:
             if len(row) < 1:
                 continue
             code = str(row[0]).strip()
-            buy_only.add(code)  # 上櫃預設先買現沖
-        print(f"上櫃可現沖：{len(data2.get('aaData', []))} 檔")
+            # row長度>=3時看第3欄判斷類型，否則預設先買現沖
+            if len(row) >= 3:
+                trade_type = str(row[2]).strip().lower()
+                if "s" in trade_type or "賣" in trade_type or "雙" in trade_type:
+                    buy_sell.add(code)
+                else:
+                    buy_only.add(code)
+            else:
+                buy_only.add(code)
+        print(f"上市可現沖：買賣現沖={len(buy_sell)} 先買現沖={len(buy_only)}")
     except Exception as e:
-        print(f"上櫃現沖名單抓取失敗: {e}")
+        print(f"上市現沖名單抓取失敗: {e}")
     return buy_sell, buy_only
+
 
 def fetch_twse_foreign():
     """上市（TWSE）三大法人外資買賣超。
@@ -435,15 +428,15 @@ for ticker, (stock_id, name, market) in ticker_map.items():
         if market == "otc": tags.append("上櫃")
         tags.append("可當沖")
 
-        # 當沖狀態判斷
+        # 當沖狀態
         is_attention = stock_id in attention_stocks
         is_disposition = stock_id in disposition_stocks
         if stock_id in buy_sell_stocks:
-            daytrade_status = "buy_sell"   # 買賣現沖（雙向）
+            daytrade_status = "buy_sell"
         elif stock_id in buy_only_stocks:
-            daytrade_status = "buy_only"   # 先買現沖
+            daytrade_status = "buy_only"
         else:
-            daytrade_status = "none"       # 不可現沖
+            daytrade_status = "none"
 
         print(f"{name}({stock_id}) 價={price} [{price_range}] 均量={vol_5avg} 外資={foreign_buy}{'✓' if foreign_found else '?'} 分={score}")
 
