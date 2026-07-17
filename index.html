@@ -373,8 +373,6 @@ function renderList() {
           <span class="sc-name">${s.name}</span>
           <span class="badge ${s.badge === 'hot' ? 'badge-hot' : 'badge-watch'}">${s.badgeLabel}</span>
           <span class="price-tag">${priceLabel}</span>
-          ${s.isDisposition ? '<span class="dt-badge dt-disposition">🚫 處置股</span>' : (s.isAttention ? '<span class="dt-badge dt-attention">⚠️ 注意股</span>' : '')}
-          ${s.daytradeStatus === 'buy_sell' ? '<span class="dt-badge dt-buy-sell">🔄 買賣現沖</span>' : s.daytradeStatus === 'buy_only' ? '<span class="dt-badge dt-buy-only">🟡 先買現沖</span>' : s.daytradeStatus === 'none' ? '<span class="dt-badge dt-none">－ 不可現沖</span>' : '<span class="dt-badge dt-none" style="color:#bbb;">現沖查詢中</span>'}
           <span class="${s.chg.startsWith('+') ? 'up' : 'dn'}" style="font-size:13px;font-weight:700;">${s.chg}</span>
           <span style="font-size:12px;color:#999;">$${s.price}</span>
           <div class="score-wrap">
@@ -394,7 +392,6 @@ function renderList() {
       <div class="sc-detail">
         <div class="detail-meta">
           <span>外資買賣超：<strong>${foreignText}</strong></span>
-          <span>當沖資格：<strong>${s.isDisposition ? '🚫 處置股不建議' : s.daytradeStatus === 'buy_sell' ? '🔄 可買賣現沖' : s.daytradeStatus === 'buy_only' ? '🟡 先買現沖' : s.daytradeStatus === 'none' ? '－ 不在現沖名單' : '查詢中（API 限制）'}</strong></span>
           <span>一張成本：<strong>$${(s.price * 1000).toLocaleString()}</strong></span>
           <span>KD：K=${s.kdK} / D=${s.kdD}</span>
           <span>${s.market === 'otc' ? '上櫃' : '上市'}</span>
