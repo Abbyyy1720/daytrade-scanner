@@ -1,5 +1,5 @@
 {
-  "updated": "2026/07/29 16:53",
+  "updated": "2026/07/29 19:15",
   "stocks": [
     {
       "code": "3441",
@@ -59547,44 +59547,6 @@
       "reason": "量能持平，與均量相近。KD 偏弱（K=12.5 D=19.9），需觀察是否止跌。外資買超 1,002 張，小幅偏多。波動率 9.1%，日內價差空間充足，適合當沖。"
     },
     {
-      "code": "2890",
-      "name": "永豐金",
-      "market": "twse",
-      "price": 38.6,
-      "priceRange": "0-100",
-      "chg": "-0.1%",
-      "vol": 39203,
-      "avgVol": 44029,
-      "atr": 1.1,
-      "atrPct": 2.8,
-      "vr": 142.6,
-      "vrTrend": "down",
-      "kdK": 49.6,
-      "kdD": 46.1,
-      "kdStatus": "up",
-      "kdLabel": "K>D 向上",
-      "foreignBuy": 2923,
-      "foreignFound": true,
-      "vol5": [
-        74249,
-        29746,
-        45834,
-        31115,
-        39203
-      ],
-      "score": 50,
-      "badge": "watch",
-      "badgeLabel": "觀察",
-      "isFinance": true,
-      "tags": [
-        "KD 向上",
-        "外資大買",
-        "金融股",
-        "可當沖"
-      ],
-      "reason": "量能持平，與均量相近。KD 向上（K=49.6 D=46.1），短線動能偏多。外資買超 2,923 張，小幅偏多。波動率 2.8%，波動中等。"
-    },
-    {
       "code": "3016",
       "name": "嘉晶",
       "market": "twse",
@@ -60479,7 +60441,7 @@
     },
     {
       "code": "4953",
-      "name": "緯軟",
+      "name": "緯致",
       "market": "otc",
       "price": 118.0,
       "priceRange": "100-300",
@@ -63658,6 +63620,44 @@
         "可當沖"
       ],
       "reason": "成交量為均量 1.7 倍，量能放大中。KD 偏弱（K=43.0 D=48.2），需觀察是否止跌。外資近乎中性。波動率僅 1.5%，波動偏小，當沖空間有限。"
+    },
+    {
+      "code": "2890",
+      "name": "永豐金",
+      "market": "twse",
+      "price": 38.6,
+      "priceRange": "0-100",
+      "chg": "-0.1%",
+      "vol": 39203,
+      "avgVol": 49703,
+      "atr": 1.1,
+      "atrPct": 2.8,
+      "vr": 149.0,
+      "vrTrend": "down",
+      "kdK": 41.3,
+      "kdD": 37.8,
+      "kdStatus": "up",
+      "kdLabel": "K>D 向上",
+      "foreignBuy": 2923,
+      "foreignFound": true,
+      "vol5": [
+        74200,
+        74249,
+        29746,
+        31115,
+        39203
+      ],
+      "score": 48,
+      "badge": "watch",
+      "badgeLabel": "觀察",
+      "isFinance": true,
+      "tags": [
+        "KD 向上",
+        "外資大買",
+        "金融股",
+        "可當沖"
+      ],
+      "reason": "量能持平，與均量相近。KD 向上（K=41.3 D=37.8），短線動能偏多。外資買超 2,923 張，小幅偏多。波動率 2.8%，波動中等。"
     },
     {
       "code": "2912",
@@ -73164,43 +73164,6 @@
         "可當沖"
       ],
       "reason": "量能持平，與均量相近。KD 偏弱（K=6.6 D=11.3），需觀察是否止跌。外資買超 486 張，小幅偏多。波動率僅 1.8%，波動偏小，當沖空間有限。"
-    },
-    {
-      "code": "00886",
-      "name": "永豐美國科技",
-      "market": "otc",
-      "price": 43.9,
-      "priceRange": "0-100",
-      "chg": "-1.6%",
-      "vol": 24,
-      "avgVol": 21,
-      "atr": 0.4,
-      "atrPct": 0.9,
-      "vr": 244.6,
-      "vrTrend": "down",
-      "kdK": 5.5,
-      "kdD": 11.0,
-      "kdStatus": "dn",
-      "kdLabel": "K<D 偏弱",
-      "foreignBuy": 0,
-      "foreignFound": false,
-      "vol5": [
-        20,
-        22,
-        1,
-        41,
-        24
-      ],
-      "score": 43,
-      "badge": "watch",
-      "badgeLabel": "觀察",
-      "isFinance": false,
-      "tags": [
-        "VR 強勢",
-        "上櫃",
-        "可當沖"
-      ],
-      "reason": "量能持平，與均量相近。KD 偏弱（K=5.5 D=11.0），需觀察是否止跌。外資資料待確認。波動率僅 0.9%，波動偏小，當沖空間有限。"
     },
     {
       "code": "2073",
@@ -84320,6 +84283,43 @@
         "可當沖"
       ],
       "reason": "量能持平，與均量相近。KD 剛完成黃金交叉（K=90.7 D=90.5），留意後續確認。外資資料待確認。波動率僅 1.2%，波動偏小，當沖空間有限。"
+    },
+    {
+      "code": "00886",
+      "name": "永豐美國科技",
+      "market": "otc",
+      "price": 43.9,
+      "priceRange": "0-100",
+      "chg": "+0.0%",
+      "vol": 0,
+      "avgVol": 17,
+      "atr": 0.4,
+      "atrPct": 0.9,
+      "vr": 256.3,
+      "vrTrend": "up",
+      "kdK": 3.7,
+      "kdD": 8.6,
+      "kdStatus": "dn",
+      "kdLabel": "K<D 偏弱",
+      "foreignBuy": 0,
+      "foreignFound": false,
+      "vol5": [
+        22,
+        1,
+        41,
+        24,
+        0
+      ],
+      "score": 31,
+      "badge": "watch",
+      "badgeLabel": "觀察",
+      "isFinance": false,
+      "tags": [
+        "VR 強勢",
+        "上櫃",
+        "可當沖"
+      ],
+      "reason": "量能持平，與均量相近。KD 偏弱（K=3.7 D=8.6），需觀察是否止跌。外資資料待確認。波動率僅 0.9%，波動偏小，當沖空間有限。"
     },
     {
       "code": "4538",
