@@ -1,5 +1,5 @@
 {
-  "updated": "2026/08/03 17:41",
+  "updated": "2026/08/03 20:13",
   "stocks": [
     {
       "code": "3229",
@@ -52802,7 +52802,7 @@
       "kdD": 25.1,
       "kdStatus": "up",
       "kdLabel": "K>D 向上",
-      "foreignBuy": 205,
+      "foreignBuy": 0,
       "foreignFound": true,
       "vol5": [
         0,
@@ -52817,10 +52817,9 @@
       "isFinance": false,
       "tags": [
         "KD 向上",
-        "外資買超",
         "可當沖"
       ],
-      "reason": "量能持平，與均量相近。KD 向上（K=34.5 D=25.1），短線動能偏多。外資買超 205 張，小幅偏多。波動率 2.2%，波動中等。"
+      "reason": "量能持平，與均量相近。KD 向上（K=34.5 D=25.1），短線動能偏多。外資近乎中性。波動率 2.2%，波動中等。"
     },
     {
       "code": "00676R",
@@ -57173,43 +57172,6 @@
       "reason": "量能持平，與均量相近。KD 偏弱（K=10.6 D=11.0），需觀察是否止跌。外資近乎中性。波動率 4.1%，日內價差空間充足，適合當沖。"
     },
     {
-      "code": "1475",
-      "name": "業旺",
-      "market": "twse",
-      "price": 27.1,
-      "priceRange": "0-100",
-      "chg": "-0.2%",
-      "vol": 8,
-      "avgVol": 19,
-      "atr": 0.8,
-      "atrPct": 3.0,
-      "vr": 114.0,
-      "vrTrend": "down",
-      "kdK": 69.4,
-      "kdD": 57.3,
-      "kdStatus": "up",
-      "kdLabel": "K>D 向上",
-      "foreignBuy": 2,
-      "foreignFound": true,
-      "vol5": [
-        40,
-        24,
-        3,
-        24,
-        8
-      ],
-      "score": 37,
-      "badge": "watch",
-      "badgeLabel": "觀察",
-      "isFinance": false,
-      "tags": [
-        "KD 向上",
-        "外資買超",
-        "可當沖"
-      ],
-      "reason": "量能持平，與均量相近。KD 向上（K=69.4 D=57.3），短線動能偏多。外資買超 2 張，小幅偏多。波動率 3.0%，波動中等。"
-    },
-    {
       "code": "2009",
       "name": "第一銅",
       "market": "twse",
@@ -61019,7 +60981,7 @@
       "kdD": 42.7,
       "kdStatus": "up",
       "kdLabel": "K>D 向上",
-      "foreignBuy": 1,
+      "foreignBuy": 0,
       "foreignFound": true,
       "vol5": [
         0,
@@ -61034,10 +60996,9 @@
       "isFinance": false,
       "tags": [
         "KD 向上",
-        "外資買超",
         "可當沖"
       ],
-      "reason": "量能持平，與均量相近。KD 向上（K=51.9 D=42.7），短線動能偏多。外資買超 1 張，小幅偏多。波動率僅 0.5%，波動偏小，當沖空間有限。"
+      "reason": "量能持平，與均量相近。KD 向上（K=51.9 D=42.7），短線動能偏多。外資近乎中性。波動率僅 0.5%，波動偏小，當沖空間有限。"
     },
     {
       "code": "00895",
@@ -76102,7 +76063,7 @@
       "kdD": 32.4,
       "kdStatus": "dn",
       "kdLabel": "K<D 偏弱",
-      "foreignBuy": -88,
+      "foreignBuy": 0,
       "foreignFound": true,
       "vol5": [
         0,
@@ -76116,7 +76077,6 @@
       "badgeLabel": "觀察",
       "isFinance": false,
       "tags": [
-        "外資賣超",
         "可當沖"
       ],
       "reason": "量能持平，與均量相近。KD 偏弱（K=24.0 D=32.4），需觀察是否止跌。外資近乎中性。波動率僅 1.1%，波動偏小，當沖空間有限。"
