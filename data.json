@@ -1,5 +1,5 @@
 {
-  "updated": "2026/08/10 16:52",
+  "updated": "2026/08/10 18:16",
   "stocks": [
     {
       "code": "2103",
@@ -57133,43 +57133,6 @@
         "可當沖"
       ],
       "reason": "量能持平，與均量相近。KD 向上（K=82.1 D=68.3），短線動能偏多。外資買超 567 張，小幅偏多。波動率 2.4%，波動中等。"
-    },
-    {
-      "code": "1321",
-      "name": "大洋",
-      "market": "twse",
-      "price": 32.2,
-      "priceRange": "0-100",
-      "chg": "+0.9%",
-      "vol": 122,
-      "avgVol": 104,
-      "atr": 0.5,
-      "atrPct": 1.6,
-      "vr": 144.3,
-      "vrTrend": "down",
-      "kdK": 48.5,
-      "kdD": 46.9,
-      "kdStatus": "cross",
-      "kdLabel": "K 剛交叉 D",
-      "foreignBuy": 8,
-      "foreignFound": true,
-      "vol5": [
-        157,
-        71,
-        110,
-        64,
-        122
-      ],
-      "score": 42,
-      "badge": "watch",
-      "badgeLabel": "觀察",
-      "isFinance": false,
-      "tags": [
-        "KD 交叉",
-        "外資買超",
-        "可當沖"
-      ],
-      "reason": "量能持平，與均量相近。KD 剛完成黃金交叉（K=48.5 D=46.9），留意後續確認。外資買超 8 張，小幅偏多。波動率僅 1.6%，波動偏小，當沖空間有限。"
     },
     {
       "code": "1776",
