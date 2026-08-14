@@ -35,6 +35,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .clear-btn { font-size: 12px; padding: 5px 14px; border-radius: 20px; border: 1.5px solid #ddd; background: #fff; color: #aaa; cursor: pointer; margin-left: auto; transition: all 0.15s; }
 .clear-btn:hover { border-color: #999; color: #555; }
 
+/* 排除 ETF 切換按鈕 */
+.toggle-btn { font-size: 12px; padding: 5px 12px; border-radius: 20px; border: 1px solid #ddd; background: #fff; color: #555; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.toggle-btn:hover { border-color: #aaa; }
+.toggle-btn.active { background: #FAECE7; color: #993C1D; border-color: #D85A30; font-weight: 600; }
+
 .divider { width: 1px; height: 20px; background: #eee; margin: 0 2px; }
 
 /* 頁籤 */
@@ -168,6 +173,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
       </select>
     </div>
 
+    <!-- 排除 ETF -->
+    <button class="toggle-btn" id="btn-exclude-etf" onclick="toggleExcludeETF()">排除 ETF</button>
+
     <!-- 清除篩選 -->
     <button class="clear-btn" onclick="clearFilters()">清除篩選</button>
   </div>
@@ -192,6 +200,7 @@ let sortKey = 'score';
 let sortDir = 'desc'; // 預設推薦指數高到低
 let currentTab = 'recommend'; // 'recommend' = 推薦股（僅熱門） | 'all' = 全部股（全市場）
 let searchQuery = '';
+let excludeETF = false; // 是否排除 ETF（代碼開頭為 00 的視為 ETF）
 let currentPage = 1;
 const pageSize = 20; // 每頁20筆
 
@@ -288,14 +297,28 @@ function clearFilters() {
   sortKey = 'score';
   sortDir = 'desc';
   searchQuery = '';
+  excludeETF = false;
+  document.getElementById('btn-exclude-etf').classList.remove('active');
   currentPage = 1;
   updateSortBtns();
+  renderList();
+}
+
+function toggleExcludeETF() {
+  excludeETF = !excludeETF;
+  document.getElementById('btn-exclude-etf').classList.toggle('active', excludeETF);
+  currentPage = 1;
   renderList();
 }
 
 function getFiltered() {
   let data = [...allStocks];
   const isSearching = !!searchQuery;
+
+  // 排除 ETF（代碼開頭為 00，台股 ETF 慣例編碼）—— 不論搜尋或篩選狀態皆套用
+  if (excludeETF) {
+    data = data.filter(s => !s.code.startsWith('00'));
+  }
 
   // 搜尋（代碼或名稱，不分大小寫）—— 有輸入搜尋字串時，優先於其他篩選條件
   if (isSearching) {
