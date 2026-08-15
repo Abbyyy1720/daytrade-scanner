@@ -86,7 +86,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .score-num { font-size: 14px; font-weight: 700; min-width: 28px; text-align: right; }
 .sc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
 .sc-metric { background: #f8f8f8; border-radius: 7px; padding: 5px 8px; }
-.sc-metric .ml { font-size: 10px; color: #000; margin-bottom: 1px; }
+.sc-metric .ml { font-size: 10px; color: #bbb; margin-bottom: 1px; }
 .sc-metric .mv { font-size: 12px; font-weight: 700; color: #333; }
 .kd-up { color: #D85A30 !important; } .kd-dn { color: #1D9E75 !important; } .kd-cross { color: #BA7517 !important; }
 
@@ -155,6 +155,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
     <div class="divider"></div>
 
     <!-- 排序按鈕群 -->
+    <button class="sort-btn" id="btn-price" onclick="toggleSort('price')">股價</button>
     <button class="sort-btn" id="btn-vol" onclick="toggleSort('vol')">成交量</button>
     <button class="sort-btn" id="btn-avgvol" onclick="toggleSort('avgvol')">五日均量</button>
     <button class="sort-btn" id="btn-chg" onclick="toggleSort('chg')">漲幅</button>
@@ -267,10 +268,10 @@ function toggleSort(key) {
 }
 
 function updateSortBtns() {
-  ['vol','avgvol','chg','score'].forEach(k => {
+  ['price','vol','avgvol','chg','score'].forEach(k => {
     const btn = document.getElementById(`btn-${k}`);
     btn.className = 'sort-btn';
-    const labels = { vol:'成交量', avgvol:'五日均量', chg:'漲幅', score:'推薦指數' };
+    const labels = { price:'股價', vol:'成交量', avgvol:'五日均量', chg:'漲幅', score:'推薦指數' };
     if (k === sortKey) {
       const arrow = sortDir === 'desc' ? ' ⬇' : ' ⬆';
       btn.textContent = labels[k] + arrow;
@@ -344,7 +345,8 @@ function getFiltered() {
   // 排序
   data.sort((a, b) => {
     let va, vb;
-    if (sortKey === 'vol') { va = a.vol; vb = b.vol; }
+    if (sortKey === 'price') { va = a.price; vb = b.price; }
+    else if (sortKey === 'vol') { va = a.vol; vb = b.vol; }
     else if (sortKey === 'avgvol') { va = a.avgVol; vb = b.avgVol; }
     else if (sortKey === 'chg') { va = chgVal(a); vb = chgVal(b); }
     else { va = a.score; vb = b.score; }
