@@ -1,5 +1,5 @@
 {
-  "updated": "2026/08/17 17:31",
+  "updated": "2026/08/17 22:59",
   "stocks": [
     {
       "code": "2392",
@@ -2661,8 +2661,8 @@
       "atrPct": 6.1,
       "vr": 143.8,
       "vrTrend": "up",
-      "kdK": 81.0,
-      "kdD": 75.0,
+      "kdK": 80.6,
+      "kdD": 74.9,
       "kdStatus": "up",
       "kdLabel": "K>D 向上",
       "foreignBuy": 797,
@@ -2684,7 +2684,7 @@
         "外資買超",
         "可當沖"
       ],
-      "reason": "成交量為均量 1.5 倍，量能放大中。KD 向上（K=81.0 D=75.0），短線動能偏多。外資買超 797 張，小幅偏多。波動率 6.1%，日內價差空間充足，適合當沖。"
+      "reason": "成交量為均量 1.5 倍，量能放大中。KD 向上（K=80.6 D=74.9），短線動能偏多。外資買超 797 張，小幅偏多。波動率 6.1%，日內價差空間充足，適合當沖。"
     },
     {
       "code": "3005",
@@ -16661,6 +16661,43 @@
       "reason": "量能持平，與均量相近。KD 剛完成黃金交叉（K=66.3 D=64.5），留意後續確認。外資資料待確認。波動率 4.7%，日內價差空間充足，適合當沖。"
     },
     {
+      "code": "3444",
+      "name": "利機",
+      "market": "otc",
+      "price": 78.8,
+      "priceRange": "0-100",
+      "chg": "+3.0%",
+      "vol": 262,
+      "avgVol": 303,
+      "atr": 3.8,
+      "atrPct": 4.8,
+      "vr": 117.7,
+      "vrTrend": "up",
+      "kdK": 85.2,
+      "kdD": 79.5,
+      "kdStatus": "up",
+      "kdLabel": "K>D 向上",
+      "foreignBuy": 0,
+      "foreignFound": false,
+      "vol5": [
+        500,
+        302,
+        262,
+        192,
+        262
+      ],
+      "score": 52,
+      "badge": "watch",
+      "badgeLabel": "觀察",
+      "isFinance": false,
+      "tags": [
+        "KD 向上",
+        "上櫃",
+        "可當沖"
+      ],
+      "reason": "量能持平，與均量相近。KD 向上（K=85.2 D=79.5），短線動能偏多。外資資料待確認。波動率 4.8%，日內價差空間充足，適合當沖。"
+    },
+    {
       "code": "3491",
       "name": "昇達科",
       "market": "otc",
@@ -17806,43 +17843,6 @@
         "可當沖"
       ],
       "reason": "量能持平，與均量相近。KD 偏弱（K=54.0 D=60.6），需觀察是否止跌。外資資料待確認。波動率 6.8%，日內價差空間充足，適合當沖。"
-    },
-    {
-      "code": "3444",
-      "name": "利機",
-      "market": "otc",
-      "price": 78.8,
-      "priceRange": "0-100",
-      "chg": "+3.0%",
-      "vol": 262,
-      "avgVol": 303,
-      "atr": 3.7,
-      "atrPct": 4.7,
-      "vr": 117.7,
-      "vrTrend": "up",
-      "kdK": 85.2,
-      "kdD": 79.5,
-      "kdStatus": "up",
-      "kdLabel": "K>D 向上",
-      "foreignBuy": 0,
-      "foreignFound": false,
-      "vol5": [
-        500,
-        302,
-        262,
-        192,
-        262
-      ],
-      "score": 51,
-      "badge": "watch",
-      "badgeLabel": "觀察",
-      "isFinance": false,
-      "tags": [
-        "KD 向上",
-        "上櫃",
-        "可當沖"
-      ],
-      "reason": "量能持平，與均量相近。KD 向上（K=85.2 D=79.5），短線動能偏多。外資資料待確認。波動率 4.7%，日內價差空間充足，適合當沖。"
     },
     {
       "code": "3630",
@@ -21506,8 +21506,8 @@
       "atrPct": 5.9,
       "vr": 89.8,
       "vrTrend": "down",
-      "kdK": 32.6,
-      "kdD": 48.9,
+      "kdK": 32.9,
+      "kdD": 49.0,
       "kdStatus": "dn",
       "kdLabel": "K<D 偏弱",
       "foreignBuy": 0,
@@ -21527,7 +21527,7 @@
         "上櫃",
         "可當沖"
       ],
-      "reason": "量能持平，與均量相近。KD 偏弱（K=32.6 D=48.9），需觀察是否止跌。外資資料待確認。波動率 5.9%，日內價差空間充足，適合當沖。"
+      "reason": "量能持平，與均量相近。KD 偏弱（K=32.9 D=49.0），需觀察是否止跌。外資資料待確認。波動率 5.9%，日內價差空間充足，適合當沖。"
     },
     {
       "code": "8234",
@@ -26932,45 +26932,6 @@
       "reason": "量能持平，與均量相近。KD 剛完成黃金交叉（K=91.4 D=89.9），留意後續確認。外資大買 5,820 張，籌碼正向。波動率 3.0%，波動中等。"
     },
     {
-      "code": "00643K",
-      "name": "群益深証中小+R",
-      "market": "twse",
-      "price": 4.0,
-      "priceRange": "0-100",
-      "chg": "-0.7%",
-      "vol": 11,
-      "avgVol": 7,
-      "atr": 0.0,
-      "atrPct": 0.0,
-      "vr": 200.0,
-      "vrTrend": "down",
-      "kdK": 89.2,
-      "kdD": 86.7,
-      "kdStatus": "cross",
-      "kdLabel": "K 剛交叉 D",
-      "foreignBuy": -2,
-      "foreignFound": true,
-      "vol5": [
-        0,
-        0,
-        0,
-        25,
-        11
-      ],
-      "score": 46,
-      "badge": "watch",
-      "badgeLabel": "觀察",
-      "isFinance": false,
-      "tags": [
-        "量能放大",
-        "KD 交叉",
-        "外資賣超",
-        "VR 強勢",
-        "可當沖"
-      ],
-      "reason": "成交量為均量 1.6 倍，量能放大中。KD 剛完成黃金交叉（K=89.2 D=86.7），留意後續確認。外資近乎中性。波動率僅 0.0%，波動偏小，當沖空間有限。"
-    },
-    {
       "code": "00663L",
       "name": "國泰臺灣加權正2",
       "market": "twse",
@@ -27886,42 +27847,6 @@
         "可當沖"
       ],
       "reason": "成交量為均量 3.0 倍，爆量明顯。KD 偏弱（K=68.4 D=79.4），需觀察是否止跌。外資資料待確認。波動率僅 0.7%，波動偏小，當沖空間有限。"
-    },
-    {
-      "code": "7772",
-      "name": "耀穎",
-      "market": "otc",
-      "price": 93.5,
-      "priceRange": "0-100",
-      "chg": "+3.8%",
-      "vol": 39,
-      "avgVol": 53,
-      "atr": 5.6,
-      "atrPct": 6.0,
-      "vr": 100.0,
-      "vrTrend": "flat",
-      "kdK": 51.1,
-      "kdD": 57.9,
-      "kdStatus": "dn",
-      "kdLabel": "K<D 偏弱",
-      "foreignBuy": 0,
-      "foreignFound": false,
-      "vol5": [
-        47,
-        45,
-        40,
-        95,
-        39
-      ],
-      "score": 46,
-      "badge": "watch",
-      "badgeLabel": "觀察",
-      "isFinance": false,
-      "tags": [
-        "上櫃",
-        "可當沖"
-      ],
-      "reason": "量能持平，與均量相近。KD 偏弱（K=51.1 D=57.9），需觀察是否止跌。外資資料待確認。波動率 6.0%，日內價差空間充足，適合當沖。"
     },
     {
       "code": "8048",
@@ -33493,8 +33418,8 @@
       "chg": "-1.1%",
       "vol": 1664,
       "avgVol": 2397,
-      "atr": 12.8,
-      "atrPct": 5.9,
+      "atr": 12.9,
+      "atrPct": 6.0,
       "vr": 56.0,
       "vrTrend": "down",
       "kdK": 59.5,
@@ -33518,7 +33443,7 @@
         "上櫃",
         "可當沖"
       ],
-      "reason": "量能持平，與均量相近。KD 偏弱（K=59.5 D=60.1），需觀察是否止跌。外資資料待確認。波動率 5.9%，日內價差空間充足，適合當沖。"
+      "reason": "量能持平，與均量相近。KD 偏弱（K=59.5 D=60.1），需觀察是否止跌。外資資料待確認。波動率 6.0%，日內價差空間充足，適合當沖。"
     },
     {
       "code": "6291",
@@ -33953,6 +33878,42 @@
         "可當沖"
       ],
       "reason": "成交量為均量 1.3 倍，量能放大中。KD 偏弱（K=57.1 D=61.0），需觀察是否止跌。外資資料待確認。波動率僅 1.8%，波動偏小，當沖空間有限。"
+    },
+    {
+      "code": "7772",
+      "name": "耀穎",
+      "market": "otc",
+      "price": 93.5,
+      "priceRange": "0-100",
+      "chg": "+3.8%",
+      "vol": 39,
+      "avgVol": 53,
+      "atr": 5.6,
+      "atrPct": 6.0,
+      "vr": 39.2,
+      "vrTrend": "up",
+      "kdK": 50.8,
+      "kdD": 56.3,
+      "kdStatus": "dn",
+      "kdLabel": "K<D 偏弱",
+      "foreignBuy": 0,
+      "foreignFound": false,
+      "vol5": [
+        47,
+        45,
+        40,
+        95,
+        39
+      ],
+      "score": 44,
+      "badge": "watch",
+      "badgeLabel": "觀察",
+      "isFinance": false,
+      "tags": [
+        "上櫃",
+        "可當沖"
+      ],
+      "reason": "量能持平，與均量相近。KD 偏弱（K=50.8 D=56.3），需觀察是否止跌。外資資料待確認。波動率 6.0%，日內價差空間充足，適合當沖。"
     },
     {
       "code": "7819",
@@ -40084,6 +40045,42 @@
       "reason": "量能持平，與均量相近。KD 偏弱（K=76.8 D=79.7），需觀察是否止跌。外資資料待確認。波動率 5.2%，日內價差空間充足，適合當沖。"
     },
     {
+      "code": "6907",
+      "name": "雅特力-KY",
+      "market": "otc",
+      "price": 171.0,
+      "priceRange": "100-300",
+      "chg": "-2.8%",
+      "vol": 933,
+      "avgVol": 2136,
+      "atr": 16.5,
+      "atrPct": 9.6,
+      "vr": 134.8,
+      "vrTrend": "down",
+      "kdK": 23.1,
+      "kdD": 35.6,
+      "kdStatus": "dn",
+      "kdLabel": "K<D 偏弱",
+      "foreignBuy": 0,
+      "foreignFound": false,
+      "vol5": [
+        2067,
+        3680,
+        1944,
+        2054,
+        933
+      ],
+      "score": 42,
+      "badge": "watch",
+      "badgeLabel": "觀察",
+      "isFinance": false,
+      "tags": [
+        "上櫃",
+        "可當沖"
+      ],
+      "reason": "量能持平，與均量相近。KD 偏弱（K=23.1 D=35.6），需觀察是否止跌。外資資料待確認。波動率 9.6%，日內價差空間充足，適合當沖。"
+    },
+    {
       "code": "6983",
       "name": "華洋精機",
       "market": "otc",
@@ -45466,6 +45463,42 @@
       "reason": "量能持平，與均量相近。KD 偏弱（K=37.3 D=45.6），需觀察是否止跌。外資買超 77 張，小幅偏多。波動率 4.0%，日內價差空間充足，適合當沖。"
     },
     {
+      "code": "7855",
+      "name": "和運租車",
+      "market": "twse",
+      "price": 43.7,
+      "priceRange": "0-100",
+      "chg": "-1.6%",
+      "vol": 2325,
+      "avgVol": 4382,
+      "atr": 6.7,
+      "atrPct": 15.3,
+      "vr": 41.4,
+      "vrTrend": "down",
+      "kdK": 6.5,
+      "kdD": 10.6,
+      "kdStatus": "dn",
+      "kdLabel": "K<D 偏弱",
+      "foreignBuy": 82,
+      "foreignFound": true,
+      "vol5": [
+        82,
+        73,
+        13128,
+        6304,
+        2325
+      ],
+      "score": 40,
+      "badge": "watch",
+      "badgeLabel": "觀察",
+      "isFinance": false,
+      "tags": [
+        "外資買超",
+        "可當沖"
+      ],
+      "reason": "量能持平，與均量相近。KD 偏弱（K=6.5 D=10.6），需觀察是否止跌。外資買超 82 張，小幅偏多。波動率 15.3%，日內價差空間充足，適合當沖。"
+    },
+    {
       "code": "9902",
       "name": "台火",
       "market": "twse",
@@ -47174,42 +47207,6 @@
         "可當沖"
       ],
       "reason": "量能持平，與均量相近。KD 偏弱（K=42.7 D=53.3），需觀察是否止跌。外資資料待確認。波動率 4.0%，日內價差空間充足，適合當沖。"
-    },
-    {
-      "code": "6907",
-      "name": "雅特力-KY",
-      "market": "otc",
-      "price": 171.0,
-      "priceRange": "100-300",
-      "chg": "-2.8%",
-      "vol": 933,
-      "avgVol": 2136,
-      "atr": 16.5,
-      "atrPct": 9.6,
-      "vr": 100.0,
-      "vrTrend": "flat",
-      "kdK": 23.2,
-      "kdD": 36.7,
-      "kdStatus": "dn",
-      "kdLabel": "K<D 偏弱",
-      "foreignBuy": 0,
-      "foreignFound": false,
-      "vol5": [
-        2067,
-        3680,
-        1944,
-        2054,
-        933
-      ],
-      "score": 40,
-      "badge": "watch",
-      "badgeLabel": "觀察",
-      "isFinance": false,
-      "tags": [
-        "上櫃",
-        "可當沖"
-      ],
-      "reason": "量能持平，與均量相近。KD 偏弱（K=23.2 D=36.7），需觀察是否止跌。外資資料待確認。波動率 9.6%，日內價差空間充足，適合當沖。"
     },
     {
       "code": "6945",
@@ -51033,6 +51030,43 @@
       "reason": "量能持平，與均量相近。KD 偏弱（K=63.1 D=69.0），需觀察是否止跌。外資資料待確認。波動率 4.0%，日內價差空間充足，適合當沖。"
     },
     {
+      "code": "6263",
+      "name": "普萊德",
+      "market": "otc",
+      "price": 163.0,
+      "priceRange": "100-300",
+      "chg": "+0.0%",
+      "vol": 82,
+      "avgVol": 113,
+      "atr": 5.7,
+      "atrPct": 3.5,
+      "vr": 77.0,
+      "vrTrend": "flat",
+      "kdK": 83.9,
+      "kdD": 83.0,
+      "kdStatus": "cross",
+      "kdLabel": "K 剛交叉 D",
+      "foreignBuy": 0,
+      "foreignFound": false,
+      "vol5": [
+        83,
+        146,
+        179,
+        78,
+        82
+      ],
+      "score": 39,
+      "badge": "watch",
+      "badgeLabel": "觀察",
+      "isFinance": false,
+      "tags": [
+        "KD 交叉",
+        "上櫃",
+        "可當沖"
+      ],
+      "reason": "量能持平，與均量相近。KD 剛完成黃金交叉（K=83.9 D=83.0），留意後續確認。外資資料待確認。波動率 3.5%，波動中等。"
+    },
+    {
       "code": "6411",
       "name": "晶焱",
       "market": "otc",
@@ -53123,7 +53157,7 @@
       "kdD": 92.7,
       "kdStatus": "up",
       "kdLabel": "K>D 向上",
-      "foreignBuy": -4,
+      "foreignBuy": 0,
       "foreignFound": true,
       "vol5": [
         0,
@@ -53138,7 +53172,6 @@
       "isFinance": false,
       "tags": [
         "KD 向上",
-        "外資賣超",
         "可當沖"
       ],
       "reason": "量能持平，與均量相近。KD 向上（K=98.0 D=92.7），短線動能偏多。外資近乎中性。波動率僅 1.2%，波動偏小，當沖空間有限。"
@@ -54196,43 +54229,6 @@
         "可當沖"
       ],
       "reason": "量能持平，與均量相近。KD 偏弱（K=47.4 D=64.3），需觀察是否止跌。外資資料待確認。波動率 5.5%，日內價差空間充足，適合當沖。"
-    },
-    {
-      "code": "6263",
-      "name": "普萊德",
-      "market": "otc",
-      "price": 163.0,
-      "priceRange": "100-300",
-      "chg": "+0.0%",
-      "vol": 82,
-      "avgVol": 113,
-      "atr": 5.6,
-      "atrPct": 3.4,
-      "vr": 77.0,
-      "vrTrend": "flat",
-      "kdK": 83.9,
-      "kdD": 83.0,
-      "kdStatus": "cross",
-      "kdLabel": "K 剛交叉 D",
-      "foreignBuy": 0,
-      "foreignFound": false,
-      "vol5": [
-        83,
-        146,
-        179,
-        78,
-        82
-      ],
-      "score": 38,
-      "badge": "watch",
-      "badgeLabel": "觀察",
-      "isFinance": false,
-      "tags": [
-        "KD 交叉",
-        "上櫃",
-        "可當沖"
-      ],
-      "reason": "量能持平，與均量相近。KD 剛完成黃金交叉（K=83.9 D=83.0），留意後續確認。外資資料待確認。波動率 3.4%，波動中等。"
     },
     {
       "code": "6294",
@@ -59807,43 +59803,6 @@
       "reason": "量能持平，與均量相近。KD 剛完成黃金交叉（K=82.6 D=80.7），留意後續確認。外資資料待確認。波動率僅 1.1%，波動偏小，當沖空間有限。"
     },
     {
-      "code": "6023",
-      "name": "元大期",
-      "market": "otc",
-      "price": 83.4,
-      "priceRange": "0-100",
-      "chg": "-1.4%",
-      "vol": 649,
-      "avgVol": 591,
-      "atr": 1.9,
-      "atrPct": 2.3,
-      "vr": 46.0,
-      "vrTrend": "down",
-      "kdK": 32.9,
-      "kdD": 42.4,
-      "kdStatus": "dn",
-      "kdLabel": "K<D 偏弱",
-      "foreignBuy": 0,
-      "foreignFound": false,
-      "vol5": [
-        689,
-        833,
-        383,
-        400,
-        649
-      ],
-      "score": 36,
-      "badge": "watch",
-      "badgeLabel": "觀察",
-      "isFinance": true,
-      "tags": [
-        "金融股",
-        "上櫃",
-        "可當沖"
-      ],
-      "reason": "量能持平，與均量相近。KD 偏弱（K=32.9 D=42.4），需觀察是否止跌。外資資料待確認。波動率 2.3%，波動中等。"
-    },
-    {
       "code": "6146",
       "name": "耕興",
       "market": "otc",
@@ -62506,6 +62465,43 @@
         "可當沖"
       ],
       "reason": "量能持平，與均量相近。KD 剛完成黃金交叉（K=43.3 D=41.7），留意後續確認。外資資料待確認。波動率僅 1.6%，波動偏小，當沖空間有限。"
+    },
+    {
+      "code": "6023",
+      "name": "元大期",
+      "market": "otc",
+      "price": 83.4,
+      "priceRange": "0-100",
+      "chg": "-1.4%",
+      "vol": 649,
+      "avgVol": 591,
+      "atr": 1.6,
+      "atrPct": 1.9,
+      "vr": 46.0,
+      "vrTrend": "down",
+      "kdK": 37.6,
+      "kdD": 44.9,
+      "kdStatus": "dn",
+      "kdLabel": "K<D 偏弱",
+      "foreignBuy": 0,
+      "foreignFound": false,
+      "vol5": [
+        689,
+        833,
+        383,
+        400,
+        649
+      ],
+      "score": 35,
+      "badge": "watch",
+      "badgeLabel": "觀察",
+      "isFinance": true,
+      "tags": [
+        "金融股",
+        "上櫃",
+        "可當沖"
+      ],
+      "reason": "量能持平，與均量相近。KD 偏弱（K=37.6 D=44.9），需觀察是否止跌。外資資料待確認。波動率僅 1.9%，波動偏小，當沖空間有限。"
     },
     {
       "code": "6104",
@@ -66817,7 +66813,7 @@
       "kdD": 75.3,
       "kdStatus": "cross",
       "kdLabel": "K 剛交叉 D",
-      "foreignBuy": 56,
+      "foreignBuy": 0,
       "foreignFound": true,
       "vol5": [
         0,
@@ -66832,10 +66828,9 @@
       "isFinance": false,
       "tags": [
         "KD 交叉",
-        "外資買超",
         "可當沖"
       ],
-      "reason": "量能持平，與均量相近。KD 剛完成黃金交叉（K=77.7 D=75.3），留意後續確認。外資買超 56 張，小幅偏多。波動率僅 1.1%，波動偏小，當沖空間有限。"
+      "reason": "量能持平，與均量相近。KD 剛完成黃金交叉（K=77.7 D=75.3），留意後續確認。外資近乎中性。波動率僅 1.1%，波動偏小，當沖空間有限。"
     },
     {
       "code": "00673R",
@@ -71527,6 +71522,42 @@
       "reason": "量能持平，與均量相近。KD 偏弱（K=43.0 D=60.9），需觀察是否止跌。外資資料待確認。波動率僅 0.8%，波動偏小，當沖空間有限。"
     },
     {
+      "code": "009815",
+      "name": "大華美國MAG7+",
+      "market": "otc",
+      "price": 11.6,
+      "priceRange": "0-100",
+      "chg": "-0.4%",
+      "vol": 1847,
+      "avgVol": 2278,
+      "atr": 0.2,
+      "atrPct": 1.7,
+      "vr": 124.2,
+      "vrTrend": "down",
+      "kdK": 49.6,
+      "kdD": 68.8,
+      "kdStatus": "dn",
+      "kdLabel": "K<D 偏弱",
+      "foreignBuy": 0,
+      "foreignFound": false,
+      "vol5": [
+        2074,
+        3426,
+        2545,
+        1495,
+        1847
+      ],
+      "score": 31,
+      "badge": "watch",
+      "badgeLabel": "觀察",
+      "isFinance": false,
+      "tags": [
+        "上櫃",
+        "可當沖"
+      ],
+      "reason": "量能持平，與均量相近。KD 偏弱（K=49.6 D=68.8），需觀察是否止跌。外資資料待確認。波動率僅 1.7%，波動偏小，當沖空間有限。"
+    },
+    {
       "code": "009823",
       "name": "群益S&P500",
       "market": "otc",
@@ -73090,43 +73121,6 @@
         "可當沖"
       ],
       "reason": "量能持平，與均量相近。KD 向上（K=47.9 D=39.5），短線動能偏多。外資買超 1 張，小幅偏多。波動率僅 1.7%，波動偏小，當沖空間有限。"
-    },
-    {
-      "code": "00625K",
-      "name": "富邦上証+R",
-      "market": "twse",
-      "price": 8.8,
-      "priceRange": "0-100",
-      "chg": "-1.9%",
-      "vol": 2,
-      "avgVol": 0,
-      "atr": 0.0,
-      "atrPct": 0.0,
-      "vr": 93.8,
-      "vrTrend": "up",
-      "kdK": 71.8,
-      "kdD": 64.5,
-      "kdStatus": "up",
-      "kdLabel": "K>D 向上",
-      "foreignBuy": 1,
-      "foreignFound": true,
-      "vol5": [
-        1,
-        0,
-        0,
-        0,
-        2
-      ],
-      "score": 30,
-      "badge": "watch",
-      "badgeLabel": "觀察",
-      "isFinance": false,
-      "tags": [
-        "KD 向上",
-        "外資買超",
-        "可當沖"
-      ],
-      "reason": "量能持平，與均量相近。KD 向上（K=71.8 D=64.5），短線動能偏多。外資買超 1 張，小幅偏多。波動率僅 0.0%，波動偏小，當沖空間有限。"
     },
     {
       "code": "00636",
@@ -75290,7 +75284,7 @@
       "kdD": 68.0,
       "kdStatus": "dn",
       "kdLabel": "K<D 偏弱",
-      "foreignBuy": -111,
+      "foreignBuy": 0,
       "foreignFound": true,
       "vol5": [
         0,
@@ -75304,7 +75298,6 @@
       "badgeLabel": "觀察",
       "isFinance": false,
       "tags": [
-        "外資賣超",
         "可當沖"
       ],
       "reason": "量能持平，與均量相近。KD 偏弱（K=48.4 D=68.0），需觀察是否止跌。外資近乎中性。波動率僅 0.5%，波動偏小，當沖空間有限。"
@@ -76693,6 +76686,43 @@
         "可當沖"
       ],
       "reason": "量能持平，與均量相近。KD 偏弱（K=66.7 D=70.1），需觀察是否止跌。外資買超 88 張，小幅偏多。波動率僅 1.6%，波動偏小，當沖空間有限。"
+    },
+    {
+      "code": "00625K",
+      "name": "富邦上証+R",
+      "market": "twse",
+      "price": 8.8,
+      "priceRange": "0-100",
+      "chg": "+0.0%",
+      "vol": 0,
+      "avgVol": 0,
+      "atr": 0.0,
+      "atrPct": 0.0,
+      "vr": 93.8,
+      "vrTrend": "flat",
+      "kdK": 65.0,
+      "kdD": 64.7,
+      "kdStatus": "cross",
+      "kdLabel": "K 剛交叉 D",
+      "foreignBuy": 1,
+      "foreignFound": true,
+      "vol5": [
+        0,
+        0,
+        0,
+        2,
+        0
+      ],
+      "score": 28,
+      "badge": "watch",
+      "badgeLabel": "觀察",
+      "isFinance": false,
+      "tags": [
+        "KD 交叉",
+        "外資買超",
+        "可當沖"
+      ],
+      "reason": "量能持平，與均量相近。KD 剛完成黃金交叉（K=65.0 D=64.7），留意後續確認。外資買超 1 張，小幅偏多。波動率僅 0.0%，波動偏小，當沖空間有限。"
     },
     {
       "code": "00634R",
@@ -80946,17 +80976,17 @@
       "atrPct": 0.6,
       "vr": 96.3,
       "vrTrend": "flat",
-      "kdK": 67.9,
-      "kdD": 50.5,
+      "kdK": 75.4,
+      "kdD": 58.8,
       "kdStatus": "up",
       "kdLabel": "K>D 向上",
       "foreignBuy": 0,
       "foreignFound": false,
       "vol5": [
-        0,
         1,
         3,
         2,
+        0,
         0
       ],
       "score": 25,
@@ -80967,7 +80997,7 @@
         "KD 向上",
         "可當沖"
       ],
-      "reason": "量能持平，與均量相近。KD 向上（K=67.9 D=50.5），短線動能偏多。外資資料待確認。波動率僅 0.6%，波動偏小，當沖空間有限。"
+      "reason": "量能持平，與均量相近。KD 向上（K=75.4 D=58.8），短線動能偏多。外資資料待確認。波動率僅 0.6%，波動偏小，當沖空間有限。"
     },
     {
       "code": "00919",
@@ -81694,6 +81724,43 @@
         "可當沖"
       ],
       "reason": "量能持平，與均量相近。KD 偏弱（K=63.4 D=68.7），需觀察是否止跌。外資買超 6 張，小幅偏多。波動率 2.0%，波動中等。"
+    },
+    {
+      "code": "00643K",
+      "name": "群益深証中小+R",
+      "market": "twse",
+      "price": 4.0,
+      "priceRange": "0-100",
+      "chg": "+0.0%",
+      "vol": 0,
+      "avgVol": 7,
+      "atr": 0.0,
+      "atrPct": 0.0,
+      "vr": 200.0,
+      "vrTrend": "flat",
+      "kdK": 85.1,
+      "kdD": 86.2,
+      "kdStatus": "dn",
+      "kdLabel": "K<D 偏弱",
+      "foreignBuy": -2,
+      "foreignFound": true,
+      "vol5": [
+        0,
+        0,
+        25,
+        11,
+        0
+      ],
+      "score": 24,
+      "badge": "watch",
+      "badgeLabel": "觀察",
+      "isFinance": false,
+      "tags": [
+        "外資賣超",
+        "VR 強勢",
+        "可當沖"
+      ],
+      "reason": "量能持平，與均量相近。KD 偏弱（K=85.1 D=86.2），需觀察是否止跌。外資近乎中性。波動率僅 0.0%，波動偏小，當沖空間有限。"
     },
     {
       "code": "00656R",
@@ -84480,43 +84547,6 @@
       "reason": "量能持平，與均量相近。KD 偏弱（K=56.8 D=70.5），需觀察是否止跌。外資資料待確認。波動率僅 0.6%，波動偏小，當沖空間有限。"
     },
     {
-      "code": "2834",
-      "name": "臺企銀",
-      "market": "twse",
-      "price": 16.3,
-      "priceRange": "0-100",
-      "chg": "+0.0%",
-      "vol": 22494,
-      "avgVol": 29308,
-      "atr": 0.3,
-      "atrPct": 1.8,
-      "vr": 47.3,
-      "vrTrend": "flat",
-      "kdK": 9.0,
-      "kdD": 11.2,
-      "kdStatus": "dn",
-      "kdLabel": "K<D 偏弱",
-      "foreignBuy": -6654,
-      "foreignFound": true,
-      "vol5": [
-        30094,
-        20051,
-        42732,
-        31171,
-        22494
-      ],
-      "score": 19,
-      "badge": "watch",
-      "badgeLabel": "觀察",
-      "isFinance": true,
-      "tags": [
-        "外資賣超",
-        "金融股",
-        "可當沖"
-      ],
-      "reason": "量能持平，與均量相近。KD 偏弱（K=9.0 D=11.2），需觀察是否止跌。外資賣超 6,654 張，籌碼偏空需謹慎。波動率僅 1.8%，波動偏小，當沖空間有限。"
-    },
-    {
       "code": "00654R",
       "name": "富邦印度反1",
       "market": "twse",
@@ -85054,6 +85084,43 @@
         "可當沖"
       ],
       "reason": "量能持平，與均量相近。KD 偏弱（K=19.9 D=32.8），需觀察是否止跌。外資資料待確認。波動率僅 0.7%，波動偏小，當沖空間有限。"
+    },
+    {
+      "code": "2834",
+      "name": "臺企銀",
+      "market": "twse",
+      "price": 16.3,
+      "priceRange": "0-100",
+      "chg": "+0.0%",
+      "vol": 22494,
+      "avgVol": 29308,
+      "atr": 0.2,
+      "atrPct": 1.2,
+      "vr": 55.5,
+      "vrTrend": "flat",
+      "kdK": 12.0,
+      "kdD": 18.2,
+      "kdStatus": "dn",
+      "kdLabel": "K<D 偏弱",
+      "foreignBuy": -6654,
+      "foreignFound": true,
+      "vol5": [
+        30094,
+        20051,
+        42732,
+        31171,
+        22494
+      ],
+      "score": 15,
+      "badge": "watch",
+      "badgeLabel": "觀察",
+      "isFinance": true,
+      "tags": [
+        "外資賣超",
+        "金融股",
+        "可當沖"
+      ],
+      "reason": "量能持平，與均量相近。KD 偏弱（K=12.0 D=18.2），需觀察是否止跌。外資賣超 6,654 張，籌碼偏空需謹慎。波動率僅 1.2%，波動偏小，當沖空間有限。"
     },
     {
       "code": "00856B",
