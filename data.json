@@ -1,5 +1,5 @@
 {
-  "updated": "2026/08/17 23:07",
+  "updated": "2026/08/17 23:28",
   "stocks": [
     {
       "code": "2392",
@@ -59803,43 +59803,6 @@
       "reason": "量能持平，與均量相近。KD 剛完成黃金交叉（K=82.6 D=80.7），留意後續確認。外資資料待確認。波動率僅 1.1%，波動偏小，當沖空間有限。"
     },
     {
-      "code": "6023",
-      "name": "元大期",
-      "market": "otc",
-      "price": 83.4,
-      "priceRange": "0-100",
-      "chg": "-1.4%",
-      "vol": 649,
-      "avgVol": 591,
-      "atr": 1.8,
-      "atrPct": 2.2,
-      "vr": 53.7,
-      "vrTrend": "down",
-      "kdK": 37.1,
-      "kdD": 46.2,
-      "kdStatus": "dn",
-      "kdLabel": "K<D 偏弱",
-      "foreignBuy": 0,
-      "foreignFound": false,
-      "vol5": [
-        689,
-        833,
-        383,
-        400,
-        649
-      ],
-      "score": 36,
-      "badge": "watch",
-      "badgeLabel": "觀察",
-      "isFinance": true,
-      "tags": [
-        "金融股",
-        "上櫃",
-        "可當沖"
-      ],
-      "reason": "量能持平，與均量相近。KD 偏弱（K=37.1 D=46.2），需觀察是否止跌。外資資料待確認。波動率 2.2%，波動中等。"
-    },
-    {
       "code": "6146",
       "name": "耕興",
       "market": "otc",
@@ -62502,6 +62465,43 @@
         "可當沖"
       ],
       "reason": "量能持平，與均量相近。KD 剛完成黃金交叉（K=43.3 D=41.7），留意後續確認。外資資料待確認。波動率僅 1.6%，波動偏小，當沖空間有限。"
+    },
+    {
+      "code": "6023",
+      "name": "元大期",
+      "market": "otc",
+      "price": 83.4,
+      "priceRange": "0-100",
+      "chg": "-1.4%",
+      "vol": 649,
+      "avgVol": 591,
+      "atr": 1.6,
+      "atrPct": 1.9,
+      "vr": 46.0,
+      "vrTrend": "down",
+      "kdK": 37.6,
+      "kdD": 44.9,
+      "kdStatus": "dn",
+      "kdLabel": "K<D 偏弱",
+      "foreignBuy": 0,
+      "foreignFound": false,
+      "vol5": [
+        689,
+        833,
+        383,
+        400,
+        649
+      ],
+      "score": 35,
+      "badge": "watch",
+      "badgeLabel": "觀察",
+      "isFinance": true,
+      "tags": [
+        "金融股",
+        "上櫃",
+        "可當沖"
+      ],
+      "reason": "量能持平，與均量相近。KD 偏弱（K=37.6 D=44.9），需觀察是否止跌。外資資料待確認。波動率僅 1.9%，波動偏小，當沖空間有限。"
     },
     {
       "code": "6104",
