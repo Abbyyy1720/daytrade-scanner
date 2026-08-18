@@ -5,6 +5,13 @@ on:
     - cron: '0 9 * * 1-5'  # 台灣時間 17:00（UTC 09:00 + 8小時），週一到週五
   workflow_dispatch:          # 允許手動觸發
 
+# 避免同一個 workflow 被同時觸發兩次（例如排程跟手動觸發重疊），
+# 造成兩個 job 同時改 data.json、push 時互相衝突。
+# 若已有一個正在跑，新觸發的會排隊等候，不會取消正在進行的那個。
+concurrency:
+  group: fetch-data
+  cancel-in-progress: false
+
 jobs:
   fetch:
     runs-on: ubuntu-latest
@@ -33,4 +40,7 @@ jobs:
           git config user.email "actions@github.com"
           git add data.json
           git diff --staged --quiet || git commit -m "每日更新：$(date '+%Y-%m-%d %H:%M')"
-          git pull --rebase && git push
+          # data.json 是整份重新產生的資料快照，不需要逐行合併；
+          # 萬一 rebase 途中仍遇到衝突（例如上一個 job 剛好也在此時 push），
+          # 一律保留這次新產生的版本（-X ours）。
+          git pull --rebase -X ours && git push
