@@ -112,6 +112,11 @@ def fetch_tpex_foreign():
     原本的程式完全沒有抓上櫃法人資料，導致上櫃股票的外資分數永遠是「待確認」。
     資料源（data.gov.tw 開放資料集 11856）：
     https://www.tpex.org.tw/web/stock/3insti/daily_trade/3itrade_hedge_result.php
+
+    2026-08 發現櫃買中心已把回傳格式從舊版 {"aaData": [...]} 改成新版
+    {"tables": [{"fields": [...], "data": [...]}]}，這裡改用新格式讀取，
+    並且用 fields 動態找出「外資及陸資買賣超股數」欄位的位置，
+    避免櫃買中心之後再調整欄位順序時又整組失效。
     """
     for i in range(5):
         d = now_tw() - datetime.timedelta(days=i)
@@ -123,26 +128,40 @@ def fetch_tpex_foreign():
         try:
             res = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
             data = res.json()
-            rows = data.get("aaData")
-            if not rows:
-                print(f"上櫃外資 {roc_date} 無資料（可能非交易日，或 API 回傳格式有變）。回傳內容前200字：{str(data)[:200]}")
+
+            tables = data.get("tables")
+            if not tables or not tables[0].get("data"):
+                print(f"上櫃外資 {roc_date} 無資料（可能非交易日，或 API 回傳格式有變）。回傳內容前500字：{str(data)[:500]}")
                 continue
+
+            fields = tables[0].get("fields", [])
+            rows = tables[0]["data"]
+
+            # 動態找「外資及陸資買賣超股數(不含外資自營商)」欄位：
+            # 在 代號、名稱 之後，第一個出現的「買賣超股數」欄位即是。
+            foreign_idx = None
+            for idx, f in enumerate(fields):
+                if idx >= 2 and "買賣超股數" in f:
+                    foreign_idx = idx
+                    break
+            if foreign_idx is None:
+                foreign_idx = 4  # 找不到就退回原本假設的位置，至少不整組壞掉
+
             id_map, name_map = {}, {}
             for row in rows:
-                if len(row) < 5:
+                if len(row) <= foreign_idx:
                     continue
                 code = str(row[0]).strip()
                 name = str(row[1]).strip()
                 try:
-                    # 「外資及陸資買賣超股數」欄位，位置隨櫃買中心格式可能微調，
-                    # 若比對後發現偏移，請用 print(rows[0]) 對照欄位順序調整 idx
-                    net = int(str(row[4]).replace(",", "").replace("+", ""))
+                    net = int(str(row[foreign_idx]).replace(",", "").replace("+", ""))
                     id_map[code] = net // 1000
                     name_map[name] = net // 1000
                 except:
                     continue
-            print(f"上櫃外資 {roc_date}：{len(id_map)} 筆")
-            return {"id_map": id_map, "name_map": name_map}
+            print(f"上櫃外資 {roc_date}：{len(id_map)} 筆（欄位索引={foreign_idx}）")
+            if id_map:
+                return {"id_map": id_map, "name_map": name_map}
         except Exception as e:
             print(f"上櫃外資失敗: {e}")
     return {"id_map": {}, "name_map": {}}
