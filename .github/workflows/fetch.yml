@@ -38,9 +38,9 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add data.json
+          git add data.json history.json
           git diff --staged --quiet || git commit -m "每日更新：$(date '+%Y-%m-%d %H:%M')"
-          # data.json 是整份重新產生的資料快照，不需要逐行合併；
+          # data.json、history.json 都是整份重新產生的資料快照，不需要逐行合併；
           # 萬一 rebase 途中仍遇到衝突（例如上一個 job 剛好也在此時 push），
           # 一律保留這次新產生的版本（-X ours）。
           git pull --rebase -X ours && git push
