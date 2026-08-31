@@ -398,10 +398,12 @@ function renderList() {
           <span class="price-tag">${priceLabel}</span>
           <span class="${s.chg.startsWith('+') ? 'up' : 'dn'}" style="font-size:13px;font-weight:700;">${s.chg}</span>
           <span style="font-size:12px;color:#999;">$${s.price}</span>
+          ${s.streakDays > 1 ? `<span style="font-size:11px;color:#999;background:#f3f3f3;border-radius:10px;padding:2px 8px;">已推薦 ${s.streakDays} 天</span>` : ''}
           <div class="score-wrap">
             <span style="font-size:11px;color:#bbb;">推薦</span>
             <div class="score-bar"><div class="score-fill" style="width:${s.score}%;background:${scoreColor(s.score)};"></div></div>
             <span class="score-num" style="color:${scoreColor(s.score)};">${s.score}</span>
+            ${s.scoreChange !== null && s.scoreChange !== undefined ? `<span style="font-size:11px;font-weight:700;" class="${s.scoreChange > 0 ? 'kd-up' : s.scoreChange < 0 ? 'kd-dn' : ''}">${s.scoreChange > 0 ? '+' : ''}${s.scoreChange !== 0 ? s.scoreChange : '±0'}</span>` : ''}
           </div>
         </div>
         <div class="sc-grid">
