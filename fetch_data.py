@@ -118,14 +118,14 @@ def fetch_tpex_foreign():
         roc_date = f"{d.year - 1911}/{d.month:02d}/{d.day:02d}"
         url = (
             "https://www.tpex.org.tw/web/stock/3insti/daily_trade/"
-            f"3itrade_hedge_result.php?l=zh-tw&se=EW&t=D&d={roc_date}&o=json"
+            f"3itrade_hedge_result.php?l=zh-tw&se=AL&t=D&d={roc_date}&o=json"
         )
         try:
             res = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
             data = res.json()
             rows = data.get("aaData")
             if not rows:
-                print(f"上櫃外資 {roc_date} 無資料（可能非交易日）")
+                print(f"上櫃外資 {roc_date} 無資料（可能非交易日，或 API 回傳格式有變）。回傳內容前200字：{str(data)[:200]}")
                 continue
             id_map, name_map = {}, {}
             for row in rows:
