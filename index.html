@@ -383,9 +383,6 @@ function renderList() {
     const kdColor = s.kdStatus === 'up' ? 'kd-up' : s.kdStatus === 'cross' ? 'kd-cross' : 'kd-dn';
     const bd = calcBreakdown(s);
     const isOpen = s.code === openCode;
-    const foreignText = !s.foreignFound ? '待確認'
-      : s.foreignBuy > 0 ? `+${s.foreignBuy.toLocaleString()} 張`
-      : s.foreignBuy < 0 ? `${s.foreignBuy.toLocaleString()} 張` : '0 張';
     const priceLabel = s.price <= 100 ? '$0–100' : s.price <= 300 ? '$100–300' : '$300+';
 
     const card = document.createElement('div');
@@ -410,15 +407,14 @@ function renderList() {
         <div class="sc-grid">
           <div class="sc-metric"><div class="ml">昨日成交量</div><div class="mv">${s.vol.toLocaleString()}</div></div>
           <div class="sc-metric"><div class="ml">5日均量</div><div class="mv">${s.avgVol.toLocaleString()}</div></div>
-          <div class="sc-metric"><div class="ml">ATR 波幅</div><div class="mv">$${s.atr}</div></div>
+          <div class="sc-metric"><div class="ml">外資買賣超</div><div class="mv ${s.foreignBuy > 0 ? 'kd-up' : s.foreignBuy < 0 ? 'kd-dn' : ''}">${!s.foreignFound ? '待確認' : (s.foreignBuy > 0 ? '+' : '') + s.foreignBuy.toLocaleString() + ' 張'}</div></div>
           <div class="sc-metric"><div class="ml">VR 指標</div><div class="mv ${s.vr > 100 ? 'kd-up' : 'kd-dn'}">${s.vr}${vrTrendArrow(s.vrTrend)}</div></div>
           <div class="sc-metric"><div class="ml">KD 狀態</div><div class="mv ${kdColor}">${s.kdLabel}</div></div>
         </div>
       </div>
       <div class="sc-detail">
         <div class="detail-meta">
-          <span>外資買賣超：<strong>${foreignText}</strong></span>
-          <span>一張成本：<strong>$${(s.price * 1000).toLocaleString()}</strong></span>
+          <span>ATR 波幅：<strong>$${s.atr}</strong></span>
           <span>KD：K=${s.kdK} / D=${s.kdD}</span>
           <span>${s.market === 'otc' ? '上櫃' : '上市'}</span>
         </div>
@@ -439,7 +435,6 @@ function renderList() {
         </div>
         <div class="dp-reason">${s.reason || '指標計算完成，建議開盤前確認大盤期貨方向再評估進場。'}</div>
         <div class="dp-tags">${(s.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}</div>
-        <div class="chart-wrap"><canvas id="c-${s.code}"></canvas></div>
       </div>
     `;
 
@@ -449,32 +444,6 @@ function renderList() {
     };
 
     list.appendChild(card);
-
-    if (isOpen) {
-      requestAnimationFrame(() => {
-        const ctx = document.getElementById(`c-${s.code}`);
-        if (!ctx) return;
-        if (charts[s.code]) charts[s.code].destroy();
-        charts[s.code] = new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: ['5日前','4日前','3日前','2日前','昨日'],
-            datasets: [
-              { data: s.vol5, backgroundColor: s.vol5.map((_,i)=>i===4?'#D85A30':'#B5D4F4'), borderRadius: 4 },
-              { data: Array(5).fill(s.avgVol), type:'line', borderColor:'#aaa', borderDash:[4,3], borderWidth:1.5, pointRadius:0, fill:false }
-            ]
-          },
-          options: {
-            responsive:true, maintainAspectRatio:false,
-            plugins:{legend:{display:false}},
-            scales:{
-              y:{ticks:{callback:v=>(v/1000).toFixed(0)+'K',font:{size:10}},grid:{color:'rgba(0,0,0,0.04)'}},
-              x:{ticks:{font:{size:10}},grid:{display:false}}
-            }
-          }
-        });
-      });
-    }
   });
 
   if (totalPages > 1) {
