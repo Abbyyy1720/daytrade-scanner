@@ -330,6 +330,23 @@ twse_foreign = fetch_twse_foreign()
 tpex_foreign = fetch_tpex_foreign()
 results = []
 
+# ==================== 歷史紀錄（用於「已推薦幾天」「較上次分數變化」） ====================
+# 因為每次執行都是重新計算今天的分數、直接覆蓋 data.json，本身不會記得昨天的狀態，
+# 所以另外用 history.json 存一份「每支股票上次的分數 / 是否為推薦股 / 連續次數」，
+# 下次執行時讀出來比對，用完再更新回去。
+#
+# 注意：如果排程哪天完全沒跑成功（沒有 push 新的 history.json），
+# 下次執行時比較的對象會自動變成「上一次成功執行那天」，不是嚴格意義的「昨天」，
+# 「已推薦天數」也是用「連續幾次成功執行都上榜」去算，跟日曆天數可能有些微落差。
+HISTORY_FILE = "history.json"
+try:
+    with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+        history = json.load(f)
+except (FileNotFoundError, json.JSONDecodeError):
+    history = {}
+
+new_history = {}
+
 for ticker, (stock_id, name, market) in ticker_map.items():
     try:
         hist = hist_data.get(ticker)
@@ -362,6 +379,24 @@ for ticker, (stock_id, name, market) in ticker_map.items():
 
         score = calc_score(vol_ratio, atr, price, foreign_buy, vr, kd_status, kd_k, kd_d)
         reason = generate_reason(kd_status, kd_k, kd_d, vol_ratio, atr_pct, foreign_buy, foreign_found)
+        is_hot = score >= 65
+
+        # 跟上一次成功執行的紀錄比較
+        prev = history.get(stock_id)
+        if prev is not None:
+            score_change = score - prev.get("score", score)
+            prev_streak = prev.get("streak", 0)
+            streak_days = prev_streak + 1 if (is_hot and prev.get("recommended")) else (1 if is_hot else 0)
+        else:
+            score_change = None  # 第一次看到這支股票，沒有比較基準
+            streak_days = 1 if is_hot else 0
+
+        new_history[stock_id] = {
+            "score": score,
+            "recommended": is_hot,
+            "streak": streak_days,
+            "date": now_tw().strftime("%Y-%m-%d"),
+        }
 
         # 股價分類
         if price <= 100:
@@ -407,6 +442,8 @@ for ticker, (stock_id, name, market) in ticker_map.items():
             "foreignFound": foreign_found,
             "vol5": vol5,
             "score": score,
+            "scoreChange": score_change,
+            "streakDays": streak_days,
             "badge": "hot" if score >= 65 else "watch",
             "badgeLabel": "熱門" if score >= 65 else "觀察",
             "isFinance": is_finance(stock_id),
@@ -442,4 +479,7 @@ with open("data.json", "w", encoding="utf-8") as f:
     # 比默默寫出壞掉的JSON、前端才發現「資料載入失敗」好除錯很多
     json.dump(output, f, ensure_ascii=False, indent=2, allow_nan=False)
 
-print(f"\n完成，共 {len(results)} 檔寫入 data.json")
+with open(HISTORY_FILE, "w", encoding="utf-8") as f:
+    json.dump(sanitize(new_history), f, ensure_ascii=False, indent=2, allow_nan=False)
+
+print(f"\n完成，共 {len(results)} 檔寫入 data.json，並更新 {len(new_history)} 筆歷史紀錄")
