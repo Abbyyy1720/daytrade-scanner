@@ -1,5 +1,5 @@
 {
-  "updated": "2026/09/29 01:10",
+  "updated": "2026/09/29 09:00",
   "stocks": [
     {
       "code": "2342",
@@ -28,8 +28,8 @@
         43321
       ],
       "score": 88,
-      "scoreChange": 10,
-      "streakDays": 5,
+      "scoreChange": 0,
+      "streakDays": 6,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -68,8 +68,8 @@
         7533
       ],
       "score": 87,
-      "scoreChange": 4,
-      "streakDays": 4,
+      "scoreChange": 0,
+      "streakDays": 5,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -109,8 +109,8 @@
         11414
       ],
       "score": 86,
-      "scoreChange": 3,
-      "streakDays": 7,
+      "scoreChange": 0,
+      "streakDays": 8,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -149,8 +149,8 @@
         15986
       ],
       "score": 86,
-      "scoreChange": -2,
-      "streakDays": 5,
+      "scoreChange": 0,
+      "streakDays": 6,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -190,8 +190,8 @@
         10485
       ],
       "score": 85,
-      "scoreChange": 2,
-      "streakDays": 8,
+      "scoreChange": 0,
+      "streakDays": 9,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -231,8 +231,8 @@
         48703
       ],
       "score": 84,
-      "scoreChange": -10,
-      "streakDays": 5,
+      "scoreChange": 0,
+      "streakDays": 6,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -271,8 +271,8 @@
         4471
       ],
       "score": 84,
-      "scoreChange": 1,
-      "streakDays": 4,
+      "scoreChange": 0,
+      "streakDays": 5,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -312,7 +312,7 @@
       ],
       "score": 84,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -353,7 +353,7 @@
       ],
       "score": 83,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -392,8 +392,8 @@
         41432
       ],
       "score": 81,
-      "scoreChange": 6,
-      "streakDays": 4,
+      "scoreChange": 0,
+      "streakDays": 5,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -433,7 +433,7 @@
       ],
       "score": 81,
       "scoreChange": 0,
-      "streakDays": 4,
+      "streakDays": 5,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -473,7 +473,7 @@
       ],
       "score": 81,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -514,7 +514,7 @@
       ],
       "score": 80,
       "scoreChange": 0,
-      "streakDays": 5,
+      "streakDays": 6,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -553,8 +553,8 @@
         14972
       ],
       "score": 80,
-      "scoreChange": -6,
-      "streakDays": 3,
+      "scoreChange": 0,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -594,7 +594,7 @@
       ],
       "score": 80,
       "scoreChange": 0,
-      "streakDays": 7,
+      "streakDays": 8,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -634,8 +634,8 @@
         11896
       ],
       "score": 79,
-      "scoreChange": -5,
-      "streakDays": 3,
+      "scoreChange": 0,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -675,8 +675,8 @@
         7161
       ],
       "score": 78,
-      "scoreChange": -2,
-      "streakDays": 3,
+      "scoreChange": 0,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -715,8 +715,8 @@
         48735
       ],
       "score": 78,
-      "scoreChange": -1,
-      "streakDays": 3,
+      "scoreChange": 0,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -755,8 +755,8 @@
         2665
       ],
       "score": 78,
-      "scoreChange": 1,
-      "streakDays": 4,
+      "scoreChange": 0,
+      "streakDays": 5,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -795,7 +795,7 @@
       ],
       "score": 78,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -834,7 +834,7 @@
       ],
       "score": 78,
       "scoreChange": 0,
-      "streakDays": 5,
+      "streakDays": 6,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -875,7 +875,7 @@
       ],
       "score": 78,
       "scoreChange": 0,
-      "streakDays": 7,
+      "streakDays": 8,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -916,7 +916,7 @@
       ],
       "score": 78,
       "scoreChange": 0,
-      "streakDays": 4,
+      "streakDays": 5,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -957,7 +957,7 @@
       ],
       "score": 77,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -996,8 +996,8 @@
         47707
       ],
       "score": 76,
-      "scoreChange": -1,
-      "streakDays": 4,
+      "scoreChange": 0,
+      "streakDays": 5,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -1035,8 +1035,8 @@
         7006
       ],
       "score": 76,
-      "scoreChange": -1,
-      "streakDays": 5,
+      "scoreChange": 0,
+      "streakDays": 6,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -1075,8 +1075,8 @@
         3556
       ],
       "score": 76,
-      "scoreChange": -1,
-      "streakDays": 3,
+      "scoreChange": 0,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -1116,7 +1116,7 @@
       ],
       "score": 76,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -1156,8 +1156,8 @@
         33451
       ],
       "score": 76,
-      "scoreChange": -1,
-      "streakDays": 5,
+      "scoreChange": 0,
+      "streakDays": 6,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -1197,8 +1197,8 @@
         2691
       ],
       "score": 76,
-      "scoreChange": -1,
-      "streakDays": 5,
+      "scoreChange": 0,
+      "streakDays": 6,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -1238,8 +1238,8 @@
         3731
       ],
       "score": 75,
-      "scoreChange": -1,
-      "streakDays": 3,
+      "scoreChange": 0,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -1279,7 +1279,7 @@
       ],
       "score": 74,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -1318,8 +1318,8 @@
         8594
       ],
       "score": 74,
-      "scoreChange": -5,
-      "streakDays": 3,
+      "scoreChange": 0,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -1358,8 +1358,8 @@
         1097
       ],
       "score": 74,
-      "scoreChange": -1,
-      "streakDays": 3,
+      "scoreChange": 0,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -1399,7 +1399,7 @@
       ],
       "score": 74,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -1437,8 +1437,8 @@
         2771
       ],
       "score": 74,
-      "scoreChange": -1,
-      "streakDays": 8,
+      "scoreChange": 0,
+      "streakDays": 9,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -1478,8 +1478,8 @@
         17900
       ],
       "score": 73,
-      "scoreChange": -5,
-      "streakDays": 5,
+      "scoreChange": 0,
+      "streakDays": 6,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -1518,8 +1518,8 @@
         6486
       ],
       "score": 73,
-      "scoreChange": -3,
-      "streakDays": 3,
+      "scoreChange": 0,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -1558,7 +1558,7 @@
       ],
       "score": 73,
       "scoreChange": 0,
-      "streakDays": 4,
+      "streakDays": 5,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -1599,7 +1599,7 @@
       ],
       "score": 73,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -1640,7 +1640,7 @@
       ],
       "score": 73,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -1681,7 +1681,7 @@
       ],
       "score": 72,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -1721,7 +1721,7 @@
       ],
       "score": 72,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -1760,8 +1760,8 @@
         5977
       ],
       "score": 72,
-      "scoreChange": 1,
-      "streakDays": 3,
+      "scoreChange": 0,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -1800,8 +1800,8 @@
         49394
       ],
       "score": 72,
-      "scoreChange": 4,
-      "streakDays": 3,
+      "scoreChange": 0,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -1842,7 +1842,7 @@
       ],
       "score": 72,
       "scoreChange": 0,
-      "streakDays": 4,
+      "streakDays": 5,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -1883,7 +1883,7 @@
       ],
       "score": 72,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -1923,7 +1923,7 @@
       ],
       "score": 72,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -1963,7 +1963,7 @@
       ],
       "score": 71,
       "scoreChange": 0,
-      "streakDays": 4,
+      "streakDays": 5,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2000,8 +2000,8 @@
         871
       ],
       "score": 71,
-      "scoreChange": -1,
-      "streakDays": 3,
+      "scoreChange": 0,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2042,7 +2042,7 @@
       ],
       "score": 71,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2083,7 +2083,7 @@
       ],
       "score": 71,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2123,7 +2123,7 @@
       ],
       "score": 71,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2163,7 +2163,7 @@
       ],
       "score": 71,
       "scoreChange": 0,
-      "streakDays": 8,
+      "streakDays": 9,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2203,8 +2203,8 @@
         5405
       ],
       "score": 71,
-      "scoreChange": 1,
-      "streakDays": 7,
+      "scoreChange": 0,
+      "streakDays": 8,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2244,7 +2244,7 @@
       ],
       "score": 71,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2284,8 +2284,8 @@
         1656
       ],
       "score": 70,
-      "scoreChange": -1,
-      "streakDays": 3,
+      "scoreChange": 0,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2324,7 +2324,7 @@
       ],
       "score": 70,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2363,8 +2363,8 @@
         8082
       ],
       "score": 69,
-      "scoreChange": -1,
-      "streakDays": 3,
+      "scoreChange": 0,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2404,7 +2404,7 @@
       ],
       "score": 69,
       "scoreChange": 0,
-      "streakDays": 5,
+      "streakDays": 6,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2444,7 +2444,7 @@
       ],
       "score": 69,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2483,8 +2483,8 @@
         1156
       ],
       "score": 69,
-      "scoreChange": 1,
-      "streakDays": 3,
+      "scoreChange": 0,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2525,7 +2525,7 @@
       ],
       "score": 69,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2563,8 +2563,8 @@
         7268
       ],
       "score": 68,
-      "scoreChange": -3,
-      "streakDays": 3,
+      "scoreChange": 0,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2603,8 +2603,8 @@
         7739
       ],
       "score": 68,
-      "scoreChange": -6,
-      "streakDays": 3,
+      "scoreChange": 0,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2642,8 +2642,8 @@
         736
       ],
       "score": 68,
-      "scoreChange": -1,
-      "streakDays": 3,
+      "scoreChange": 0,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2682,8 +2682,8 @@
         83219
       ],
       "score": 68,
-      "scoreChange": -10,
-      "streakDays": 8,
+      "scoreChange": 0,
+      "streakDays": 9,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2722,7 +2722,7 @@
       ],
       "score": 68,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2762,7 +2762,7 @@
       ],
       "score": 68,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2803,7 +2803,7 @@
       ],
       "score": 68,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2843,8 +2843,8 @@
         14386
       ],
       "score": 67,
-      "scoreChange": 1,
-      "streakDays": 7,
+      "scoreChange": 0,
+      "streakDays": 8,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2882,8 +2882,8 @@
         4455
       ],
       "score": 67,
-      "scoreChange": -2,
-      "streakDays": 8,
+      "scoreChange": 0,
+      "streakDays": 9,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2922,7 +2922,7 @@
       ],
       "score": 67,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2960,8 +2960,8 @@
         278
       ],
       "score": 67,
-      "scoreChange": 1,
-      "streakDays": 3,
+      "scoreChange": 0,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -2999,7 +2999,7 @@
       ],
       "score": 67,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -3039,7 +3039,7 @@
       ],
       "score": 66,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -3077,8 +3077,8 @@
         6204
       ],
       "score": 66,
-      "scoreChange": 6,
-      "streakDays": 1,
+      "scoreChange": 0,
+      "streakDays": 2,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -3116,8 +3116,8 @@
         7151
       ],
       "score": 66,
-      "scoreChange": -1,
-      "streakDays": 3,
+      "scoreChange": 0,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -3155,8 +3155,8 @@
         22688
       ],
       "score": 66,
-      "scoreChange": 6,
-      "streakDays": 1,
+      "scoreChange": 0,
+      "streakDays": 2,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -3194,8 +3194,8 @@
         41339
       ],
       "score": 66,
-      "scoreChange": -10,
-      "streakDays": 5,
+      "scoreChange": 0,
+      "streakDays": 6,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -3234,7 +3234,7 @@
       ],
       "score": 66,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -3273,7 +3273,7 @@
       ],
       "score": 66,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -3312,7 +3312,7 @@
       ],
       "score": 66,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -3352,7 +3352,7 @@
       ],
       "score": 66,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -3390,8 +3390,8 @@
         3175
       ],
       "score": 66,
-      "scoreChange": 1,
-      "streakDays": 4,
+      "scoreChange": 0,
+      "streakDays": 5,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -3430,8 +3430,8 @@
         1280
       ],
       "score": 66,
-      "scoreChange": -1,
-      "streakDays": 3,
+      "scoreChange": 0,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -3470,8 +3470,8 @@
         2243
       ],
       "score": 66,
-      "scoreChange": -1,
-      "streakDays": 4,
+      "scoreChange": 0,
+      "streakDays": 5,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -3511,7 +3511,7 @@
       ],
       "score": 66,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -3551,7 +3551,7 @@
       ],
       "score": 66,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -3591,8 +3591,8 @@
         1265
       ],
       "score": 66,
-      "scoreChange": -1,
-      "streakDays": 3,
+      "scoreChange": 0,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -3632,7 +3632,7 @@
       ],
       "score": 66,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -3672,7 +3672,7 @@
       ],
       "score": 66,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -3712,8 +3712,8 @@
         9177
       ],
       "score": 65,
-      "scoreChange": 1,
-      "streakDays": 1,
+      "scoreChange": 0,
+      "streakDays": 2,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -3751,8 +3751,8 @@
         15155
       ],
       "score": 65,
-      "scoreChange": 6,
-      "streakDays": 1,
+      "scoreChange": 0,
+      "streakDays": 2,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -3790,8 +3790,8 @@
         1751
       ],
       "score": 65,
-      "scoreChange": 1,
-      "streakDays": 1,
+      "scoreChange": 0,
+      "streakDays": 2,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -3830,7 +3830,7 @@
       ],
       "score": 65,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -3868,8 +3868,8 @@
         7510
       ],
       "score": 65,
-      "scoreChange": -1,
-      "streakDays": 3,
+      "scoreChange": 0,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -3909,7 +3909,7 @@
       ],
       "score": 65,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -3949,7 +3949,7 @@
       ],
       "score": 65,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -3989,8 +3989,8 @@
         2445
       ],
       "score": 65,
-      "scoreChange": 1,
-      "streakDays": 1,
+      "scoreChange": 0,
+      "streakDays": 2,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -4030,7 +4030,7 @@
       ],
       "score": 65,
       "scoreChange": 0,
-      "streakDays": 3,
+      "streakDays": 4,
       "badge": "hot",
       "badgeLabel": "熱門",
       "isFinance": false,
@@ -4069,7 +4069,7 @@
         8512
       ],
       "score": 64,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -4109,7 +4109,7 @@
         1360
       ],
       "score": 64,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -4149,7 +4149,7 @@
         6060
       ],
       "score": 64,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -4344,7 +4344,7 @@
         10068
       ],
       "score": 64,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -4383,7 +4383,7 @@
         7919
       ],
       "score": 64,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -4423,7 +4423,7 @@
         3061
       ],
       "score": 64,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -4622,7 +4622,7 @@
         954
       ],
       "score": 64,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -4702,7 +4702,7 @@
         4730
       ],
       "score": 63,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -4819,7 +4819,7 @@
         5225
       ],
       "score": 63,
-      "scoreChange": -6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -4981,7 +4981,7 @@
         3887
       ],
       "score": 62,
-      "scoreChange": -4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -5059,7 +5059,7 @@
         35341
       ],
       "score": 62,
-      "scoreChange": 4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -5137,7 +5137,7 @@
         3046
       ],
       "score": 62,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -5175,7 +5175,7 @@
         1918
       ],
       "score": 62,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -5253,7 +5253,7 @@
         1909
       ],
       "score": 62,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -5333,7 +5333,7 @@
         259
       ],
       "score": 62,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -5413,7 +5413,7 @@
         2283
       ],
       "score": 62,
-      "scoreChange": -3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -5494,7 +5494,7 @@
         2378
       ],
       "score": 61,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -5611,7 +5611,7 @@
         5763
       ],
       "score": 61,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -5850,7 +5850,7 @@
         2548
       ],
       "score": 61,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -5889,7 +5889,7 @@
         5872
       ],
       "score": 61,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -6010,7 +6010,7 @@
         3562
       ],
       "score": 61,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -6167,7 +6167,7 @@
         2113
       ],
       "score": 60,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -6206,7 +6206,7 @@
         989
       ],
       "score": 60,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -6245,7 +6245,7 @@
         14305
       ],
       "score": 60,
-      "scoreChange": 4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -6558,7 +6558,7 @@
         14265
       ],
       "score": 60,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -6598,7 +6598,7 @@
         3167
       ],
       "score": 60,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -6637,7 +6637,7 @@
         3278
       ],
       "score": 60,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -6717,7 +6717,7 @@
         3456
       ],
       "score": 60,
-      "scoreChange": -2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -6757,7 +6757,7 @@
         5351
       ],
       "score": 60,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -6797,7 +6797,7 @@
         2472
       ],
       "score": 60,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -6915,7 +6915,7 @@
         3348
       ],
       "score": 60,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -6994,7 +6994,7 @@
         510
       ],
       "score": 59,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -7111,7 +7111,7 @@
         2
       ],
       "score": 59,
-      "scoreChange": 4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -7228,7 +7228,7 @@
         1800
       ],
       "score": 59,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -7388,7 +7388,7 @@
         10075
       ],
       "score": 59,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -7546,7 +7546,7 @@
         568
       ],
       "score": 59,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -7585,7 +7585,7 @@
         388
       ],
       "score": 58,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -7624,7 +7624,7 @@
         1817
       ],
       "score": 58,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -7780,7 +7780,7 @@
         16286
       ],
       "score": 58,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -7818,7 +7818,7 @@
         105
       ],
       "score": 58,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -7858,7 +7858,7 @@
         6332
       ],
       "score": 58,
-      "scoreChange": 12,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -8054,7 +8054,7 @@
         92430
       ],
       "score": 58,
-      "scoreChange": -10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -8211,7 +8211,7 @@
         12816
       ],
       "score": 57,
-      "scoreChange": -6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -8287,7 +8287,7 @@
         4339
       ],
       "score": 57,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -8403,7 +8403,7 @@
         1083
       ],
       "score": 57,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -8441,7 +8441,7 @@
         4958
       ],
       "score": 57,
-      "scoreChange": -2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -8519,7 +8519,7 @@
         21638
       ],
       "score": 57,
-      "scoreChange": 9,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -8638,7 +8638,7 @@
         2010
       ],
       "score": 57,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -8956,7 +8956,7 @@
         66153
       ],
       "score": 56,
-      "scoreChange": -10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -8994,7 +8994,7 @@
         34995
       ],
       "score": 56,
-      "scoreChange": -5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -9032,7 +9032,7 @@
         1544
       ],
       "score": 56,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -9110,7 +9110,7 @@
         7556
       ],
       "score": 56,
-      "scoreChange": -3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -9149,7 +9149,7 @@
         2282
       ],
       "score": 56,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -9426,7 +9426,7 @@
         3313
       ],
       "score": 56,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -9544,7 +9544,7 @@
         4168
       ],
       "score": 56,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -9815,7 +9815,7 @@
         9809
       ],
       "score": 55,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -9931,7 +9931,7 @@
         541275
       ],
       "score": 55,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -10008,7 +10008,7 @@
         2932
       ],
       "score": 55,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -10125,7 +10125,7 @@
         136
       ],
       "score": 55,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -10163,7 +10163,7 @@
         4724
       ],
       "score": 55,
-      "scoreChange": -2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -10392,7 +10392,7 @@
         9593
       ],
       "score": 55,
-      "scoreChange": 5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -10430,7 +10430,7 @@
         510
       ],
       "score": 55,
-      "scoreChange": 11,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -10708,7 +10708,7 @@
         1165
       ],
       "score": 55,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -10748,7 +10748,7 @@
         1902
       ],
       "score": 55,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -10865,7 +10865,7 @@
         14076
       ],
       "score": 55,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -10983,7 +10983,7 @@
         48653
       ],
       "score": 54,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -11021,7 +11021,7 @@
         1459
       ],
       "score": 54,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -11060,7 +11060,7 @@
         153840
       ],
       "score": 54,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -11175,7 +11175,7 @@
         1116
       ],
       "score": 54,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -11328,7 +11328,7 @@
         15915
       ],
       "score": 54,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -11367,7 +11367,7 @@
         2188
       ],
       "score": 54,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -11406,7 +11406,7 @@
         418
       ],
       "score": 54,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -11445,7 +11445,7 @@
         13463
       ],
       "score": 54,
-      "scoreChange": -3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -11600,7 +11600,7 @@
         1365
       ],
       "score": 54,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -11800,7 +11800,7 @@
         2508
       ],
       "score": 54,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -12034,7 +12034,7 @@
         2124
       ],
       "score": 53,
-      "scoreChange": -2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -12073,7 +12073,7 @@
         434
       ],
       "score": 53,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -12187,7 +12187,7 @@
         28348
       ],
       "score": 53,
-      "scoreChange": 5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -12301,7 +12301,7 @@
         13390
       ],
       "score": 53,
-      "scoreChange": 5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -12339,7 +12339,7 @@
         15907
       ],
       "score": 53,
-      "scoreChange": -4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -12415,7 +12415,7 @@
         13341
       ],
       "score": 53,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -12609,7 +12609,7 @@
         2500
       ],
       "score": 53,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -13046,7 +13046,7 @@
         467
       ],
       "score": 52,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -13083,7 +13083,7 @@
         5313
       ],
       "score": 52,
-      "scoreChange": -4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -13120,7 +13120,7 @@
         1926
       ],
       "score": 52,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -13159,7 +13159,7 @@
         2649
       ],
       "score": 52,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -13197,7 +13197,7 @@
         26330
       ],
       "score": 52,
-      "scoreChange": -2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -13236,7 +13236,7 @@
         17449
       ],
       "score": 52,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -13274,7 +13274,7 @@
         2008
       ],
       "score": 52,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -13505,7 +13505,7 @@
         13043
       ],
       "score": 52,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -13544,7 +13544,7 @@
         1764
       ],
       "score": 52,
-      "scoreChange": 5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -13623,7 +13623,7 @@
         1612
       ],
       "score": 52,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -13702,7 +13702,7 @@
         21285
       ],
       "score": 52,
-      "scoreChange": -6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -14056,7 +14056,7 @@
         8543
       ],
       "score": 52,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -14332,7 +14332,7 @@
         3918
       ],
       "score": 52,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -14372,7 +14372,7 @@
         1058
       ],
       "score": 51,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -14527,7 +14527,7 @@
         7157
       ],
       "score": 51,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -14603,7 +14603,7 @@
         5263
       ],
       "score": 51,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -14643,7 +14643,7 @@
         1527
       ],
       "score": 51,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -14681,7 +14681,7 @@
         8945
       ],
       "score": 51,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -14874,7 +14874,7 @@
         768
       ],
       "score": 51,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -14912,7 +14912,7 @@
         92
       ],
       "score": 51,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -14950,7 +14950,7 @@
         2201
       ],
       "score": 51,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -15068,7 +15068,7 @@
         1531
       ],
       "score": 51,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -15504,7 +15504,7 @@
         8183
       ],
       "score": 50,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -15543,7 +15543,7 @@
         49769
       ],
       "score": 50,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -15735,7 +15735,7 @@
         2297
       ],
       "score": 50,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -15812,7 +15812,7 @@
         6545
       ],
       "score": 50,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -15851,7 +15851,7 @@
         94551
       ],
       "score": 50,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -15927,7 +15927,7 @@
         2521
       ],
       "score": 50,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -16004,7 +16004,7 @@
         26
       ],
       "score": 50,
-      "scoreChange": -2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -16043,7 +16043,7 @@
         78
       ],
       "score": 50,
-      "scoreChange": 8,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -16082,7 +16082,7 @@
         270
       ],
       "score": 50,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -16159,7 +16159,7 @@
         5600
       ],
       "score": 50,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -16237,7 +16237,7 @@
         28394
       ],
       "score": 50,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -16394,7 +16394,7 @@
         838
       ],
       "score": 50,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -16550,7 +16550,7 @@
         6910
       ],
       "score": 50,
-      "scoreChange": 5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -16942,7 +16942,7 @@
         453
       ],
       "score": 50,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -16982,7 +16982,7 @@
         2622
       ],
       "score": 50,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -17140,7 +17140,7 @@
         312
       ],
       "score": 49,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -17216,7 +17216,7 @@
         7524
       ],
       "score": 49,
-      "scoreChange": 4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -17255,7 +17255,7 @@
         38189
       ],
       "score": 49,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -17370,7 +17370,7 @@
         15348
       ],
       "score": 49,
-      "scoreChange": -6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -17637,7 +17637,7 @@
         1135
       ],
       "score": 49,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -17713,7 +17713,7 @@
         2784
       ],
       "score": 49,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -17790,7 +17790,7 @@
         291
       ],
       "score": 49,
-      "scoreChange": 8,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -17830,7 +17830,7 @@
         25251
       ],
       "score": 49,
-      "scoreChange": -10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -17869,7 +17869,7 @@
         6999
       ],
       "score": 49,
-      "scoreChange": -10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -18066,7 +18066,7 @@
         17998
       ],
       "score": 49,
-      "scoreChange": -5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -18184,7 +18184,7 @@
         1609
       ],
       "score": 49,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -18223,7 +18223,7 @@
         1320
       ],
       "score": 49,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -18537,7 +18537,7 @@
         39084
       ],
       "score": 48,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -18576,7 +18576,7 @@
         2205
       ],
       "score": 48,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -18728,7 +18728,7 @@
         1807
       ],
       "score": 48,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -18766,7 +18766,7 @@
         532
       ],
       "score": 48,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -18879,7 +18879,7 @@
         621
       ],
       "score": 48,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -18994,7 +18994,7 @@
         819
       ],
       "score": 48,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -19032,7 +19032,7 @@
         199
       ],
       "score": 48,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -19109,7 +19109,7 @@
         2903
       ],
       "score": 48,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -19187,7 +19187,7 @@
         284112
       ],
       "score": 48,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -19226,7 +19226,7 @@
         52188
       ],
       "score": 48,
-      "scoreChange": 18,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -19265,7 +19265,7 @@
         2524
       ],
       "score": 48,
-      "scoreChange": 9,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -19303,7 +19303,7 @@
         163
       ],
       "score": 48,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -19342,7 +19342,7 @@
         134
       ],
       "score": 48,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -19381,7 +19381,7 @@
         3526
       ],
       "score": 48,
-      "scoreChange": 24,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -19418,7 +19418,7 @@
         2185
       ],
       "score": 48,
-      "scoreChange": -6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -19457,7 +19457,7 @@
         68461
       ],
       "score": 48,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -19495,7 +19495,7 @@
         5977
       ],
       "score": 48,
-      "scoreChange": 12,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -19573,7 +19573,7 @@
         17200
       ],
       "score": 48,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -20086,7 +20086,7 @@
         876
       ],
       "score": 48,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -20243,7 +20243,7 @@
         6461
       ],
       "score": 48,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -20360,7 +20360,7 @@
         4271
       ],
       "score": 47,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -20438,7 +20438,7 @@
         10193
       ],
       "score": 47,
-      "scoreChange": -4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -20514,7 +20514,7 @@
         48
       ],
       "score": 47,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -20554,7 +20554,7 @@
         6229
       ],
       "score": 47,
-      "scoreChange": 4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -20707,7 +20707,7 @@
         6318
       ],
       "score": 47,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -20744,7 +20744,7 @@
         1081
       ],
       "score": 47,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -20935,7 +20935,7 @@
         10529
       ],
       "score": 47,
-      "scoreChange": -4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -20974,7 +20974,7 @@
         8638
       ],
       "score": 47,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -21128,7 +21128,7 @@
         41731
       ],
       "score": 47,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -21319,7 +21319,7 @@
         810
       ],
       "score": 47,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -21470,7 +21470,7 @@
         55
       ],
       "score": 47,
-      "scoreChange": 7,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -21509,7 +21509,7 @@
         5225
       ],
       "score": 47,
-      "scoreChange": 9,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -21547,7 +21547,7 @@
         1884
       ],
       "score": 47,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -21586,7 +21586,7 @@
         681
       ],
       "score": 47,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -21625,7 +21625,7 @@
         23958
       ],
       "score": 47,
-      "scoreChange": -5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -21664,7 +21664,7 @@
         7937
       ],
       "score": 47,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -21782,7 +21782,7 @@
         49
       ],
       "score": 47,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -21861,7 +21861,7 @@
         56
       ],
       "score": 47,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -22057,7 +22057,7 @@
         9974
       ],
       "score": 47,
-      "scoreChange": 4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -22844,7 +22844,7 @@
         16324
       ],
       "score": 46,
-      "scoreChange": -3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -22920,7 +22920,7 @@
         7767
       ],
       "score": 46,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -22958,7 +22958,7 @@
         702
       ],
       "score": 46,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -23035,7 +23035,7 @@
         1163
       ],
       "score": 46,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -23073,7 +23073,7 @@
         462
       ],
       "score": 46,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -23149,7 +23149,7 @@
         707
       ],
       "score": 46,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -23263,7 +23263,7 @@
         19961
       ],
       "score": 46,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -23300,7 +23300,7 @@
         1926
       ],
       "score": 46,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -23414,7 +23414,7 @@
         11274
       ],
       "score": 46,
-      "scoreChange": 7,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -23452,7 +23452,7 @@
         2236
       ],
       "score": 46,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -23565,7 +23565,7 @@
         658
       ],
       "score": 46,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -23793,7 +23793,7 @@
         2122
       ],
       "score": 46,
-      "scoreChange": 4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -23832,7 +23832,7 @@
         2373
       ],
       "score": 46,
-      "scoreChange": 7,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -23871,7 +23871,7 @@
         61377
       ],
       "score": 46,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -23910,7 +23910,7 @@
         4595
       ],
       "score": 46,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -24419,7 +24419,7 @@
         1055
       ],
       "score": 46,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -24533,7 +24533,7 @@
         354
       ],
       "score": 45,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -24610,7 +24610,7 @@
         810
       ],
       "score": 45,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -24685,7 +24685,7 @@
         1134
       ],
       "score": 45,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -24723,7 +24723,7 @@
         2740
       ],
       "score": 45,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -25140,7 +25140,7 @@
         238
       ],
       "score": 45,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -25405,7 +25405,7 @@
         2704
       ],
       "score": 45,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -25443,7 +25443,7 @@
         1315
       ],
       "score": 45,
-      "scoreChange": 14,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -25481,7 +25481,7 @@
         75772
       ],
       "score": 45,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -25559,7 +25559,7 @@
         1803
       ],
       "score": 45,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -25678,7 +25678,7 @@
         356
       ],
       "score": 45,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -26027,7 +26027,7 @@
         18432
       ],
       "score": 45,
-      "scoreChange": -5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -26144,7 +26144,7 @@
         1310
       ],
       "score": 45,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -26260,7 +26260,7 @@
         757
       ],
       "score": 45,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -26299,7 +26299,7 @@
         9233
       ],
       "score": 45,
-      "scoreChange": 5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -26805,7 +26805,7 @@
         1242
       ],
       "score": 44,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -26921,7 +26921,7 @@
         3985
       ],
       "score": 44,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -27113,7 +27113,7 @@
         555
       ],
       "score": 44,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -27151,7 +27151,7 @@
         3458
       ],
       "score": 44,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -27188,7 +27188,7 @@
         1689
       ],
       "score": 44,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -27226,7 +27226,7 @@
         1621
       ],
       "score": 44,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -27264,7 +27264,7 @@
         4821
       ],
       "score": 44,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -27455,7 +27455,7 @@
         2962
       ],
       "score": 44,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -27568,7 +27568,7 @@
         1899
       ],
       "score": 44,
-      "scoreChange": -2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -27607,7 +27607,7 @@
         534
       ],
       "score": 44,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -27909,7 +27909,7 @@
         234089
       ],
       "score": 44,
-      "scoreChange": 22,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -27947,7 +27947,7 @@
         219
       ],
       "score": 44,
-      "scoreChange": 11,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -27985,7 +27985,7 @@
         5562
       ],
       "score": 44,
-      "scoreChange": 11,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -28024,7 +28024,7 @@
         1644
       ],
       "score": 44,
-      "scoreChange": 13,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -28260,7 +28260,7 @@
         1578
       ],
       "score": 44,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -28377,7 +28377,7 @@
         146
       ],
       "score": 44,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -28612,7 +28612,7 @@
         370
       ],
       "score": 44,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -29157,7 +29157,7 @@
         4639
       ],
       "score": 43,
-      "scoreChange": -2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -29195,7 +29195,7 @@
         990
       ],
       "score": 43,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -29349,7 +29349,7 @@
         18013
       ],
       "score": 43,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -29464,7 +29464,7 @@
         692
       ],
       "score": 43,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -29540,7 +29540,7 @@
         1320
       ],
       "score": 43,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -29578,7 +29578,7 @@
         6246
       ],
       "score": 43,
-      "scoreChange": -3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -29770,7 +29770,7 @@
         746
       ],
       "score": 43,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -29846,7 +29846,7 @@
         1046
       ],
       "score": 43,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -29922,7 +29922,7 @@
         2430
       ],
       "score": 43,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -29998,7 +29998,7 @@
         2471
       ],
       "score": 43,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -30189,7 +30189,7 @@
         575
       ],
       "score": 43,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -30264,7 +30264,7 @@
         304
       ],
       "score": 43,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -30339,7 +30339,7 @@
         2648
       ],
       "score": 43,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -30376,7 +30376,7 @@
         24663
       ],
       "score": 43,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -30414,7 +30414,7 @@
         3677
       ],
       "score": 43,
-      "scoreChange": 13,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -30453,7 +30453,7 @@
         136023
       ],
       "score": 43,
-      "scoreChange": 25,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -30492,7 +30492,7 @@
         4407
       ],
       "score": 43,
-      "scoreChange": 9,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -30530,7 +30530,7 @@
         397
       ],
       "score": 43,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -30569,7 +30569,7 @@
         161715
       ],
       "score": 43,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -30607,7 +30607,7 @@
         12680
       ],
       "score": 43,
-      "scoreChange": 5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -30646,7 +30646,7 @@
         9372
       ],
       "score": 43,
-      "scoreChange": -7,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -31153,7 +31153,7 @@
         1940
       ],
       "score": 43,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -31234,7 +31234,7 @@
         6013
       ],
       "score": 43,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -31272,7 +31272,7 @@
         1408
       ],
       "score": 43,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -31468,7 +31468,7 @@
         237
       ],
       "score": 43,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -31583,7 +31583,7 @@
         136
       ],
       "score": 43,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -31855,7 +31855,7 @@
         371
       ],
       "score": 42,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -31894,7 +31894,7 @@
         6133
       ],
       "score": 42,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -32161,7 +32161,7 @@
         1085
       ],
       "score": 42,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -32199,7 +32199,7 @@
         2470
       ],
       "score": 42,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -32314,7 +32314,7 @@
         435
       ],
       "score": 42,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -32543,7 +32543,7 @@
         70896
       ],
       "score": 42,
-      "scoreChange": 19,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -32582,7 +32582,7 @@
         140
       ],
       "score": 42,
-      "scoreChange": 9,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -32620,7 +32620,7 @@
         781
       ],
       "score": 42,
-      "scoreChange": 7,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -32658,7 +32658,7 @@
         33945
       ],
       "score": 42,
-      "scoreChange": 9,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -32696,7 +32696,7 @@
         666
       ],
       "score": 42,
-      "scoreChange": 7,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -32735,7 +32735,7 @@
         6364
       ],
       "score": 42,
-      "scoreChange": 8,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -32774,7 +32774,7 @@
         18129
       ],
       "score": 42,
-      "scoreChange": 19,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -32851,7 +32851,7 @@
         4299
       ],
       "score": 42,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -32890,7 +32890,7 @@
         28521
       ],
       "score": 42,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -32928,7 +32928,7 @@
         2926
       ],
       "score": 42,
-      "scoreChange": 12,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -32967,7 +32967,7 @@
         1611
       ],
       "score": 42,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -33163,7 +33163,7 @@
         520
       ],
       "score": 42,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -34095,7 +34095,7 @@
         42191
       ],
       "score": 41,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -34247,7 +34247,7 @@
         887
       ],
       "score": 41,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -34285,7 +34285,7 @@
         1579
       ],
       "score": 41,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -34361,7 +34361,7 @@
         948
       ],
       "score": 41,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -34474,7 +34474,7 @@
         1260
       ],
       "score": 41,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -34590,7 +34590,7 @@
         1779
       ],
       "score": 41,
-      "scoreChange": -2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -34703,7 +34703,7 @@
         25256
       ],
       "score": 41,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -34779,7 +34779,7 @@
         3554
       ],
       "score": 41,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -34818,7 +34818,7 @@
         20574
       ],
       "score": 41,
-      "scoreChange": 5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -34857,7 +34857,7 @@
         2293
       ],
       "score": 41,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -34896,7 +34896,7 @@
         27226
       ],
       "score": 41,
-      "scoreChange": -10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -35123,7 +35123,7 @@
         7838
       ],
       "score": 41,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -35275,7 +35275,7 @@
         5142
       ],
       "score": 41,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -35351,7 +35351,7 @@
         1333
       ],
       "score": 41,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -35427,7 +35427,7 @@
         2258
       ],
       "score": 41,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -35464,7 +35464,7 @@
         3872
       ],
       "score": 41,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -35576,7 +35576,7 @@
         6412
       ],
       "score": 41,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -35614,7 +35614,7 @@
         403
       ],
       "score": 41,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -35652,7 +35652,7 @@
         682
       ],
       "score": 41,
-      "scoreChange": 9,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -35689,7 +35689,7 @@
         0
       ],
       "score": 41,
-      "scoreChange": 5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -35728,7 +35728,7 @@
         682
       ],
       "score": 41,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -35767,7 +35767,7 @@
         11162
       ],
       "score": 41,
-      "scoreChange": 11,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -35806,7 +35806,7 @@
         1052
       ],
       "score": 41,
-      "scoreChange": 5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -35845,7 +35845,7 @@
         193
       ],
       "score": 41,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -35883,7 +35883,7 @@
         624
       ],
       "score": 41,
-      "scoreChange": 11,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -35922,7 +35922,7 @@
         3661
       ],
       "score": 41,
-      "scoreChange": 7,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -35961,7 +35961,7 @@
         9254
       ],
       "score": 41,
-      "scoreChange": 14,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -36039,7 +36039,7 @@
         8447
       ],
       "score": 41,
-      "scoreChange": 5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -36157,7 +36157,7 @@
         2084
       ],
       "score": 41,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -36745,7 +36745,7 @@
         7948
       ],
       "score": 41,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -36940,7 +36940,7 @@
         3843
       ],
       "score": 41,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -37018,7 +37018,7 @@
         380
       ],
       "score": 41,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -37211,7 +37211,7 @@
         731
       ],
       "score": 41,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -37482,7 +37482,7 @@
         2175
       ],
       "score": 40,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -37520,7 +37520,7 @@
         7729
       ],
       "score": 40,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -37558,7 +37558,7 @@
         1270
       ],
       "score": 40,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -37711,7 +37711,7 @@
         713
       ],
       "score": 40,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -37749,7 +37749,7 @@
         284
       ],
       "score": 40,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -37863,7 +37863,7 @@
         5019
       ],
       "score": 40,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -37901,7 +37901,7 @@
         6824
       ],
       "score": 40,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -37977,7 +37977,7 @@
         1838
       ],
       "score": 40,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -38016,7 +38016,7 @@
         2420
       ],
       "score": 40,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -38129,7 +38129,7 @@
         715
       ],
       "score": 40,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -38167,7 +38167,7 @@
         7153
       ],
       "score": 40,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -38205,7 +38205,7 @@
         20263
       ],
       "score": 40,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -38508,7 +38508,7 @@
         101383
       ],
       "score": 40,
-      "scoreChange": 4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -38584,7 +38584,7 @@
         7962
       ],
       "score": 40,
-      "scoreChange": -6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -38661,7 +38661,7 @@
         321
       ],
       "score": 40,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -38776,7 +38776,7 @@
         872
       ],
       "score": 40,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -39117,7 +39117,7 @@
         157
       ],
       "score": 40,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -39155,7 +39155,7 @@
         98663
       ],
       "score": 40,
-      "scoreChange": 22,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -39194,7 +39194,7 @@
         570
       ],
       "score": 40,
-      "scoreChange": 7,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -39233,7 +39233,7 @@
         13882
       ],
       "score": 40,
-      "scoreChange": 11,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -39271,7 +39271,7 @@
         30
       ],
       "score": 40,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -39310,7 +39310,7 @@
         3091
       ],
       "score": 40,
-      "scoreChange": 12,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -39348,7 +39348,7 @@
         8290
       ],
       "score": 40,
-      "scoreChange": -2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -39388,7 +39388,7 @@
         3608
       ],
       "score": 40,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -39584,7 +39584,7 @@
         4135
       ],
       "score": 40,
-      "scoreChange": 5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -39855,7 +39855,7 @@
         3092
       ],
       "score": 40,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -39896,7 +39896,7 @@
         229
       ],
       "score": 40,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -40365,7 +40365,7 @@
         7418
       ],
       "score": 39,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -40518,7 +40518,7 @@
         1297
       ],
       "score": 39,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -40632,7 +40632,7 @@
         7965
       ],
       "score": 39,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -40669,7 +40669,7 @@
         1488
       ],
       "score": 39,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -40706,7 +40706,7 @@
         1536
       ],
       "score": 39,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -40782,7 +40782,7 @@
         33005
       ],
       "score": 39,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -41009,7 +41009,7 @@
         9439
       ],
       "score": 39,
-      "scoreChange": 9,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -41161,7 +41161,7 @@
         65
       ],
       "score": 39,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -41653,7 +41653,7 @@
         22723
       ],
       "score": 39,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -41692,7 +41692,7 @@
         66490
       ],
       "score": 39,
-      "scoreChange": 16,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -41731,7 +41731,7 @@
         21833
       ],
       "score": 39,
-      "scoreChange": 15,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -41769,7 +41769,7 @@
         516
       ],
       "score": 39,
-      "scoreChange": 12,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -41808,7 +41808,7 @@
         168
       ],
       "score": 39,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -41847,7 +41847,7 @@
         435
       ],
       "score": 39,
-      "scoreChange": 7,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -41885,7 +41885,7 @@
         744
       ],
       "score": 39,
-      "scoreChange": 9,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -41924,7 +41924,7 @@
         7245
       ],
       "score": 39,
-      "scoreChange": 9,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -42081,7 +42081,7 @@
         4326
       ],
       "score": 39,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -42625,7 +42625,7 @@
         1963
       ],
       "score": 39,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -43205,7 +43205,7 @@
         1398
       ],
       "score": 38,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -43356,7 +43356,7 @@
         3354
       ],
       "score": 38,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -43394,7 +43394,7 @@
         4034
       ],
       "score": 38,
-      "scoreChange": -2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -43470,7 +43470,7 @@
         1997
       ],
       "score": 38,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -43546,7 +43546,7 @@
         348
       ],
       "score": 38,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -43584,7 +43584,7 @@
         4851
       ],
       "score": 38,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -43659,7 +43659,7 @@
         18064
       ],
       "score": 38,
-      "scoreChange": 4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -43698,7 +43698,7 @@
         12269
       ],
       "score": 38,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -43737,7 +43737,7 @@
         92
       ],
       "score": 38,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -43775,7 +43775,7 @@
         2364
       ],
       "score": 38,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -43851,7 +43851,7 @@
         2571
       ],
       "score": 38,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -43888,7 +43888,7 @@
         1556
       ],
       "score": 38,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -44153,7 +44153,7 @@
         1338
       ],
       "score": 38,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -44191,7 +44191,7 @@
         6199
       ],
       "score": 38,
-      "scoreChange": 9,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -44230,7 +44230,7 @@
         2120
       ],
       "score": 38,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -44646,7 +44646,7 @@
         1461
       ],
       "score": 38,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -44684,7 +44684,7 @@
         2627
       ],
       "score": 38,
-      "scoreChange": 14,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -44723,7 +44723,7 @@
         24247
       ],
       "score": 38,
-      "scoreChange": 15,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -44761,7 +44761,7 @@
         320
       ],
       "score": 38,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -44800,7 +44800,7 @@
         12294
       ],
       "score": 38,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -44877,7 +44877,7 @@
         143
       ],
       "score": 38,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -45460,7 +45460,7 @@
         484
       ],
       "score": 38,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -45925,7 +45925,7 @@
         488
       ],
       "score": 37,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -46154,7 +46154,7 @@
         7132
       ],
       "score": 37,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -46192,7 +46192,7 @@
         229
       ],
       "score": 37,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -46230,7 +46230,7 @@
         10195
       ],
       "score": 37,
-      "scoreChange": 9,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -46267,7 +46267,7 @@
         3413
       ],
       "score": 37,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -46305,7 +46305,7 @@
         9170
       ],
       "score": 37,
-      "scoreChange": 7,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -46496,7 +46496,7 @@
         213
       ],
       "score": 37,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -46535,7 +46535,7 @@
         832
       ],
       "score": 37,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -46724,7 +46724,7 @@
         457
       ],
       "score": 37,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -46762,7 +46762,7 @@
         6961
       ],
       "score": 37,
-      "scoreChange": 4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -47254,7 +47254,7 @@
         471
       ],
       "score": 37,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -47521,7 +47521,7 @@
         21
       ],
       "score": 37,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -47559,7 +47559,7 @@
         8
       ],
       "score": 37,
-      "scoreChange": 5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -47598,7 +47598,7 @@
         2906
       ],
       "score": 37,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -47635,7 +47635,7 @@
         81
       ],
       "score": 37,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -47673,7 +47673,7 @@
         619
       ],
       "score": 37,
-      "scoreChange": 12,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -47712,7 +47712,7 @@
         3927
       ],
       "score": 37,
-      "scoreChange": 11,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -47751,7 +47751,7 @@
         8634
       ],
       "score": 37,
-      "scoreChange": 22,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -48101,7 +48101,7 @@
         7290
       ],
       "score": 37,
-      "scoreChange": 8,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -48566,7 +48566,7 @@
         282
       ],
       "score": 37,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -48682,7 +48682,7 @@
         569
       ],
       "score": 36,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -48757,7 +48757,7 @@
         3494
       ],
       "score": 36,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -48795,7 +48795,7 @@
         6253
       ],
       "score": 36,
-      "scoreChange": -6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -49099,7 +49099,7 @@
         13695
       ],
       "score": 36,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -49177,7 +49177,7 @@
         21835
       ],
       "score": 36,
-      "scoreChange": 7,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -49329,7 +49329,7 @@
         445
       ],
       "score": 36,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -49631,7 +49631,7 @@
         3000
       ],
       "score": 36,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -49670,7 +49670,7 @@
         14412
       ],
       "score": 36,
-      "scoreChange": 4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -49709,7 +49709,7 @@
         0
       ],
       "score": 36,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -50164,7 +50164,7 @@
         9728
       ],
       "score": 36,
-      "scoreChange": 9,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -50203,7 +50203,7 @@
         89
       ],
       "score": 36,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -50241,7 +50241,7 @@
         347
       ],
       "score": 36,
-      "scoreChange": 7,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -50279,7 +50279,7 @@
         238
       ],
       "score": 36,
-      "scoreChange": 9,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -50318,7 +50318,7 @@
         2
       ],
       "score": 36,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -50357,7 +50357,7 @@
         87
       ],
       "score": 36,
-      "scoreChange": 7,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -50396,7 +50396,7 @@
         10209
       ],
       "score": 36,
-      "scoreChange": 9,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -50434,7 +50434,7 @@
         128
       ],
       "score": 36,
-      "scoreChange": 5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -50473,7 +50473,7 @@
         3197
       ],
       "score": 36,
-      "scoreChange": 7,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -50550,7 +50550,7 @@
         41
       ],
       "score": 36,
-      "scoreChange": 4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -50589,7 +50589,7 @@
         8791
       ],
       "score": 36,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -50628,7 +50628,7 @@
         15218
       ],
       "score": 36,
-      "scoreChange": 4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -50666,7 +50666,7 @@
         2853
       ],
       "score": 36,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -50784,7 +50784,7 @@
         44
       ],
       "score": 36,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -51483,7 +51483,7 @@
         64
       ],
       "score": 36,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -51830,7 +51830,7 @@
         1074
       ],
       "score": 35,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -51979,7 +51979,7 @@
         8817
       ],
       "score": 35,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -52092,7 +52092,7 @@
         174
       ],
       "score": 35,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -52129,7 +52129,7 @@
         10319
       ],
       "score": 35,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -52168,7 +52168,7 @@
         1190
       ],
       "score": 35,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -52281,7 +52281,7 @@
         1638
       ],
       "score": 35,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -52357,7 +52357,7 @@
         342
       ],
       "score": 35,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -52469,7 +52469,7 @@
         114
       ],
       "score": 35,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -53034,7 +53034,7 @@
         9427
       ],
       "score": 35,
-      "scoreChange": -8,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -53073,7 +53073,7 @@
         1214
       ],
       "score": 35,
-      "scoreChange": 12,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -53111,7 +53111,7 @@
         23
       ],
       "score": 35,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -53150,7 +53150,7 @@
         97650
       ],
       "score": 35,
-      "scoreChange": 15,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -53188,7 +53188,7 @@
         6768
       ],
       "score": 35,
-      "scoreChange": 9,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -53226,7 +53226,7 @@
         199
       ],
       "score": 35,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -53264,7 +53264,7 @@
         319
       ],
       "score": 35,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -53302,7 +53302,7 @@
         1427
       ],
       "score": 35,
-      "scoreChange": 13,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -53340,7 +53340,7 @@
         1707
       ],
       "score": 35,
-      "scoreChange": 7,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -53377,7 +53377,7 @@
         962
       ],
       "score": 35,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -53416,7 +53416,7 @@
         2844
       ],
       "score": 35,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -54623,7 +54623,7 @@
         321
       ],
       "score": 35,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -55239,7 +55239,7 @@
         249
       ],
       "score": 34,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -55276,7 +55276,7 @@
         1556
       ],
       "score": 34,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -55390,7 +55390,7 @@
         13043
       ],
       "score": 34,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -55428,7 +55428,7 @@
         1382
       ],
       "score": 34,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -55579,7 +55579,7 @@
         11724
       ],
       "score": 34,
-      "scoreChange": 7,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -55617,7 +55617,7 @@
         17429
       ],
       "score": 34,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -55656,7 +55656,7 @@
         11248
       ],
       "score": 34,
-      "scoreChange": -3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -55922,7 +55922,7 @@
         759
       ],
       "score": 34,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -55998,7 +55998,7 @@
         1473
       ],
       "score": 34,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -56150,7 +56150,7 @@
         675
       ],
       "score": 34,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -56450,7 +56450,7 @@
         557
       ],
       "score": 34,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -56676,7 +56676,7 @@
         170
       ],
       "score": 34,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -56714,7 +56714,7 @@
         31
       ],
       "score": 34,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -56752,7 +56752,7 @@
         412
       ],
       "score": 34,
-      "scoreChange": 8,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -56791,7 +56791,7 @@
         30
       ],
       "score": 34,
-      "scoreChange": 7,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -56829,7 +56829,7 @@
         307
       ],
       "score": 34,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -56867,7 +56867,7 @@
         262
       ],
       "score": 34,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -56906,7 +56906,7 @@
         150
       ],
       "score": 34,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -56944,7 +56944,7 @@
         878
       ],
       "score": 34,
-      "scoreChange": 8,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -56982,7 +56982,7 @@
         1153
       ],
       "score": 34,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -57021,7 +57021,7 @@
         74670
       ],
       "score": 34,
-      "scoreChange": 13,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -57097,7 +57097,7 @@
         1465
       ],
       "score": 34,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -57174,7 +57174,7 @@
         1565
       ],
       "score": 34,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -57484,7 +57484,7 @@
         1137
       ],
       "score": 34,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -57677,7 +57677,7 @@
         217
       ],
       "score": 34,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -57716,7 +57716,7 @@
         414
       ],
       "score": 34,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -57833,7 +57833,7 @@
         484
       ],
       "score": 34,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -58370,7 +58370,7 @@
         4829
       ],
       "score": 33,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -58445,7 +58445,7 @@
         1239
       ],
       "score": 33,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -58633,7 +58633,7 @@
         7197
       ],
       "score": 33,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -58670,7 +58670,7 @@
         2574
       ],
       "score": 33,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -58819,7 +58819,7 @@
         762
       ],
       "score": 33,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -58857,7 +58857,7 @@
         243
       ],
       "score": 33,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -59008,7 +59008,7 @@
         1142
       ],
       "score": 33,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -59047,7 +59047,7 @@
         1521
       ],
       "score": 33,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -59085,7 +59085,7 @@
         356
       ],
       "score": 33,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -59122,7 +59122,7 @@
         4874
       ],
       "score": 33,
-      "scoreChange": -2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -59537,7 +59537,7 @@
         2354
       ],
       "score": 33,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -59876,7 +59876,7 @@
         768
       ],
       "score": 33,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -59915,7 +59915,7 @@
         39
       ],
       "score": 33,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -59954,7 +59954,7 @@
         102
       ],
       "score": 33,
-      "scoreChange": 7,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -59992,7 +59992,7 @@
         110
       ],
       "score": 33,
-      "scoreChange": 5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -60030,7 +60030,7 @@
         503
       ],
       "score": 33,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -60068,7 +60068,7 @@
         106
       ],
       "score": 33,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -60107,7 +60107,7 @@
         49
       ],
       "score": 33,
-      "scoreChange": 4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -60145,7 +60145,7 @@
         2491
       ],
       "score": 33,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -60183,7 +60183,7 @@
         7968
       ],
       "score": 33,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -60881,7 +60881,7 @@
         197
       ],
       "score": 33,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -61689,7 +61689,7 @@
         1043
       ],
       "score": 32,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -61879,7 +61879,7 @@
         1453
       ],
       "score": 32,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -61917,7 +61917,7 @@
         12346
       ],
       "score": 32,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -61992,7 +61992,7 @@
         8193
       ],
       "score": 32,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -62030,7 +62030,7 @@
         2770
       ],
       "score": 32,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -62069,7 +62069,7 @@
         2111
       ],
       "score": 32,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -62595,7 +62595,7 @@
         221
       ],
       "score": 32,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -62708,7 +62708,7 @@
         2848
       ],
       "score": 32,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -62746,7 +62746,7 @@
         8294
       ],
       "score": 32,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -62822,7 +62822,7 @@
         908
       ],
       "score": 32,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -62860,7 +62860,7 @@
         9
       ],
       "score": 32,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -62937,7 +62937,7 @@
         121
       ],
       "score": 32,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -62975,7 +62975,7 @@
         307
       ],
       "score": 32,
-      "scoreChange": 4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -63013,7 +63013,7 @@
         79
       ],
       "score": 32,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -63052,7 +63052,7 @@
         43
       ],
       "score": 32,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -63090,7 +63090,7 @@
         81
       ],
       "score": 32,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -63128,7 +63128,7 @@
         282
       ],
       "score": 32,
-      "scoreChange": 7,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -63167,7 +63167,7 @@
         82696
       ],
       "score": 32,
-      "scoreChange": 15,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -63204,7 +63204,7 @@
         19717
       ],
       "score": 32,
-      "scoreChange": 16,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -63242,7 +63242,7 @@
         928
       ],
       "score": 32,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -63280,7 +63280,7 @@
         1205
       ],
       "score": 32,
-      "scoreChange": 7,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -63318,7 +63318,7 @@
         2357
       ],
       "score": 32,
-      "scoreChange": 8,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -63356,7 +63356,7 @@
         83
       ],
       "score": 32,
-      "scoreChange": 11,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -63394,7 +63394,7 @@
         4198
       ],
       "score": 32,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -63470,7 +63470,7 @@
         923
       ],
       "score": 32,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -63860,7 +63860,7 @@
         148
       ],
       "score": 32,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -64866,7 +64866,7 @@
         56
       ],
       "score": 31,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -65623,7 +65623,7 @@
         633
       ],
       "score": 31,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -65961,7 +65961,7 @@
         1413
       ],
       "score": 31,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -66566,7 +66566,7 @@
         1267
       ],
       "score": 31,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -66640,7 +66640,7 @@
         179
       ],
       "score": 31,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -66677,7 +66677,7 @@
         49
       ],
       "score": 31,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -66716,7 +66716,7 @@
         969
       ],
       "score": 31,
-      "scoreChange": 11,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -66754,7 +66754,7 @@
         75
       ],
       "score": 31,
-      "scoreChange": 8,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -66792,7 +66792,7 @@
         37
       ],
       "score": 31,
-      "scoreChange": 5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -66831,7 +66831,7 @@
         707
       ],
       "score": 31,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -66869,7 +66869,7 @@
         394
       ],
       "score": 31,
-      "scoreChange": 8,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -66907,7 +66907,7 @@
         6906
       ],
       "score": 31,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -66946,7 +66946,7 @@
         625
       ],
       "score": 31,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -66984,7 +66984,7 @@
         4173
       ],
       "score": 31,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -67061,7 +67061,7 @@
         3312
       ],
       "score": 31,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -67137,7 +67137,7 @@
         1159
       ],
       "score": 31,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -68868,7 +68868,7 @@
         922
       ],
       "score": 30,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -68905,7 +68905,7 @@
         1849
       ],
       "score": 30,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -69130,7 +69130,7 @@
         12704
       ],
       "score": 30,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -69168,7 +69168,7 @@
         808
       ],
       "score": 30,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -69469,7 +69469,7 @@
         1029
       ],
       "score": 30,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -69582,7 +69582,7 @@
         38
       ],
       "score": 30,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -69620,7 +69620,7 @@
         1391
       ],
       "score": 30,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -69658,7 +69658,7 @@
         0
       ],
       "score": 30,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -69696,7 +69696,7 @@
         619
       ],
       "score": 30,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -69735,7 +69735,7 @@
         269
       ],
       "score": 30,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -69810,7 +69810,7 @@
         4054
       ],
       "score": 30,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -69848,7 +69848,7 @@
         340
       ],
       "score": 30,
-      "scoreChange": 4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -69885,7 +69885,7 @@
         2843
       ],
       "score": 30,
-      "scoreChange": 5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -69923,7 +69923,7 @@
         531
       ],
       "score": 30,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -69961,7 +69961,7 @@
         1005
       ],
       "score": 30,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -70036,7 +70036,7 @@
         53
       ],
       "score": 30,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -70075,7 +70075,7 @@
         1049
       ],
       "score": 30,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -70113,7 +70113,7 @@
         38
       ],
       "score": 30,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -70152,7 +70152,7 @@
         4248
       ],
       "score": 30,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -70459,7 +70459,7 @@
         229
       ],
       "score": 30,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -71501,7 +71501,7 @@
         6225
       ],
       "score": 29,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -71652,7 +71652,7 @@
         17719
       ],
       "score": 29,
-      "scoreChange": 10,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -71689,7 +71689,7 @@
         937
       ],
       "score": 29,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -71727,7 +71727,7 @@
         1759
       ],
       "score": 29,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -71765,7 +71765,7 @@
         374
       ],
       "score": 29,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -72141,7 +72141,7 @@
         741
       ],
       "score": 29,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -72292,7 +72292,7 @@
         37
       ],
       "score": 29,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -72629,7 +72629,7 @@
         682
       ],
       "score": 29,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -72743,7 +72743,7 @@
         5904
       ],
       "score": 29,
-      "scoreChange": 8,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -72781,7 +72781,7 @@
         519
       ],
       "score": 29,
-      "scoreChange": 7,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -72818,7 +72818,7 @@
         2
       ],
       "score": 29,
-      "scoreChange": 4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -72857,7 +72857,7 @@
         2562
       ],
       "score": 29,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -72895,7 +72895,7 @@
         3937
       ],
       "score": 29,
-      "scoreChange": 13,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -72933,7 +72933,7 @@
         545
       ],
       "score": 29,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -72971,7 +72971,7 @@
         289
       ],
       "score": 29,
-      "scoreChange": 9,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -73009,7 +73009,7 @@
         80
       ],
       "score": 29,
-      "scoreChange": -3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -73046,7 +73046,7 @@
         2369
       ],
       "score": 29,
-      "scoreChange": 9,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -73084,7 +73084,7 @@
         2126
       ],
       "score": 29,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -73122,7 +73122,7 @@
         1209
       ],
       "score": 29,
-      "scoreChange": 5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -73160,7 +73160,7 @@
         910
       ],
       "score": 29,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -73198,7 +73198,7 @@
         834
       ],
       "score": 29,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -73391,7 +73391,7 @@
         1576
       ],
       "score": 29,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -75053,7 +75053,7 @@
         20362
       ],
       "score": 28,
-      "scoreChange": 9,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -75127,7 +75127,7 @@
         2228
       ],
       "score": 28,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -75351,7 +75351,7 @@
         1229
       ],
       "score": 28,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -75427,7 +75427,7 @@
         310
       ],
       "score": 28,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -75540,7 +75540,7 @@
         8115
       ],
       "score": 28,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -75654,7 +75654,7 @@
         430
       ],
       "score": 28,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -76028,7 +76028,7 @@
         2540
       ],
       "score": 28,
-      "scoreChange": 4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -76066,7 +76066,7 @@
         864
       ],
       "score": 28,
-      "scoreChange": 4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -76103,7 +76103,7 @@
         758
       ],
       "score": 28,
-      "scoreChange": 8,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -76797,7 +76797,7 @@
         705
       ],
       "score": 28,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -77529,7 +77529,7 @@
         38
       ],
       "score": 27,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -77642,7 +77642,7 @@
         763
       ],
       "score": 27,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -77680,7 +77680,7 @@
         338
       ],
       "score": 27,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -77907,7 +77907,7 @@
         1712
       ],
       "score": 27,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -78019,7 +78019,7 @@
         4724
       ],
       "score": 27,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -78282,7 +78282,7 @@
         29236
       ],
       "score": 27,
-      "scoreChange": -4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -78320,7 +78320,7 @@
         3
       ],
       "score": 27,
-      "scoreChange": 5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -78358,7 +78358,7 @@
         1634
       ],
       "score": 27,
-      "scoreChange": 4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -78395,7 +78395,7 @@
         52
       ],
       "score": 27,
-      "scoreChange": 4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -78433,7 +78433,7 @@
         458
       ],
       "score": 27,
-      "scoreChange": 5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -78471,7 +78471,7 @@
         350
       ],
       "score": 27,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -79818,7 +79818,7 @@
         1264
       ],
       "score": 26,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -80045,7 +80045,7 @@
         957
       ],
       "score": 26,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -80082,7 +80082,7 @@
         980
       ],
       "score": 26,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -80194,7 +80194,7 @@
         1645
       ],
       "score": 26,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -80609,7 +80609,7 @@
         1193
       ],
       "score": 26,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -80797,7 +80797,7 @@
         145
       ],
       "score": 26,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -80834,7 +80834,7 @@
         1749
       ],
       "score": 26,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -80871,7 +80871,7 @@
         207
       ],
       "score": 26,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -80908,7 +80908,7 @@
         157
       ],
       "score": 26,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -80946,7 +80946,7 @@
         16
       ],
       "score": 26,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -80984,7 +80984,7 @@
         188
       ],
       "score": 26,
-      "scoreChange": 4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -81059,7 +81059,7 @@
         1613
       ],
       "score": 26,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -81096,7 +81096,7 @@
         1113
       ],
       "score": 26,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -81133,7 +81133,7 @@
         2213
       ],
       "score": 26,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -81824,7 +81824,7 @@
         4788
       ],
       "score": 25,
-      "scoreChange": 5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -81975,7 +81975,7 @@
         52
       ],
       "score": 25,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -82089,7 +82089,7 @@
         2101
       ],
       "score": 25,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -82613,7 +82613,7 @@
         3
       ],
       "score": 25,
-      "scoreChange": 7,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -82651,7 +82651,7 @@
         265
       ],
       "score": 25,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -82689,7 +82689,7 @@
         1230
       ],
       "score": 25,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -82727,7 +82727,7 @@
         127
       ],
       "score": 25,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -84029,7 +84029,7 @@
         487
       ],
       "score": 24,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -84329,7 +84329,7 @@
         3204
       ],
       "score": 24,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -84366,7 +84366,7 @@
         443
       ],
       "score": 24,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -84478,7 +84478,7 @@
         3361
       ],
       "score": 24,
-      "scoreChange": 9,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -84515,7 +84515,7 @@
         395
       ],
       "score": 24,
-      "scoreChange": 5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -84552,7 +84552,7 @@
         4339
       ],
       "score": 24,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -84589,7 +84589,7 @@
         19468
       ],
       "score": 24,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -84626,7 +84626,7 @@
         473
       ],
       "score": 24,
-      "scoreChange": 4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -84664,7 +84664,7 @@
         1428
       ],
       "score": 24,
-      "scoreChange": 6,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -84702,7 +84702,7 @@
         13968
       ],
       "score": 24,
-      "scoreChange": -2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -84892,7 +84892,7 @@
         885
       ],
       "score": 24,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -85316,7 +85316,7 @@
         1116
       ],
       "score": 23,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -85689,7 +85689,7 @@
         4549
       ],
       "score": 23,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -85764,7 +85764,7 @@
         1448
       ],
       "score": 23,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -85802,7 +85802,7 @@
         553
       ],
       "score": 23,
-      "scoreChange": 7,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -85839,7 +85839,7 @@
         592
       ],
       "score": 23,
-      "scoreChange": 4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -85876,7 +85876,7 @@
         73
       ],
       "score": 23,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -85914,7 +85914,7 @@
         18
       ],
       "score": 23,
-      "scoreChange": 5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -85952,7 +85952,7 @@
         687
       ],
       "score": 23,
-      "scoreChange": -2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -86937,7 +86937,7 @@
         110
       ],
       "score": 22,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -86974,7 +86974,7 @@
         9
       ],
       "score": 22,
-      "scoreChange": 3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -87878,7 +87878,7 @@
         65248
       ],
       "score": 21,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -87915,7 +87915,7 @@
         1
       ],
       "score": 21,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -87953,7 +87953,7 @@
         86
       ],
       "score": 21,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -87990,7 +87990,7 @@
         41528
       ],
       "score": 21,
-      "scoreChange": 4,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -88485,7 +88485,7 @@
         6259
       ],
       "score": 20,
-      "scoreChange": -3,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -88943,7 +88943,7 @@
         9
       ],
       "score": 19,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -89209,7 +89209,7 @@
         3442
       ],
       "score": 18,
-      "scoreChange": 5,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -89357,7 +89357,7 @@
         368
       ],
       "score": 18,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -89470,7 +89470,7 @@
         22
       ],
       "score": 17,
-      "scoreChange": 1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -89545,7 +89545,7 @@
         15
       ],
       "score": 16,
-      "scoreChange": 2,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -89620,7 +89620,7 @@
         4284
       ],
       "score": 15,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
@@ -89732,7 +89732,7 @@
         1
       ],
       "score": 13,
-      "scoreChange": -1,
+      "scoreChange": 0,
       "streakDays": 0,
       "badge": "watch",
       "badgeLabel": "觀察",
