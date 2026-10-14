@@ -1,0 +1,536 @@
+import yfinance as yf
+import pandas as pd
+import json
+import requests
+import datetime
+import time
+import math
+import os
+import tempfile
+import re
+from bs4 import BeautifulSoup
+
+INDUSTRY_MAP = {}  # code -> 產業別，由 fetch_stock_universe() 填入
+
+# GitHub Actions 伺服器系統時間是 UTC，直接用 datetime.now() 會少8小時。
+# 台灣不實施日光節約時間，用固定 +8 時區即可，不需要額外裝 tzdata。
+TAIPEI_TZ = datetime.timezone(datetime.timedelta(hours=8))
+
+def now_tw():
+    return datetime.datetime.now(TAIPEI_TZ)
+
+def is_finance(code):
+    return INDUSTRY_MAP.get(code) == "金融保險業"
+
+def is_dr(name):
+    return 'DR' in name or '-DR' in name
+
+def fetch_stock_universe():
+    """動態抓取台股上市＋上櫃「全市場」普通股＋ETF清單，取代原本手動維護的90檔候選清單。
+    資料源：證交所 ISIN 公告表（官方、免金鑰）
+      上市：https://isin.twse.com.tw/isin/C_public.jsp?strMode=2
+      上櫃：https://isin.twse.com.tw/isin/C_public.jsp?strMode=4
+    CFICode 前兩碼判斷類別（ISO 10962 CFI 分類標準）：
+      'ES' = 一般普通股（例如 ESVUFR、ESVTFR 等變體都算）
+      'CE' = 集合投資工具／ETF（例如 0050、0056、006208 這類）
+    藉此排除權證(RW開頭)、公司債、特別股等其他標的，且不用再靠猜代碼前綴。
+    同時把「產業別」記錄下來，讓 is_finance() 用官方分類而不是猜代碼開頭
+    （ETF沒有產業別，is_finance() 對ETF自然回傳False，不影響判斷）。
+    """
+    urls = {
+        "twse": "https://isin.twse.com.tw/isin/C_public.jsp?strMode=2",
+        "otc": "https://isin.twse.com.tw/isin/C_public.jsp?strMode=4",
+    }
+    universe = []
+    industry_map = {}
+    for market, url in urls.items():
+        try:
+            res = requests.get(url, timeout=20, headers={"User-Agent": "Mozilla/5.0"})
+            res.encoding = "big5"
+            soup = BeautifulSoup(res.text, "html.parser")
+            table = soup.find("table", {"class": "h4"}) or soup.find("table")
+            if not table:
+                print(f"{market} 清單抓取失敗：找不到表格")
+                continue
+            count = 0
+            for row in table.find_all("tr")[1:]:
+                cells = row.find_all("td")
+                if len(cells) != 7:
+                    continue  # 這是分類標題列（股票/ETF/權證...），跳過
+                code_name = cells[0].get_text().strip()
+                if "\u3000" not in code_name:
+                    continue
+                code, name = code_name.split("\u3000", 1)
+                code, name = code.strip(), name.strip()
+                # 代碼放寬到4~6位數字、可帶一個英文字母後綴（涵蓋 006208、00675L 這類ETF代碼）
+                if not re.match(r"^\d{4,6}[A-Z]?$", code):
+                    continue
+                cfi = cells[5].get_text().strip()
+                if not (cfi.startswith("ES") or cfi.startswith("CE")):
+                    continue  # 只留一般普通股(ES)與ETF(CE)，排除權證(RW)、公司債等
+                industry = cells[4].get_text().strip()
+                universe.append((code, name, market))
+                industry_map[code] = industry
+                count += 1
+            print(f"{market} 普通股+ETF清單：{count} 檔")
+        except Exception as e:
+            print(f"{market} 清單抓取失敗: {e}")
+    return universe, industry_map
+
+def fetch_twse_foreign():
+    """上市（TWSE）三大法人外資買賣超。
+    關鍵：T86 這支 API 一定要帶 selectType 參數，否則永遠回傳空資料。
+    這是原本版本一直抓不到外資資料的根本原因。
+    """
+    for i in range(5):
+        target_date = (now_tw() - datetime.timedelta(days=i)).strftime("%Y%m%d")
+        url = f"https://www.twse.com.tw/rwd/zh/fund/T86?date={target_date}&selectType=ALL&response=json"
+        try:
+            res = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
+            data = res.json()
+            if data.get("stat") == "OK" and data.get("data"):
+                id_map, name_map = {}, {}
+                for row in data.get("data", []):
+                    if len(row) < 8:
+                        continue
+                    code = str(row[0]).strip()
+                    name = str(row[1]).strip()
+                    try:
+                        # 「外陸資買賣超股數(不含外資自營商)」欄位
+                        net = int(str(row[4]).replace(",", "").replace("+", ""))
+                        id_map[code] = net // 1000
+                        name_map[name] = net // 1000
+                    except:
+                        continue
+                print(f"上市外資 {target_date}：{len(id_map)} 筆")
+                return {"id_map": id_map, "name_map": name_map}
+            else:
+                print(f"上市外資 {target_date} 無資料（可能非交易日）")
+        except Exception as e:
+            print(f"上市外資失敗: {e}")
+    return {"id_map": {}, "name_map": {}}
+
+def fetch_tpex_foreign():
+    """上櫃（TPEx）三大法人外資買賣超。
+    原本的程式完全沒有抓上櫃法人資料，導致上櫃股票的外資分數永遠是「待確認」。
+    資料源（data.gov.tw 開放資料集 11856）：
+    https://www.tpex.org.tw/web/stock/3insti/daily_trade/3itrade_hedge_result.php
+
+    2026-08 發現櫃買中心已把回傳格式從舊版 {"aaData": [...]} 改成新版
+    {"tables": [{"fields": [...], "data": [...]}]}，這裡改用新格式讀取，
+    並且用 fields 動態找出「外資及陸資買賣超股數」欄位的位置，
+    避免櫃買中心之後再調整欄位順序時又整組失效。
+    """
+    for i in range(5):
+        d = now_tw() - datetime.timedelta(days=i)
+        roc_date = f"{d.year - 1911}/{d.month:02d}/{d.day:02d}"
+        url = (
+            "https://www.tpex.org.tw/web/stock/3insti/daily_trade/"
+            f"3itrade_hedge_result.php?l=zh-tw&se=AL&t=D&d={roc_date}&o=json"
+        )
+        try:
+            res = requests.get(url, timeout=10, headers={"User-Agent": "Mozilla/5.0"})
+            data = res.json()
+
+            tables = data.get("tables")
+            if not tables or not tables[0].get("data"):
+                print(f"上櫃外資 {roc_date} 無資料（可能非交易日，或 API 回傳格式有變）。回傳內容前500字：{str(data)[:500]}")
+                continue
+
+            fields = tables[0].get("fields", [])
+            rows = tables[0]["data"]
+
+            # 動態找「外資及陸資買賣超股數(不含外資自營商)」欄位：
+            # 在 代號、名稱 之後，第一個出現的「買賣超股數」欄位即是。
+            foreign_idx = None
+            for idx, f in enumerate(fields):
+                if idx >= 2 and "買賣超股數" in f:
+                    foreign_idx = idx
+                    break
+            if foreign_idx is None:
+                foreign_idx = 4  # 找不到就退回原本假設的位置，至少不整組壞掉
+
+            id_map, name_map = {}, {}
+            for row in rows:
+                if len(row) <= foreign_idx:
+                    continue
+                code = str(row[0]).strip()
+                name = str(row[1]).strip()
+                try:
+                    net = int(str(row[foreign_idx]).replace(",", "").replace("+", ""))
+                    id_map[code] = net // 1000
+                    name_map[name] = net // 1000
+                except:
+                    continue
+            print(f"上櫃外資 {roc_date}：{len(id_map)} 筆（欄位索引={foreign_idx}）")
+            if id_map:
+                return {"id_map": id_map, "name_map": name_map}
+        except Exception as e:
+            print(f"上櫃外資失敗: {e}")
+    return {"id_map": {}, "name_map": {}}
+
+def match_foreign(stock_id, stock_name, market, twse_foreign, tpex_foreign):
+    foreign = tpex_foreign if market == "otc" else twse_foreign
+    id_map = foreign.get("id_map", {})
+    name_map = foreign.get("name_map", {})
+    if stock_id in id_map:
+        return id_map[stock_id], True
+    if stock_name in name_map:
+        return name_map[stock_name], True
+    # 名稱模糊比對僅在雙方名稱都至少2字時才採用，降低誤配風險
+    for k, v in name_map.items():
+        if len(k) >= 2 and len(stock_name) >= 2 and (stock_name in k or k in stock_name):
+            return v, True
+    return 0, False
+
+def calc_kd(high, low, close, period=9):
+    lowest_low = low.rolling(window=period).min()
+    highest_high = high.rolling(window=period).max()
+    denom = (highest_high - lowest_low).replace(0, 1)
+    rsv = (close - lowest_low) / denom * 100
+    k = rsv.ewm(com=2).mean()
+    d = k.ewm(com=2).mean()
+    k_val, d_val = k.iloc[-1], d.iloc[-1]
+    # 全市場掃描會碰到剛上市、資料不齊、或長期橫盤的邊緣個股，
+    # 這裡如果算出 NaN，寫進 JSON 會變成不合法的 NaN 字面值，前端 JSON.parse 會直接整包失敗。
+    k_val = 50.0 if pd.isna(k_val) else round(k_val, 1)
+    d_val = 50.0 if pd.isna(d_val) else round(d_val, 1)
+    return k_val, d_val
+
+def calc_vr(close, volume, period=26):
+    """回傳今日 VR 值，以及相對於昨日 VR 的趨勢方向（up/down/flat）。"""
+    price_change = close.diff()
+    up_vol = volume.where(price_change > 0, 0).rolling(period).sum()
+    dn_vol = volume.where(price_change < 0, 0).rolling(period).sum()
+    dn_vol = dn_vol.replace(0, 1)
+    vr_series = (up_vol / dn_vol * 100)
+
+    vr_today = vr_series.iloc[-1]
+    vr_today = round(vr_today, 1) if not pd.isna(vr_today) else 100.0
+
+    vr_trend = "flat"
+    if len(vr_series) >= 2:
+        vr_yesterday = vr_series.iloc[-2]
+        if not pd.isna(vr_yesterday):
+            diff = vr_today - round(vr_yesterday, 1)
+            if diff > 0.5:
+                vr_trend = "up"
+            elif diff < -0.5:
+                vr_trend = "down"
+
+    return vr_today, vr_trend
+
+def calc_atr(high, low, close, period=14):
+    tr = pd.concat([
+        high - low,
+        (high - close.shift()).abs(),
+        (low - close.shift()).abs()
+    ], axis=1).max(axis=1)
+    val = tr.rolling(period).mean().iloc[-1]
+    return round(val, 1) if not pd.isna(val) else 0.0
+
+def calc_score(vol_ratio, atr, price, foreign_buy, vr, kd_status, kd_k, kd_d):
+    vol_score = min(max((vol_ratio - 0.5) / 1.5, 0), 1) * 100
+    atr_pct = (atr / price * 100) if price > 0 else 0
+    atr_score = min(max(atr_pct / 5.0, 0), 1) * 100
+    foreign_score = min(max((foreign_buy + 5000) / 10000, 0), 1) * 100
+    vr_score = min(max((vr - 60) / 240, 0), 1) * 100
+    if kd_status == "up":
+        kd_score = 60 + min((kd_k - kd_d) / 20, 1) * 40
+    elif kd_status == "cross":
+        kd_score = 55
+    else:
+        kd_score = max(20, 50 - (kd_d - kd_k) * 2)
+    return round(vol_score*0.30 + atr_score*0.25 + foreign_score*0.20 + vr_score*0.15 + kd_score*0.10)
+
+def generate_reason(kd_status, kd_k, kd_d, vol_ratio, atr_pct, foreign_buy, foreign_found):
+    points = []
+    if vol_ratio >= 2.0:
+        points.append(f"成交量為均量 {vol_ratio:.1f} 倍，爆量明顯")
+    elif vol_ratio >= 1.3:
+        points.append(f"成交量為均量 {vol_ratio:.1f} 倍，量能放大中")
+    else:
+        points.append("量能持平，與均量相近")
+    if kd_status == "up":
+        points.append(f"KD 向上（K={kd_k} D={kd_d}），短線動能偏多")
+    elif kd_status == "cross":
+        points.append(f"KD 剛完成黃金交叉（K={kd_k} D={kd_d}），留意後續確認")
+    else:
+        points.append(f"KD 偏弱（K={kd_k} D={kd_d}），需觀察是否止跌")
+    if not foreign_found:
+        points.append("外資資料待確認")
+    elif foreign_buy > 3000:
+        points.append(f"外資大買 {foreign_buy:,} 張，籌碼正向")
+    elif foreign_buy > 0:
+        points.append(f"外資買超 {foreign_buy:,} 張，小幅偏多")
+    elif foreign_buy < -1000:
+        points.append(f"外資賣超 {abs(foreign_buy):,} 張，籌碼偏空需謹慎")
+    else:
+        points.append("外資近乎中性")
+    if atr_pct >= 4:
+        points.append(f"波動率 {atr_pct:.1f}%，日內價差空間充足，適合當沖")
+    elif atr_pct >= 2:
+        points.append(f"波動率 {atr_pct:.1f}%，波動中等")
+    else:
+        points.append(f"波動率僅 {atr_pct:.1f}%，波動偏小，當沖空間有限")
+    return "。".join(points) + "。"
+
+def valid_history(sub, min_bars=20):
+    """Only accept rows with finite, positive OHLC and non-negative volume."""
+    required = ["Open", "High", "Low", "Close", "Volume"]
+    if sub is None or sub.empty or any(col not in sub for col in required):
+        return None
+    sub = sub.copy()
+    for col in required:
+        sub[col] = pd.to_numeric(sub[col], errors="coerce")
+    good = sub[required].notna().all(axis=1)
+    for col in ("Open", "High", "Low", "Close"):
+        good &= sub[col].gt(0) & sub[col].map(math.isfinite)
+    good &= sub["Volume"].ge(0) & sub["Volume"].map(math.isfinite)
+    good &= sub["High"].ge(sub["Low"])
+    sub = sub.loc[good].sort_index()
+    if len(sub) < min_bars:
+        return None
+    # A partial invalid most recent bar is NOT harmless: it may change the daily indicators.
+    # Reject the download when the latest raw bar is invalid, then retry the ticker.
+    if not bool(good.iloc[-1]):
+        return None
+    return sub
+
+
+def fetch_batch_history(ticker_map, chunk_size=100, period="60d"):
+    """Download history and retry tickers with invalid OHLC bars in smaller groups."""
+    all_tickers = list(ticker_map)
+    found = {}
+    remaining = all_tickers[:]
+    for attempt, batch_size in enumerate((chunk_size, 20, 5), start=1):
+        if not remaining:
+            break
+        retry = []
+        print(f"第 {attempt} 輪行情下載：{len(remaining)} 檔，每批 {batch_size} 檔")
+        for i in range(0, len(remaining), batch_size):
+            chunk = remaining[i:i + batch_size]
+            try:
+                df = yf.download(
+                    tickers=chunk, period=period, group_by="ticker",
+                    threads=False, progress=False, auto_adjust=False,
+                    timeout=25,
+                )
+            except Exception as exc:
+                print(f"批次下載失敗：{chunk[:3]}... {exc}")
+                retry.extend(chunk)
+                continue
+            for ticker in chunk:
+                try:
+                    raw = df if len(chunk) == 1 else df[ticker]
+                    clean = valid_history(raw)
+                    if clean is None:
+                        retry.append(ticker)
+                    else:
+                        found[ticker] = clean
+                except Exception as exc:
+                    print(f"行情解析失敗 {ticker}: {exc}")
+                    retry.append(ticker)
+            time.sleep(1.5 if attempt == 1 else 2.5)
+        remaining = retry
+        print(f"第 {attempt} 輪完成：有效={len(found)}，待重試={len(remaining)}")
+        if remaining and attempt < 3:
+            time.sleep(5 * attempt)
+    if remaining:
+        print(f"仍無有效行情（前 40 檔）：{', '.join(remaining[:40])}")
+    return found
+
+# ==================== 主流程 ====================
+STOCK_LIST, INDUSTRY_MAP = fetch_stock_universe()
+print(f"候選清單共 {len(STOCK_LIST)} 檔（上市＋上櫃全市場普通股），開始抓取...")
+
+ticker_map = {}  # yfinance代號 -> (code, name, market)
+for (stock_id, name, market) in STOCK_LIST:
+    if is_dr(name):
+        continue
+    suffix = ".TW" if market == "twse" else ".TWO"
+    ticker_map[f"{stock_id}{suffix}"] = (stock_id, name, market)
+
+hist_data = fetch_batch_history(ticker_map, chunk_size=100)
+print(f"成功取得歷史價量資料：{len(hist_data)}/{len(ticker_map)} 檔")
+
+twse_foreign = fetch_twse_foreign()
+tpex_foreign = fetch_tpex_foreign()
+results = []
+
+# ==================== 歷史紀錄（用於「已推薦幾天」「較上次分數變化」） ====================
+# 因為每次執行都是重新計算今天的分數、直接覆蓋 data.json，本身不會記得昨天的狀態，
+# 所以另外用 history.json 存一份「每支股票上次的分數 / 是否為推薦股 / 連續次數」，
+# 下次執行時讀出來比對，用完再更新回去。
+#
+# 注意：如果排程哪天完全沒跑成功（沒有 push 新的 history.json），
+# 下次執行時比較的對象會自動變成「上一次成功執行那天」，不是嚴格意義的「昨天」，
+# 「已推薦天數」也是用「連續幾次成功執行都上榜」去算，跟日曆天數可能有些微落差。
+HISTORY_FILE = "history.json"
+try:
+    with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+        history = json.load(f)
+except (FileNotFoundError, json.JSONDecodeError):
+    history = {}
+
+new_history = {}
+
+for ticker, (stock_id, name, market) in ticker_map.items():
+    try:
+        hist = hist_data.get(ticker)
+        if hist is None or hist.empty or len(hist) < 20:
+            continue
+
+        # Invalid OHLC must never become a published price=0 or score.
+        if valid_history(hist) is None:
+            print(f"跳過無效行情 {ticker}")
+            continue
+        price = round(float(hist["Close"].iloc[-1]), 1)
+        vol_today = int(hist["Volume"].iloc[-1] / 1000)
+        vol_5avg = int(hist["Volume"].tail(5).mean() / 1000)
+
+        # 注意：這裡不再過濾低量股，全部股頁籤需要顯示全市場，
+        # 交易量高低改由前端篩選器處理，不在後端就砍掉資料
+
+        vol_ratio = round(vol_today / vol_5avg, 2) if vol_5avg > 0 else 1
+        atr = calc_atr(hist["High"], hist["Low"], hist["Close"])
+        vr, vr_trend = calc_vr(hist["Close"], hist["Volume"])
+        kd_k, kd_d = calc_kd(hist["High"], hist["Low"], hist["Close"])
+        vol5 = [int(v/1000) for v in hist["Volume"].tail(5).tolist()]
+        chg = round((hist["Close"].iloc[-1] - hist["Close"].iloc[-2]) / hist["Close"].iloc[-2] * 100, 1)
+        atr_pct = round(atr / price * 100, 1) if price > 0 else 0
+
+        foreign_buy, foreign_found = match_foreign(stock_id, name, market, twse_foreign, tpex_foreign)
+
+        if kd_k > kd_d + 3:
+            kd_status, kd_label = "up", "K>D 向上"
+        elif kd_k > kd_d:
+            kd_status, kd_label = "cross", "K 剛交叉 D"
+        else:
+            kd_status, kd_label = "dn", "K<D 偏弱"
+
+        score = calc_score(vol_ratio, atr, price, foreign_buy, vr, kd_status, kd_k, kd_d)
+        reason = generate_reason(kd_status, kd_k, kd_d, vol_ratio, atr_pct, foreign_buy, foreign_found)
+        is_hot = score >= 65
+
+        # 跟上一次成功執行的紀錄比較
+        prev = history.get(stock_id)
+        if prev is not None:
+            score_change = score - prev.get("score", score)
+            prev_streak = prev.get("streak", 0)
+            same_day = prev.get("date") == now_tw().strftime("%Y-%m-%d")
+            streak_days = (prev_streak if same_day else prev_streak + 1) if (is_hot and prev.get("recommended")) else (1 if is_hot else 0)
+        else:
+            score_change = None  # 第一次看到這支股票，沒有比較基準
+            streak_days = 1 if is_hot else 0
+
+        new_history[stock_id] = {
+            "score": score,
+            "recommended": is_hot,
+            "streak": streak_days,
+            "date": now_tw().strftime("%Y-%m-%d"),
+        }
+
+        # 股價分類
+        if price <= 100:
+            price_range = "0-100"
+        elif price <= 300:
+            price_range = "100-300"
+        else:
+            price_range = "300+"
+
+        tags = []
+        if vol_ratio > 1.3: tags.append("量能放大")
+        if kd_status == "up": tags.append("KD 向上")
+        if kd_status == "cross": tags.append("KD 交叉")
+        if foreign_buy > 1000: tags.append("外資大買")
+        elif foreign_buy > 0: tags.append("外資買超")
+        elif foreign_buy < 0: tags.append("外資賣超")
+        if vr > 150: tags.append("VR 強勢")
+        if is_finance(stock_id): tags.append("金融股")
+        if market == "otc": tags.append("上櫃")
+        tags.append("可當沖")
+
+
+        print(f"{name}({stock_id}) 價={price} [{price_range}] 均量={vol_5avg} 外資={foreign_buy}{'✓' if foreign_found else '?'} 分={score}")
+
+        results.append({
+            "code": stock_id,
+            "name": name,
+            "market": market,
+            "price": price,
+            "priceRange": price_range,
+            "chg": f"+{chg}%" if chg >= 0 else f"{chg}%",
+            "vol": vol_today,
+            "avgVol": vol_5avg,
+            "atr": atr,
+            "atrPct": atr_pct,
+            "vr": vr,
+            "vrTrend": vr_trend,
+            "kdK": kd_k,
+            "kdD": kd_d,
+            "kdStatus": kd_status,
+            "kdLabel": kd_label,
+            "foreignBuy": foreign_buy,
+            "foreignFound": foreign_found,
+            "vol5": vol5,
+            "score": score,
+            "scoreChange": score_change,
+            "streakDays": streak_days,
+            "badge": "hot" if score >= 65 else "watch",
+            "badgeLabel": "熱門" if score >= 65 else "觀察",
+            "isFinance": is_finance(stock_id),
+            "tags": tags,
+            "reason": reason,
+        })
+
+    except Exception as e:
+        print(f"Error {stock_id}: {e}")
+
+results.sort(key=lambda x: x["score"], reverse=True)
+
+def sanitize(obj):
+    """遞迴清掉所有 NaN/Infinity，統一換成 0，確保輸出一定是合法 JSON。
+    這是最後一道保險：就算未來哪個指標又漏算出 NaN，也不會讓整包 data.json 壞掉、
+    前端 JSON.parse 直接失敗（這正是這次全市場掃描踩到的問題）。
+    """
+    if isinstance(obj, float):
+        return 0 if (pd.isna(obj) or obj in (float("inf"), float("-inf"))) else obj
+    if isinstance(obj, dict):
+        return {k: sanitize(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [sanitize(v) for v in obj]
+    return obj
+
+output = {
+    "updated": now_tw().strftime("%Y/%m/%d %H:%M"),
+    "stocks": sanitize(results)
+}
+
+# Validate BEFORE replacing the published data and recommendation history.
+expected = len(ticker_map)
+valid_count = len(results)
+min_coverage = float(os.getenv("MIN_VALID_COVERAGE", "0.85"))
+coverage = valid_count / expected if expected else 0
+print(f"發布前檢查：有效股票 {valid_count}/{expected}，覆蓋率 {coverage:.2%}（門檻 {min_coverage:.0%}）")
+if coverage < min_coverage:
+    raise RuntimeError("有效股價覆蓋率不足，拒絕覆蓋 data.json / history.json")
+if any(not isinstance(s["price"], (int, float)) or not math.isfinite(s["price"]) or s["price"] <= 0 for s in results):
+    raise RuntimeError("檢測到無效收盤價，拒絕發布")
+
+# Produce both files first, then replace only after both serialize successfully.
+prepared = []
+try:
+    for dest, payload in (("data.json", output), (HISTORY_FILE, sanitize(new_history))):
+        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=".",
+                                         prefix=f".{dest}.", suffix=".tmp", delete=False) as f:
+            json.dump(payload, f, ensure_ascii=False, indent=2, allow_nan=False)
+            prepared.append((f.name, dest))
+    for temporary, dest in prepared:
+        os.replace(temporary, dest)
+finally:
+    for temporary, _ in prepared:
+        if os.path.exists(temporary):
+            os.unlink(temporary)
+
+print(f"\n完成，共 {len(results)} 檔寫入 data.json，並更新 {len(new_history)} 筆歷史紀錄")

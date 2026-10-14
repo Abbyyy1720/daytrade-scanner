@@ -1,0 +1,53 @@
+name: 每日盤後抓股票資料
+
+on:
+  schedule:
+    - cron: '17 17 * * 1-5'  # 台灣時間 17:17，週一到週五
+      timezone: 'Asia/Taipei'
+  workflow_dispatch:          # 允許手動觸發
+
+# 避免同一個 workflow 被同時觸發兩次（例如排程跟手動觸發重疊），
+# 造成兩個 job 同時改 data.json、push 時互相衝突。
+# 若已有一個正在跑，新觸發的會排隊等候，不會取消正在進行的那個。
+concurrency:
+  group: fetch-data
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60  # 全市場約1700+檔分批下載，抓緊一點避免卡住時無限跑下去；如常態性超時可再拉長
+    permissions:
+      contents: write
+
+    steps:
+      - name: 取得程式碼
+        uses: actions/checkout@v4
+
+      - name: 安裝 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安裝套件
+        run: pip install yfinance pandas requests beautifulsoup4
+
+      - name: 顯示實際啟動時間
+        run: |
+          echo "UTC: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          echo "台灣時間: $(TZ=Asia/Taipei date '+%Y-%m-%d %H:%M:%S %Z')"
+          echo "觸發來源: ${{ github.event_name }}"
+
+      - name: 執行抓資料腳本
+        run: python fetch_data.py
+
+      - name: 儲存 data.json 回 GitHub
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add data.json history.json
+          git diff --staged --quiet || git commit -m "每日更新：$(date '+%Y-%m-%d %H:%M')"
+          # data.json、history.json 都是整份重新產生的資料快照，不需要逐行合併；
+          # 萬一 rebase 途中仍遇到衝突（例如上一個 job 剛好也在此時 push），
+          # 一律保留這次新產生的版本（-X ours）。
+          git pull --rebase -X ours && git push
