@@ -4,6 +4,9 @@ import json
 import requests
 import datetime
 import time
+import math
+import os
+import tempfile
 import re
 from bs4 import BeautifulSoup
 
@@ -272,45 +275,70 @@ def generate_reason(kd_status, kd_k, kd_d, vol_ratio, atr_pct, foreign_buy, fore
         points.append(f"波動率僅 {atr_pct:.1f}%，波動偏小，當沖空間有限")
     return "。".join(points) + "。"
 
+def valid_history(sub, min_bars=20):
+    """Only accept rows with finite, positive OHLC and non-negative volume."""
+    required = ["Open", "High", "Low", "Close", "Volume"]
+    if sub is None or sub.empty or any(col not in sub for col in required):
+        return None
+    sub = sub.copy()
+    for col in required:
+        sub[col] = pd.to_numeric(sub[col], errors="coerce")
+    good = sub[required].notna().all(axis=1)
+    for col in ("Open", "High", "Low", "Close"):
+        good &= sub[col].gt(0) & sub[col].map(math.isfinite)
+    good &= sub["Volume"].ge(0) & sub["Volume"].map(math.isfinite)
+    good &= sub["High"].ge(sub["Low"])
+    sub = sub.loc[good].sort_index()
+    if len(sub) < min_bars:
+        return None
+    # A partial invalid most recent bar is NOT harmless: it may change the daily indicators.
+    # Reject the download when the latest raw bar is invalid, then retry the ticker.
+    if not bool(good.iloc[-1]):
+        return None
+    return sub
+
+
 def fetch_batch_history(ticker_map, chunk_size=100, period="60d"):
-    """分批＋多執行緒下載歷史股價，取代逐檔 yf.Ticker().history() 的做法。
-    全市場約1700+檔，如果逐一呼叫會很慢，且容易被 Yahoo Finance 判定異常流量。
-    這裡改用 yf.download() 一次帶入一批 ticker，批次之間間隔一下降低風險。
-    注意：Yahoo Finance 對雲端機房 IP（含 GitHub Actions）較常見限流/封鎖，
-    若正式跑起來發現大量失敗，請告知我，我們再評估要不要換官方資料源。
-    """
-    all_tickers = list(ticker_map.keys())
-    hist_map = {}
-    total = len(all_tickers)
-    for i in range(0, total, chunk_size):
-        chunk = all_tickers[i:i + chunk_size]
-        try:
-            df = yf.download(
-                tickers=chunk, period=period, group_by="ticker",
-                threads=True, progress=False, auto_adjust=False
-            )
-        except Exception as e:
-            print(f"批次下載失敗（第 {i}-{i+len(chunk)} 檔）: {e}")
-            continue
-
-        for t in chunk:
+    """Download history and retry tickers with invalid OHLC bars in smaller groups."""
+    all_tickers = list(ticker_map)
+    found = {}
+    remaining = all_tickers[:]
+    for attempt, batch_size in enumerate((chunk_size, 20, 5), start=1):
+        if not remaining:
+            break
+        retry = []
+        print(f"第 {attempt} 輪行情下載：{len(remaining)} 檔，每批 {batch_size} 檔")
+        for i in range(0, len(remaining), batch_size):
+            chunk = remaining[i:i + batch_size]
             try:
-                if len(chunk) == 1:
-                    sub = df
-                elif t in df.columns.get_level_values(0):
-                    sub = df[t]
-                else:
-                    continue
-                sub = sub.dropna(how="all")
-                if len(sub) >= 20:
-                    hist_map[t] = sub
-            except Exception:
+                df = yf.download(
+                    tickers=chunk, period=period, group_by="ticker",
+                    threads=False, progress=False, auto_adjust=False,
+                    timeout=25,
+                )
+            except Exception as exc:
+                print(f"批次下載失敗：{chunk[:3]}... {exc}")
+                retry.extend(chunk)
                 continue
-
-        print(f"歷史股價下載進度：{min(i + chunk_size, total)}/{total}")
-        time.sleep(1.5)  # 批次間停頓，降低被限流風險
-
-    return hist_map
+            for ticker in chunk:
+                try:
+                    raw = df if len(chunk) == 1 else df[ticker]
+                    clean = valid_history(raw)
+                    if clean is None:
+                        retry.append(ticker)
+                    else:
+                        found[ticker] = clean
+                except Exception as exc:
+                    print(f"行情解析失敗 {ticker}: {exc}")
+                    retry.append(ticker)
+            time.sleep(1.5 if attempt == 1 else 2.5)
+        remaining = retry
+        print(f"第 {attempt} 輪完成：有效={len(found)}，待重試={len(remaining)}")
+        if remaining and attempt < 3:
+            time.sleep(5 * attempt)
+    if remaining:
+        print(f"仍無有效行情（前 40 檔）：{', '.join(remaining[:40])}")
+    return found
 
 # ==================== 主流程 ====================
 STOCK_LIST, INDUSTRY_MAP = fetch_stock_universe()
@@ -353,7 +381,11 @@ for ticker, (stock_id, name, market) in ticker_map.items():
         if hist is None or hist.empty or len(hist) < 20:
             continue
 
-        price = round(hist["Close"].iloc[-1], 1)
+        # Invalid OHLC must never become a published price=0 or score.
+        if valid_history(hist) is None:
+            print(f"跳過無效行情 {ticker}")
+            continue
+        price = round(float(hist["Close"].iloc[-1]), 1)
         vol_today = int(hist["Volume"].iloc[-1] / 1000)
         vol_5avg = int(hist["Volume"].tail(5).mean() / 1000)
 
@@ -386,7 +418,8 @@ for ticker, (stock_id, name, market) in ticker_map.items():
         if prev is not None:
             score_change = score - prev.get("score", score)
             prev_streak = prev.get("streak", 0)
-            streak_days = prev_streak + 1 if (is_hot and prev.get("recommended")) else (1 if is_hot else 0)
+            same_day = prev.get("date") == now_tw().strftime("%Y-%m-%d")
+            streak_days = (prev_streak if same_day else prev_streak + 1) if (is_hot and prev.get("recommended")) else (1 if is_hot else 0)
         else:
             score_change = None  # 第一次看到這支股票，沒有比較基準
             streak_days = 1 if is_hot else 0
@@ -474,12 +507,30 @@ output = {
     "stocks": sanitize(results)
 }
 
-with open("data.json", "w", encoding="utf-8") as f:
-    # allow_nan=False：如果清理後還是漏了NaN，這裡會直接報錯讓 Actions log 顯示出來，
-    # 比默默寫出壞掉的JSON、前端才發現「資料載入失敗」好除錯很多
-    json.dump(output, f, ensure_ascii=False, indent=2, allow_nan=False)
+# Validate BEFORE replacing the published data and recommendation history.
+expected = len(ticker_map)
+valid_count = len(results)
+min_coverage = float(os.getenv("MIN_VALID_COVERAGE", "0.85"))
+coverage = valid_count / expected if expected else 0
+print(f"發布前檢查：有效股票 {valid_count}/{expected}，覆蓋率 {coverage:.2%}（門檻 {min_coverage:.0%}）")
+if coverage < min_coverage:
+    raise RuntimeError("有效股價覆蓋率不足，拒絕覆蓋 data.json / history.json")
+if any(not isinstance(s["price"], (int, float)) or not math.isfinite(s["price"]) or s["price"] <= 0 for s in results):
+    raise RuntimeError("檢測到無效收盤價，拒絕發布")
 
-with open(HISTORY_FILE, "w", encoding="utf-8") as f:
-    json.dump(sanitize(new_history), f, ensure_ascii=False, indent=2, allow_nan=False)
+# Produce both files first, then replace only after both serialize successfully.
+prepared = []
+try:
+    for dest, payload in (("data.json", output), (HISTORY_FILE, sanitize(new_history))):
+        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=".",
+                                         prefix=f".{dest}.", suffix=".tmp", delete=False) as f:
+            json.dump(payload, f, ensure_ascii=False, indent=2, allow_nan=False)
+            prepared.append((f.name, dest))
+    for temporary, dest in prepared:
+        os.replace(temporary, dest)
+finally:
+    for temporary, _ in prepared:
+        if os.path.exists(temporary):
+            os.unlink(temporary)
 
 print(f"\n完成，共 {len(results)} 檔寫入 data.json，並更新 {len(new_history)} 筆歷史紀錄")
