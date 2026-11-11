@@ -280,7 +280,12 @@ def valid_history(sub, min_bars=20):
     required = ["Open", "High", "Low", "Close", "Volume"]
     if sub is None or sub.empty or any(col not in sub for col in required):
         return None
-    sub = sub.copy()
+    # yf.download aligns every ticker to a shared date index. A fully empty
+    # OHLCV row can be padding from another ticker, not a broken price bar.
+    # Do not drop partially populated or zero-price bars: they must still fail.
+    sub = sub.dropna(subset=required, how="all").sort_index().copy()
+    if sub.empty:
+        return None
     for col in required:
         sub[col] = pd.to_numeric(sub[col], errors="coerce")
     good = sub[required].notna().all(axis=1)
@@ -322,7 +327,8 @@ def fetch_batch_history(ticker_map, chunk_size=100, period="60d"):
                 continue
             for ticker in chunk:
                 try:
-                    raw = df if len(chunk) == 1 else df[ticker]
+                    # yfinance returns MultiIndex columns even for one ticker.
+                    raw = df[ticker] if isinstance(df.columns, pd.MultiIndex) else df
                     clean = valid_history(raw)
                     if clean is None:
                         retry.append(ticker)
@@ -340,197 +346,203 @@ def fetch_batch_history(ticker_map, chunk_size=100, period="60d"):
         print(f"仍無有效行情（前 40 檔）：{', '.join(remaining[:40])}")
     return found
 
-# ==================== 主流程 ====================
-STOCK_LIST, INDUSTRY_MAP = fetch_stock_universe()
-print(f"候選清單共 {len(STOCK_LIST)} 檔（上市＋上櫃全市場普通股），開始抓取...")
+def main():
+    global INDUSTRY_MAP
+    # ==================== 主流程 ====================
+    STOCK_LIST, INDUSTRY_MAP = fetch_stock_universe()
+    print(f"候選清單共 {len(STOCK_LIST)} 檔（上市＋上櫃全市場普通股），開始抓取...")
 
-ticker_map = {}  # yfinance代號 -> (code, name, market)
-for (stock_id, name, market) in STOCK_LIST:
-    if is_dr(name):
-        continue
-    suffix = ".TW" if market == "twse" else ".TWO"
-    ticker_map[f"{stock_id}{suffix}"] = (stock_id, name, market)
+    ticker_map = {}  # yfinance代號 -> (code, name, market)
+    for (stock_id, name, market) in STOCK_LIST:
+        if is_dr(name):
+            continue
+        suffix = ".TW" if market == "twse" else ".TWO"
+        ticker_map[f"{stock_id}{suffix}"] = (stock_id, name, market)
 
-hist_data = fetch_batch_history(ticker_map, chunk_size=100)
-print(f"成功取得歷史價量資料：{len(hist_data)}/{len(ticker_map)} 檔")
+    hist_data = fetch_batch_history(ticker_map, chunk_size=100)
+    print(f"成功取得歷史價量資料：{len(hist_data)}/{len(ticker_map)} 檔")
 
-twse_foreign = fetch_twse_foreign()
-tpex_foreign = fetch_tpex_foreign()
-results = []
+    twse_foreign = fetch_twse_foreign()
+    tpex_foreign = fetch_tpex_foreign()
+    results = []
 
-# ==================== 歷史紀錄（用於「已推薦幾天」「較上次分數變化」） ====================
-# 因為每次執行都是重新計算今天的分數、直接覆蓋 data.json，本身不會記得昨天的狀態，
-# 所以另外用 history.json 存一份「每支股票上次的分數 / 是否為推薦股 / 連續次數」，
-# 下次執行時讀出來比對，用完再更新回去。
-#
-# 注意：如果排程哪天完全沒跑成功（沒有 push 新的 history.json），
-# 下次執行時比較的對象會自動變成「上一次成功執行那天」，不是嚴格意義的「昨天」，
-# 「已推薦天數」也是用「連續幾次成功執行都上榜」去算，跟日曆天數可能有些微落差。
-HISTORY_FILE = "history.json"
-try:
-    with open(HISTORY_FILE, "r", encoding="utf-8") as f:
-        history = json.load(f)
-except (FileNotFoundError, json.JSONDecodeError):
-    history = {}
-
-new_history = {}
-
-for ticker, (stock_id, name, market) in ticker_map.items():
+    # ==================== 歷史紀錄（用於「已推薦幾天」「較上次分數變化」） ====================
+    # 因為每次執行都是重新計算今天的分數、直接覆蓋 data.json，本身不會記得昨天的狀態，
+    # 所以另外用 history.json 存一份「每支股票上次的分數 / 是否為推薦股 / 連續次數」，
+    # 下次執行時讀出來比對，用完再更新回去。
+    #
+    # 注意：如果排程哪天完全沒跑成功（沒有 push 新的 history.json），
+    # 下次執行時比較的對象會自動變成「上一次成功執行那天」，不是嚴格意義的「昨天」，
+    # 「已推薦天數」也是用「連續幾次成功執行都上榜」去算，跟日曆天數可能有些微落差。
+    HISTORY_FILE = "history.json"
     try:
-        hist = hist_data.get(ticker)
-        if hist is None or hist.empty or len(hist) < 20:
-            continue
+        with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+            history = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        history = {}
 
-        # Invalid OHLC must never become a published price=0 or score.
-        if valid_history(hist) is None:
-            print(f"跳過無效行情 {ticker}")
-            continue
-        price = round(float(hist["Close"].iloc[-1]), 1)
-        vol_today = int(hist["Volume"].iloc[-1] / 1000)
-        vol_5avg = int(hist["Volume"].tail(5).mean() / 1000)
+    new_history = {}
 
-        # 注意：這裡不再過濾低量股，全部股頁籤需要顯示全市場，
-        # 交易量高低改由前端篩選器處理，不在後端就砍掉資料
+    for ticker, (stock_id, name, market) in ticker_map.items():
+        try:
+            hist = hist_data.get(ticker)
+            if hist is None or hist.empty or len(hist) < 20:
+                continue
 
-        vol_ratio = round(vol_today / vol_5avg, 2) if vol_5avg > 0 else 1
-        atr = calc_atr(hist["High"], hist["Low"], hist["Close"])
-        vr, vr_trend = calc_vr(hist["Close"], hist["Volume"])
-        kd_k, kd_d = calc_kd(hist["High"], hist["Low"], hist["Close"])
-        vol5 = [int(v/1000) for v in hist["Volume"].tail(5).tolist()]
-        chg = round((hist["Close"].iloc[-1] - hist["Close"].iloc[-2]) / hist["Close"].iloc[-2] * 100, 1)
-        atr_pct = round(atr / price * 100, 1) if price > 0 else 0
+            # Invalid OHLC must never become a published price=0 or score.
+            if valid_history(hist) is None:
+                print(f"跳過無效行情 {ticker}")
+                continue
+            price = round(float(hist["Close"].iloc[-1]), 1)
+            vol_today = int(hist["Volume"].iloc[-1] / 1000)
+            vol_5avg = int(hist["Volume"].tail(5).mean() / 1000)
 
-        foreign_buy, foreign_found = match_foreign(stock_id, name, market, twse_foreign, tpex_foreign)
+            # 注意：這裡不再過濾低量股，全部股頁籤需要顯示全市場，
+            # 交易量高低改由前端篩選器處理，不在後端就砍掉資料
 
-        if kd_k > kd_d + 3:
-            kd_status, kd_label = "up", "K>D 向上"
-        elif kd_k > kd_d:
-            kd_status, kd_label = "cross", "K 剛交叉 D"
-        else:
-            kd_status, kd_label = "dn", "K<D 偏弱"
+            vol_ratio = round(vol_today / vol_5avg, 2) if vol_5avg > 0 else 1
+            atr = calc_atr(hist["High"], hist["Low"], hist["Close"])
+            vr, vr_trend = calc_vr(hist["Close"], hist["Volume"])
+            kd_k, kd_d = calc_kd(hist["High"], hist["Low"], hist["Close"])
+            vol5 = [int(v/1000) for v in hist["Volume"].tail(5).tolist()]
+            chg = round((hist["Close"].iloc[-1] - hist["Close"].iloc[-2]) / hist["Close"].iloc[-2] * 100, 1)
+            atr_pct = round(atr / price * 100, 1) if price > 0 else 0
 
-        score = calc_score(vol_ratio, atr, price, foreign_buy, vr, kd_status, kd_k, kd_d)
-        reason = generate_reason(kd_status, kd_k, kd_d, vol_ratio, atr_pct, foreign_buy, foreign_found)
-        is_hot = score >= 65
+            foreign_buy, foreign_found = match_foreign(stock_id, name, market, twse_foreign, tpex_foreign)
 
-        # 跟上一次成功執行的紀錄比較
-        prev = history.get(stock_id)
-        if prev is not None:
-            score_change = score - prev.get("score", score)
-            prev_streak = prev.get("streak", 0)
-            same_day = prev.get("date") == now_tw().strftime("%Y-%m-%d")
-            streak_days = (prev_streak if same_day else prev_streak + 1) if (is_hot and prev.get("recommended")) else (1 if is_hot else 0)
-        else:
-            score_change = None  # 第一次看到這支股票，沒有比較基準
-            streak_days = 1 if is_hot else 0
+            if kd_k > kd_d + 3:
+                kd_status, kd_label = "up", "K>D 向上"
+            elif kd_k > kd_d:
+                kd_status, kd_label = "cross", "K 剛交叉 D"
+            else:
+                kd_status, kd_label = "dn", "K<D 偏弱"
 
-        new_history[stock_id] = {
-            "score": score,
-            "recommended": is_hot,
-            "streak": streak_days,
-            "date": now_tw().strftime("%Y-%m-%d"),
-        }
+            score = calc_score(vol_ratio, atr, price, foreign_buy, vr, kd_status, kd_k, kd_d)
+            reason = generate_reason(kd_status, kd_k, kd_d, vol_ratio, atr_pct, foreign_buy, foreign_found)
+            is_hot = score >= 65
 
-        # 股價分類
-        if price <= 100:
-            price_range = "0-100"
-        elif price <= 300:
-            price_range = "100-300"
-        else:
-            price_range = "300+"
+            # 跟上一次成功執行的紀錄比較
+            prev = history.get(stock_id)
+            if prev is not None:
+                score_change = score - prev.get("score", score)
+                prev_streak = prev.get("streak", 0)
+                same_day = prev.get("date") == now_tw().strftime("%Y-%m-%d")
+                streak_days = (prev_streak if same_day else prev_streak + 1) if (is_hot and prev.get("recommended")) else (1 if is_hot else 0)
+            else:
+                score_change = None  # 第一次看到這支股票，沒有比較基準
+                streak_days = 1 if is_hot else 0
 
-        tags = []
-        if vol_ratio > 1.3: tags.append("量能放大")
-        if kd_status == "up": tags.append("KD 向上")
-        if kd_status == "cross": tags.append("KD 交叉")
-        if foreign_buy > 1000: tags.append("外資大買")
-        elif foreign_buy > 0: tags.append("外資買超")
-        elif foreign_buy < 0: tags.append("外資賣超")
-        if vr > 150: tags.append("VR 強勢")
-        if is_finance(stock_id): tags.append("金融股")
-        if market == "otc": tags.append("上櫃")
-        tags.append("可當沖")
+            new_history[stock_id] = {
+                "score": score,
+                "recommended": is_hot,
+                "streak": streak_days,
+                "date": now_tw().strftime("%Y-%m-%d"),
+            }
+
+            # 股價分類
+            if price <= 100:
+                price_range = "0-100"
+            elif price <= 300:
+                price_range = "100-300"
+            else:
+                price_range = "300+"
+
+            tags = []
+            if vol_ratio > 1.3: tags.append("量能放大")
+            if kd_status == "up": tags.append("KD 向上")
+            if kd_status == "cross": tags.append("KD 交叉")
+            if foreign_buy > 1000: tags.append("外資大買")
+            elif foreign_buy > 0: tags.append("外資買超")
+            elif foreign_buy < 0: tags.append("外資賣超")
+            if vr > 150: tags.append("VR 強勢")
+            if is_finance(stock_id): tags.append("金融股")
+            if market == "otc": tags.append("上櫃")
+            tags.append("可當沖")
 
 
-        print(f"{name}({stock_id}) 價={price} [{price_range}] 均量={vol_5avg} 外資={foreign_buy}{'✓' if foreign_found else '?'} 分={score}")
+            print(f"{name}({stock_id}) 價={price} [{price_range}] 均量={vol_5avg} 外資={foreign_buy}{'✓' if foreign_found else '?'} 分={score}")
 
-        results.append({
-            "code": stock_id,
-            "name": name,
-            "market": market,
-            "price": price,
-            "priceRange": price_range,
-            "chg": f"+{chg}%" if chg >= 0 else f"{chg}%",
-            "vol": vol_today,
-            "avgVol": vol_5avg,
-            "atr": atr,
-            "atrPct": atr_pct,
-            "vr": vr,
-            "vrTrend": vr_trend,
-            "kdK": kd_k,
-            "kdD": kd_d,
-            "kdStatus": kd_status,
-            "kdLabel": kd_label,
-            "foreignBuy": foreign_buy,
-            "foreignFound": foreign_found,
-            "vol5": vol5,
-            "score": score,
-            "scoreChange": score_change,
-            "streakDays": streak_days,
-            "badge": "hot" if score >= 65 else "watch",
-            "badgeLabel": "熱門" if score >= 65 else "觀察",
-            "isFinance": is_finance(stock_id),
-            "tags": tags,
-            "reason": reason,
-        })
+            results.append({
+                "code": stock_id,
+                "name": name,
+                "market": market,
+                "price": price,
+                "priceRange": price_range,
+                "chg": f"+{chg}%" if chg >= 0 else f"{chg}%",
+                "vol": vol_today,
+                "avgVol": vol_5avg,
+                "atr": atr,
+                "atrPct": atr_pct,
+                "vr": vr,
+                "vrTrend": vr_trend,
+                "kdK": kd_k,
+                "kdD": kd_d,
+                "kdStatus": kd_status,
+                "kdLabel": kd_label,
+                "foreignBuy": foreign_buy,
+                "foreignFound": foreign_found,
+                "vol5": vol5,
+                "score": score,
+                "scoreChange": score_change,
+                "streakDays": streak_days,
+                "badge": "hot" if score >= 65 else "watch",
+                "badgeLabel": "熱門" if score >= 65 else "觀察",
+                "isFinance": is_finance(stock_id),
+                "tags": tags,
+                "reason": reason,
+            })
 
-    except Exception as e:
-        print(f"Error {stock_id}: {e}")
+        except Exception as e:
+            print(f"Error {stock_id}: {e}")
 
-results.sort(key=lambda x: x["score"], reverse=True)
+    results.sort(key=lambda x: x["score"], reverse=True)
 
-def sanitize(obj):
-    """遞迴清掉所有 NaN/Infinity，統一換成 0，確保輸出一定是合法 JSON。
-    這是最後一道保險：就算未來哪個指標又漏算出 NaN，也不會讓整包 data.json 壞掉、
-    前端 JSON.parse 直接失敗（這正是這次全市場掃描踩到的問題）。
-    """
-    if isinstance(obj, float):
-        return 0 if (pd.isna(obj) or obj in (float("inf"), float("-inf"))) else obj
-    if isinstance(obj, dict):
-        return {k: sanitize(v) for k, v in obj.items()}
-    if isinstance(obj, list):
-        return [sanitize(v) for v in obj]
-    return obj
+    def sanitize(obj):
+        """遞迴清掉所有 NaN/Infinity，統一換成 0，確保輸出一定是合法 JSON。
+        這是最後一道保險：就算未來哪個指標又漏算出 NaN，也不會讓整包 data.json 壞掉、
+        前端 JSON.parse 直接失敗（這正是這次全市場掃描踩到的問題）。
+        """
+        if isinstance(obj, float):
+            return 0 if (pd.isna(obj) or obj in (float("inf"), float("-inf"))) else obj
+        if isinstance(obj, dict):
+            return {k: sanitize(v) for k, v in obj.items()}
+        if isinstance(obj, list):
+            return [sanitize(v) for v in obj]
+        return obj
 
-output = {
-    "updated": now_tw().strftime("%Y/%m/%d %H:%M"),
-    "stocks": sanitize(results)
-}
+    output = {
+        "updated": now_tw().strftime("%Y/%m/%d %H:%M"),
+        "stocks": sanitize(results)
+    }
 
-# Validate BEFORE replacing the published data and recommendation history.
-expected = len(ticker_map)
-valid_count = len(results)
-min_coverage = float(os.getenv("MIN_VALID_COVERAGE", "0.85"))
-coverage = valid_count / expected if expected else 0
-print(f"發布前檢查：有效股票 {valid_count}/{expected}，覆蓋率 {coverage:.2%}（門檻 {min_coverage:.0%}）")
-if coverage < min_coverage:
-    raise RuntimeError("有效股價覆蓋率不足，拒絕覆蓋 data.json / history.json")
-if any(not isinstance(s["price"], (int, float)) or not math.isfinite(s["price"]) or s["price"] <= 0 for s in results):
-    raise RuntimeError("檢測到無效收盤價，拒絕發布")
+    # Validate BEFORE replacing the published data and recommendation history.
+    expected = len(ticker_map)
+    valid_count = len(results)
+    min_coverage = float(os.getenv("MIN_VALID_COVERAGE", "0.85"))
+    coverage = valid_count / expected if expected else 0
+    print(f"發布前檢查：有效股票 {valid_count}/{expected}，覆蓋率 {coverage:.2%}（門檻 {min_coverage:.0%}）")
+    if coverage < min_coverage:
+        raise RuntimeError("有效股價覆蓋率不足，拒絕覆蓋 data.json / history.json")
+    if any(not isinstance(s["price"], (int, float)) or not math.isfinite(s["price"]) or s["price"] <= 0 for s in results):
+        raise RuntimeError("檢測到無效收盤價，拒絕發布")
 
-# Produce both files first, then replace only after both serialize successfully.
-prepared = []
-try:
-    for dest, payload in (("data.json", output), (HISTORY_FILE, sanitize(new_history))):
-        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=".",
-                                         prefix=f".{dest}.", suffix=".tmp", delete=False) as f:
-            json.dump(payload, f, ensure_ascii=False, indent=2, allow_nan=False)
-            prepared.append((f.name, dest))
-    for temporary, dest in prepared:
-        os.replace(temporary, dest)
-finally:
-    for temporary, _ in prepared:
-        if os.path.exists(temporary):
-            os.unlink(temporary)
+    # Produce both files first, then replace only after both serialize successfully.
+    prepared = []
+    try:
+        for dest, payload in (("data.json", output), (HISTORY_FILE, sanitize(new_history))):
+            with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=".",
+                                             prefix=f".{dest}.", suffix=".tmp", delete=False) as f:
+                json.dump(payload, f, ensure_ascii=False, indent=2, allow_nan=False)
+                prepared.append((f.name, dest))
+        for temporary, dest in prepared:
+            os.replace(temporary, dest)
+    finally:
+        for temporary, _ in prepared:
+            if os.path.exists(temporary):
+                os.unlink(temporary)
 
-print(f"\n完成，共 {len(results)} 檔寫入 data.json，並更新 {len(new_history)} 筆歷史紀錄")
+    print(f"\n完成，共 {len(results)} 檔寫入 data.json，並更新 {len(new_history)} 筆歷史紀錄")
+
+
+if __name__ == "__main__":
+    main()
