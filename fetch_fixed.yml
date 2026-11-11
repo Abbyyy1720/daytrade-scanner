@@ -9,7 +9,7 @@ on:
     paths:
       - 'fetch_data.py'
       - 'tests/test_fetch_data.py'
-      - '.github/workflows/fetch.yml' 
+      - '.github/workflows/fetch.yml'
 
 # 避免同一個 workflow 被同時觸發兩次（例如排程跟手動觸發重疊），
 # 造成兩個 job 同時改 data.json、push 時互相衝突。
