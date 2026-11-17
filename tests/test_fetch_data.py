@@ -31,6 +31,19 @@ class HistoryTests(unittest.TestCase):
                 frame.loc[frame.index[-1], "Close"] = bad
                 self.assertIsNone(valid_history(frame))
 
+
+    def test_zero_volume_alignment_padding_is_ignored(self):
+        original = history()
+        padded = original.reindex(pd.date_range("2026-09-01", periods=31))
+        padded.loc[padded.index[-1], "Volume"] = 0.0
+        pd.testing.assert_frame_equal(valid_history(padded), original, check_freq=False)
+
+    def test_missing_price_with_real_volume_is_rejected(self):
+        frame = history()
+        frame.loc[frame.index[-1], ["Open", "High", "Low", "Close"]] = float("nan")
+        frame.loc[frame.index[-1], "Volume"] = 1234.
+        self.assertIsNone(valid_history(frame))
+
     def test_empty_and_short_history_rejected(self):
         self.assertIsNone(valid_history(history().iloc[:19]))
         self.assertIsNone(valid_history(history() * float("nan")))
