@@ -280,14 +280,19 @@ def valid_history(sub, min_bars=20):
     required = ["Open", "High", "Low", "Close", "Volume"]
     if sub is None or sub.empty or any(col not in sub for col in required):
         return None
-    # yf.download aligns every ticker to a shared date index. A fully empty
-    # OHLCV row can be padding from another ticker, not a broken price bar.
-    # Do not drop partially populated or zero-price bars: they must still fail.
-    sub = sub.dropna(subset=required, how="all").sort_index().copy()
-    if sub.empty:
-        return None
+    # yfinance aligns tickers on a common date index. On days when an
+    # individual ticker has no bar, the filler row may contain NaN OHLC
+    # AND Volume=0 (rather than an entirely NaN row). This is padding,
+    # not a genuine zero-price quotation; drop it before checking the last bar.
+    # A row with any quoted price/positive volume is never treated as padding.
+    sub = sub.sort_index().copy()
     for col in required:
         sub[col] = pd.to_numeric(sub[col], errors="coerce")
+    empty_ohlc = sub[["Open", "High", "Low", "Close"]].isna().all(axis=1)
+    no_trades = sub["Volume"].isna() | sub["Volume"].eq(0)
+    sub = sub.loc[~(empty_ohlc & no_trades)]
+    if sub.empty:
+        return None
     good = sub[required].notna().all(axis=1)
     for col in ("Open", "High", "Low", "Close"):
         good &= sub[col].gt(0) & sub[col].map(math.isfinite)
