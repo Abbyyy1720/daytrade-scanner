@@ -275,6 +275,38 @@ def generate_reason(kd_status, kd_k, kd_d, vol_ratio, atr_pct, foreign_buy, fore
         points.append(f"波動率僅 {atr_pct:.1f}%，波動偏小，當沖空間有限")
     return "。".join(points) + "。"
 
+def latest_completed_market_date(reference=None):
+    """Last eligible Taiwan trading date; do not score a future/in-progress daily candle.
+
+    Weekends are rolled back to Friday. Exchange holidays without a new candle
+    remain handled by the existing historical data and publication threshold.
+    """
+    reference = reference or now_tw()
+    if reference.tzinfo is None:
+        raise ValueError("reference must be timezone-aware")
+    local = reference.astimezone(TAIPEI_TZ)
+    day = local.date()
+    if local.hour < 17:
+        day -= datetime.timedelta(days=1)
+    while day.weekday() >= 5:
+        day -= datetime.timedelta(days=1)
+    return day
+
+
+def cutoff_history(sub, max_market_date):
+    """Exclude daily Yahoo bars newer than the last completed Taiwan session.
+
+    Yahoo's daily download can expose a not-yet-traded next-day candle in the
+    early morning Taiwan time, with some incomplete OHLC values. Never use it
+    as the latest completed session even when Yahoo supplied nonzero volume.
+    """
+    if sub is None or sub.empty:
+        return sub
+    indexed = pd.to_datetime(sub.index, errors="coerce")
+    keep = pd.Series(indexed.date, index=sub.index).le(max_market_date)
+    return sub.loc[keep.to_numpy()]
+
+
 def valid_history(sub, min_bars=20):
     """Only accept rows with finite, positive OHLC and non-negative volume."""
     required = ["Open", "High", "Low", "Close", "Volume"]
@@ -313,6 +345,9 @@ def fetch_batch_history(ticker_map, chunk_size=100, period="60d"):
     all_tickers = list(ticker_map)
     found = {}
     remaining = all_tickers[:]
+    max_market_date = latest_completed_market_date()
+    print(f"行情截止日（台灣已完成交易日）：{max_market_date}；目前台灣時間：{now_tw().isoformat()}")
+    debug_samples = 0
     for attempt, batch_size in enumerate((chunk_size, 20, 5), start=1):
         if not remaining:
             break
@@ -334,9 +369,18 @@ def fetch_batch_history(ticker_map, chunk_size=100, period="60d"):
                 try:
                     # yfinance returns MultiIndex columns even for one ticker.
                     raw = df[ticker] if isinstance(df.columns, pd.MultiIndex) else df
-                    clean = valid_history(raw)
+                    eligible = cutoff_history(raw, max_market_date)
+                    clean = valid_history(eligible)
                     if clean is None:
                         retry.append(ticker)
+                        # The previous logs only reported counts, not whether
+                        # the latest candle had invalid values or a future date.
+                        if attempt == 1 and debug_samples < 12:
+                            debug_samples += 1
+                            last = raw.tail(2)[["Open", "High", "Low", "Close", "Volume"]] if all(
+                                key in raw.columns for key in ("Open", "High", "Low", "Close", "Volume")
+                            ) else raw.tail(2)
+                            print(f"行情診斷 {ticker}: 原始最近兩列={last.to_dict(orient='index')}，日期截斷後={len(eligible)} 筆")
                     else:
                         found[ticker] = clean
                 except Exception as exc:
