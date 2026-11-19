@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 import pandas as pd
 
-from fetch_data import fetch_batch_history, valid_history
+from fetch_data import fetch_batch_history, valid_history, cutoff_history, latest_completed_market_date
 
 
 def history():
@@ -43,6 +43,27 @@ class HistoryTests(unittest.TestCase):
         frame.loc[frame.index[-1], ["Open", "High", "Low", "Close"]] = float("nan")
         frame.loc[frame.index[-1], "Volume"] = 1234.
         self.assertIsNone(valid_history(frame))
+
+    def test_market_cutoff_before_5pm_taiwan(self):
+        from datetime import datetime, timezone, timedelta
+        taipei = timezone(timedelta(hours=8))
+        self.assertEqual(latest_completed_market_date(datetime(2026, 11, 19, 2, 10, tzinfo=taipei)).isoformat(), "2026-11-18")
+        self.assertEqual(latest_completed_market_date(datetime(2026, 11, 19, 17, 17, tzinfo=taipei)).isoformat(), "2026-11-19")
+        self.assertEqual(latest_completed_market_date(datetime(2026, 11, 23, 2, 10, tzinfo=taipei)).isoformat(), "2026-11-20")
+
+    def test_future_partial_candle_is_dropped_before_validation(self):
+        original = history()
+        padded = original.reindex(pd.date_range("2026-09-01", periods=31))
+        padded.loc[padded.index[-1], "Volume"] = 1000.
+        self.assertIsNone(valid_history(padded))
+        cleaned = cutoff_history(padded, original.index[-1].date())
+        pd.testing.assert_frame_equal(valid_history(cleaned), original, check_freq=False)
+
+    def test_current_invalid_candle_is_not_silently_dropped(self):
+        original = history()
+        original.loc[original.index[-1], "Close"] = float("nan")
+        cleaned = cutoff_history(original, original.index[-1].date())
+        self.assertIsNone(valid_history(cleaned))
 
     def test_empty_and_short_history_rejected(self):
         self.assertIsNone(valid_history(history().iloc[:19]))
